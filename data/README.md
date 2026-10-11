@@ -9,6 +9,7 @@ people or messages, and is released under CC0 (public domain).
 | `train.csv` / `test.csv` | 129 / 33 | same | Fixed 80/20 split of the file above |
 | `summaries.csv` | 31 | `text`, `summary` | ROUGE evaluation: `summary` is the reference |
 | `inventory_text.csv` | 32 | `text`, `expected_json` | JSON extraction (lesson 2.3) |
+| `docs/*.md` | 5 files | Markdown | RAG lesson (lesson 6): a fictional bike shop's policies |
 
 ## Emails
 
@@ -36,3 +37,9 @@ train = load_emails("train")
 ```
 
 `load_emails` checks the columns, rejects empty emails, and rejects unknown labels.
+
+## RAG documents
+
+`docs/` holds five short policy pages for a made-up bike shop. `helmets.md` ends with a
+planted prompt-injection sentence ("ignore your previous instructions...") so the lesson can
+show how the prompt resists it. Do not remove it.

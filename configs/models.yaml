@@ -17,3 +17,10 @@ profiles:
     n_ctx: 8192
     n_gpu_layers: -1
     n_threads: null
+
+  embedding:              # Small embedding model for the RAG lesson (~150 MB). Load with embedding=True.
+    repo: nomic-ai/nomic-embed-text-v1.5-GGUF
+    file: nomic-embed-text-v1.5.Q8_0.gguf
+    n_ctx: 2048
+    n_gpu_layers: -1
+    n_threads: null
