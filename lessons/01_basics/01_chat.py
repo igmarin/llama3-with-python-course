@@ -1,31 +1,28 @@
-"""Part 1: Chatting with Llama 3 locally using llama-cpp-python.
+"""Lesson 1.1: Ask Llama a question.
 
-This is the corrected version of the starter snippet:
-  - Import the `Llama` class (capital L), not the `llama` submodule.
-  - Initialize with model_path=llama_path.
+Goal:     Load a model and get one answer.
+Concept:  ``llm(prompt)`` is plain text completion. The model continues the text
+          you give it. It does not know it is in a chat, so the reply may ramble
+          or repeat. Lesson 1.2 fixes that with chat messages.
+Run:      python lessons/01_basics/01_chat.py
+Expected: Text about databases that may ramble until it hits ``max_tokens``.
+          It differs on every run because ``temperature`` adds randomness.
 """
 
-from llama_cpp import Llama
+from llama_course.llm import get_llm
 
-# Path to the downloaded GGUF model file.
-llama_path = "./models/Llama-3.2-3B-Instruct-Q4_K_M.gguf"
 
-# Initialize the Llama model
-llm = Llama(
-    model_path=llama_path,
-    n_ctx=4096,        # context window
-    n_threads=4,       # CPU threads (adjust to your machine)
-    n_gpu_layers=0,    # set >0 if you have Metal/CUDA support
-    verbose=False,
-)
+def main() -> None:
+    llm = get_llm()
+    response = llm(
+        "What is the most used database for data storage?",
+        max_tokens=128,    # stop after at most 128 generated tokens
+        temperature=0.7,   # 0 = always pick the likeliest token; higher = more varied
+        top_p=0.95,        # sample only from the tokens that make up 95% of the probability
+        stop=["<|eot_id|>"],
+    )
+    print(response["choices"][0]["text"].strip())
 
-question = "What is the most used database for data storage?"
-response = llm(
-    question,
-    max_tokens=128,
-    temperature=0.7,
-    top_p=0.95,
-    stop=["<|eot_id|>"],
-)
 
-print(response["choices"][0]["text"].strip())
+if __name__ == "__main__":
+    main()

@@ -1,20 +1,31 @@
-from llama_cpp import Llama
+"""Lesson 2.3: JSON output.
 
-# Path to the downloaded GGUF model file.
-llama_path = "./models/Llama-3.2-3B-Instruct-Q4_K_M.gguf"
+Goal:     Turn free text into data your program can use.
+Concept:  ``response_format={"type": "json_object"}`` forces the model to emit
+          valid JSON. ``chat_json`` also parses it and raises
+          ``InvalidJSONReply`` if the reply was cut off.
+Run:      python lessons/02_prompting/03_json_inventory.py
+Expected: {'apples': 15, 'oranges': 33, 'potatoes': 5052}. The model converts
+          the spelled-out numbers; small models sometimes get one wrong.
+"""
 
-# Initialize the model
-llm = Llama(model_path=llama_path, verbose=False)
+from llama_course.llm import get_llm
+from llama_course.structured import chat_json
 
-output = llm.create_chat_completion(
-        messages=[
-            {"role": "system", "content": "You convert inventory lists from text to JSON, extracting item counts and names from the text as keys and values in the form: item: count; for example, 'banana': 32.",},
-            {"role": "user", "content": "Fifteen apples, thirty-three oranges, and five thousand fifty-two potatoes."},
-        ],
-        # Specify output format to JSON
-        response_format={
-            "type": "json_object"
-        }
+SYSTEM = (
+    "You convert inventory lists from text to JSON, extracting item counts and names "
+    "from the text as keys and values in the form: item: count; for example, 'banana': 32."
 )
 
-print(output['choices'][0]['message']['content'])
+
+def main() -> None:
+    llm = get_llm()
+    messages = [
+        {"role": "system", "content": SYSTEM},
+        {"role": "user", "content": "Fifteen apples, thirty-three oranges, and five thousand fifty-two potatoes."},
+    ]
+    print(chat_json(llm, messages, max_tokens=200))
+
+
+if __name__ == "__main__":
+    main()

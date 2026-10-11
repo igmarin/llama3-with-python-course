@@ -1,18 +1,24 @@
-from llama_cpp import Llama
+"""Lesson 2.1: Prompt formatting.
 
-# Path to the downloaded GGUF model file.
-llama_path = "./models/Llama-3.2-3B-Instruct-Q4_K_M.gguf"
-
-# Initialize the model
-llm = Llama(model_path=llama_path, verbose=False)
-
-# Add formatting to the prompt
-prompt="""
-Instruction: Explain the concept of gravity in simple terms.
-Question: What is gravity?
-Answer:
+Goal:     Get a focused answer from plain completion.
+Concept:  A completion model continues your text, so structure the text to make
+          the answer the natural next thing: an instruction, a question, then
+          ``Answer:``. A ``stop`` string ends generation before the model invents
+          the next question.
+Run:      python lessons/02_prompting/01_prompt_formatting.py
+Expected: One or two plain sentences explaining gravity.
 """
 
-# Send the prompt to the model
-output = llm(prompt, max_tokens=15, stop=["Question:"])
-print(output['choices'][0]['text'])
+from llama_course.llm import get_llm
+from llama_course.prompts import qa_prompt
+
+
+def main() -> None:
+    llm = get_llm()
+    prompt = qa_prompt("Explain the concept of gravity in simple terms.", "What is gravity?")
+    output = llm(prompt, max_tokens=60, stop=["Question:"])
+    print(output["choices"][0]["text"].strip())
+
+
+if __name__ == "__main__":
+    main()
