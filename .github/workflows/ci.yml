@@ -21,6 +21,6 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install -e . --no-deps
-          pip install numpy pandas pyyaml pytest ruff
+          pip install numpy pandas pydantic pyyaml pytest ruff
       - run: ruff check .
       - run: pytest -q
