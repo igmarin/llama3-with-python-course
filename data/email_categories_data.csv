@@ -1,11 +1,163 @@
-email,category
-Your account security alert: unusual login detected from a new device. Please verify your identity immediately.,Priority
-Weekly newsletter: Top 10 travel destinations for 2024,Updates
-50% OFF all flights this weekend only! Book now and save big,Promotions
-URGENT: Your payment is due tomorrow. Please complete your transaction to avoid service interruption.,Priority
-System maintenance scheduled for this Saturday from 2-4 AM UTC,Updates
-Free trial expires soon! Upgrade to premium and get unlimited access,Promotions
-Meeting reminder: Quarterly review session at 3 PM today,Priority
-New feature announcement: Dark mode is now available,Updates
-Exclusive offer: Buy one get one free on all courses,Promotions
-Password reset request: Click here to change your password,Priority
+email,category,difficulty
+Your account security alert: unusual login detected from a new device. Please verify your identity immediately.,Priority,easy
+URGENT: Your payment is due tomorrow. Please complete your transaction to avoid service interruption.,Priority,easy
+Meeting reminder: Quarterly review session at 3 PM today,Priority,easy
+Password reset request: Click here to change your password,Priority,easy
+Action required: your credit card ending in 4421 was declined. Update your billing details today.,Priority,easy
+Your flight to Denver departs in 3 hours. Check in now to keep your seat.,Priority,easy
+Reminder: your dentist appointment is tomorrow at 9:30 AM. Reply C to confirm.,Priority,easy
+Please sign the attached contract by end of day so we can start Monday.,Priority,easy
+The production server is down and customers cannot check out. Can you join the incident call now?,Priority,easy
+Your tax documents are ready and the filing deadline is this Friday. Review and approve them today.,Priority,easy
+Final notice: your car insurance policy lapses tonight unless payment is received.,Priority,easy
+Can you approve my expense report before 5 PM? Finance closes the books today.,Priority,easy
+Two-factor code: 482913. It expires in 10 minutes. Do not share it with anyone.,Priority,easy
+"Your rent payment of $1,450 is overdue. Please pay today to avoid a late fee.",Priority,easy
+We could not deliver your package. Confirm your address within 24 hours or it returns to sender.,Priority,easy
+Interview scheduled with the hiring team tomorrow at 10 AM. Please confirm you can attend.,Priority,easy
+Security notice: someone tried to change the email on your account. Was this you?,Priority,easy
+Your visa appointment is rescheduled to Thursday 8:15 AM. Bring your original passport.,Priority,easy
+The client moved the demo to 2 PM today. Slides are needed in one hour.,Priority,easy
+Your prescription is ready for pickup. The pharmacy closes at 7 PM tonight.,Priority,easy
+Please review the pull request blocking tomorrow's release. It needs one approval.,Priority,easy
+Your domain example-shop.com expires in 2 days. Renew now to avoid losing your website.,Priority,easy
+Parent-teacher conference tomorrow at 4 PM. Please confirm your time slot.,Priority,easy
+Your bank statement shows a charge of $899 you may not recognize. Contact us today if it is not yours.,Priority,easy
+Reminder: the grant application is due at noon tomorrow. We are still missing your budget page.,Priority,easy
+Your loan payment is due in 2 days. Set up autopay to avoid a missed payment.,Priority,easy
+Doctor's office: your lab results are in. Please call us today to discuss next steps.,Priority,easy
+Your storage is 100% full and new emails are bouncing. Free up space or upgrade immediately.,Priority,easy
+Legal: we need your signed affidavit by Wednesday to file the case on time.,Priority,easy
+Your building's water will be shut off from 8 to 11 AM tomorrow. Please move your car from the garage.,Priority,easy
+"Please confirm the wire transfer of $12,000 before the bank's 3 PM cutoff.",Priority,easy
+Performance review is scheduled for Friday at 1 PM. Please complete your self-assessment beforehand.,Priority,easy
+Reminder: your jury duty summons requires a response within 5 days.,Priority,easy
+The board meeting agenda needs your input today. Please reply with your items by 4 PM.,Priority,easy
+Your account will be suspended in 48 hours unless you verify your phone number.,Priority,easy
+Your child's school is closing early today at 12:30 PM due to the storm. Pickup is required.,Priority,easy
+Your hotel booking could not be charged. Provide a new card within 12 hours to keep the reservation.,Priority,easy
+Reminder: your passport renewal documents must be submitted by Monday.,Priority,easy
+Please call me as soon as you see this. The landlord is at the door about the inspection.,Priority,easy
+Your electricity will be disconnected tomorrow unless the overdue balance is paid.,Priority,easy
+We need your decision on the job offer by 6 PM tomorrow.,Priority,easy
+Your contractor needs the permit approval signed today or the crew cannot start tomorrow.,Priority,easy
+Urgent: customer data export failed overnight. Please check the pipeline logs this morning.,Priority,easy
+Weekly newsletter: Top 10 travel destinations for 2024,Updates,easy
+System maintenance scheduled for this Saturday from 2-4 AM UTC,Updates,easy
+New feature announcement: Dark mode is now available,Updates,easy
+Your order #88231 has shipped and should arrive on Thursday. Track it with the link below.,Updates,easy
+Your monthly account statement is now available in your online banking portal.,Updates,easy
+"Release notes for version 3.4: faster search, smaller downloads, and several bug fixes.",Updates,easy
+The library has extended its weekend hours starting next month.,Updates,easy
+Your subscription renewed successfully. A receipt for $9.99 is attached.,Updates,easy
+"Here is your weekly activity summary: 12 commits, 3 pull requests merged, 2 issues closed.",Updates,easy
+We have updated our privacy policy. You can read the changes on our website.,Updates,easy
+Community update: our spring meetup recap and photos are now online.,Updates,easy
+Your photo book has been printed and is on its way.,Updates,easy
+The city council posted the minutes of last week's meeting.,Updates,easy
+Your package was delivered and left at the front door at 2:14 PM.,Updates,easy
+"New episode available: season 2, episode 5 of the Data Engineering Podcast.",Updates,easy
+Your monthly reading report: you finished 3 books and 4 articles.,Updates,easy
+Service update: the app will be read-only for 30 minutes during a database upgrade on Sunday.,Updates,easy
+Your profile was viewed 14 times this week.,Updates,easy
+The cafeteria menu for next week has been posted on the intranet.,Updates,easy
+Your electricity usage last month was 8% lower than the month before.,Updates,easy
+Product update: we added CSV export to the reports page.,Updates,easy
+Your expense report #2291 was approved and will be paid on the next payroll run.,Updates,easy
+"Alumni newsletter: class notes, upcoming events, and a campus construction update.",Updates,easy
+Your warranty registration for the blender has been recorded.,Updates,easy
+The team offsite photos are in the shared drive.,Updates,easy
+Changelog for this week: three new keyboard shortcuts and a faster login page.,Updates,easy
+Your gym membership will move to the new app on the 1st. Your account data carries over.,Updates,easy
+"Your cloud backup completed successfully. 2,431 files were backed up.",Updates,easy
+Neighborhood update: street cleaning schedule for the coming month.,Updates,easy
+We have published the notes from yesterday's all-hands meeting.,Updates,easy
+"A new comment was added to your document ""Q3 plan"".",Updates,easy
+Your annual report is ready to download from the dashboard.,Updates,easy
+Our office will be closed on Monday for the public holiday.,Updates,easy
+Your return has been received and a refund of $34.50 will appear in 5 to 7 business days.,Updates,easy
+Status update: the outage from Tuesday was caused by an expired certificate and is fully resolved.,Updates,easy
+The conference schedule is now online. Sessions begin at 9 AM on both days.,Updates,easy
+"Your reservation at Luna Bistro is confirmed for Saturday at 7:30 PM, party of four.",Updates,easy
+Your language course unlock: lesson 12 is now available.,Updates,easy
+Monthly digest: the five most read articles in the engineering blog.,Updates,easy
+Your new debit card was activated. The old card stops working next month.,Updates,easy
+The parking permit you requested was issued and is valid through December.,Updates,easy
+Your newsletter preferences were updated. No further action is needed.,Updates,easy
+The quarterly roadmap deck is now in the shared folder.,Updates,easy
+50% OFF all flights this weekend only! Book now and save big,Promotions,easy
+Free trial expires soon! Upgrade to premium and get unlimited access,Promotions,easy
+Exclusive offer: Buy one get one free on all courses,Promotions,easy
+"Flash sale: up to 70% off winter jackets, today only!",Promotions,easy
+Join our rewards program and get a free coffee on your first visit.,Promotions,easy
+New arrivals just dropped. Shop the spring collection and get free shipping over $50.,Promotions,easy
+"Black Friday starts now: doorbusters on laptops, TVs, and headphones.",Promotions,easy
+Save 20% on your first order with code WELCOME20.,Promotions,easy
+Upgrade to Pro and unlock all templates. Limited time pricing.,Promotions,easy
+Treat yourself: spa day package for two at 30% off this month.,Promotions,easy
+Refer a friend and you both get $25 credit.,Promotions,easy
+Summer travel deals: beach getaways from $299 per person.,Promotions,easy
+"Back to school sale: backpacks, notebooks, and laptops at the lowest prices of the season.",Promotions,easy
+Your favorite pizza is half price every Tuesday. Order now.,Promotions,easy
+Win a free vacation! Enter our monthly giveaway in 30 seconds.,Promotions,easy
+Memorial Day mattress sale: save up to $500 and get free delivery.,Promotions,easy
+We miss you! Come back and enjoy 15% off your next purchase.,Promotions,easy
+Get 3 months of streaming for the price of 1. Offer ends Sunday.,Promotions,easy
+Try our new seasonal menu and get a free dessert with any entree.,Promotions,easy
+The big clearance event: shoes starting at $19.99.,Promotions,easy
+Limited edition sneakers are back in stock. Grab a pair before they sell out.,Promotions,easy
+Sign up for our webinar and receive a free e-book on investing.,Promotions,easy
+Cyber Monday: save big on software subscriptions and online courses.,Promotions,easy
+"Gift cards make perfect holiday presents. Buy two, get one free.",Promotions,easy
+Bundle and save: add a case and screen protector to your order for 40% off.,Promotions,easy
+Give your home a makeover with up to 60% off furniture.,Promotions,easy
+Take our 2-minute quiz and get a personalized skincare routine plus 10% off.,Promotions,easy
+Enjoy double points on every purchase this weekend.,Promotions,easy
+Free shipping on everything this week. No minimum order.,Promotions,easy
+New course launch: learn Python in 30 days. Early-bird price ends soon.,Promotions,easy
+Tonight only: movie tickets for $5 at participating theaters.,Promotions,easy
+Our biggest sale of the year is here. Shop now and save up to 80%.,Promotions,easy
+Get a free tote bag when you subscribe to our magazine today.,Promotions,easy
+Hotel deals in Lisbon: stay 3 nights and pay for 2.,Promotions,easy
+Exclusive member pricing on running shoes. Log in to see your discount.,Promotions,easy
+Upgrade your phone today and get $200 trade-in credit.,Promotions,easy
+Weekend special: kids eat free with every adult entree.,Promotions,easy
+Introducing our newest smartwatch. Pre-order now and get a free band.,Promotions,easy
+Season finale sale: all garden tools buy one get one 50% off.,Promotions,easy
+Here is a coupon for your birthday month: a free appetizer on us!,Promotions,easy
+"New season, new look: save 25% on all sweaters this week.",Promotions,easy
+Buy a pair of boots and get a free pair of socks.,Promotions,easy
+"Spring cleaning sale on vacuum cleaners: up to 35% off, today and tomorrow.",Promotions,easy
+Quick note: could you send me the signed lease renewal by Friday? The landlord needs it on file.,Priority,hard
+"Hey, no rush, but the client asked about the invoice twice today. Can you send it before they call you?",Priority,hard
+FYI the building fire drill is at 10 AM tomorrow. Everyone must leave their desks and meet in the parking lot.,Priority,hard
+"Hi, just checking in. Your deposit hasn't arrived and the closing is Monday, so we need it by Thursday.",Priority,hard
+"Heads up: HR needs your updated tax form this week, or your next paycheck may be delayed.",Priority,hard
+"When you get a moment today, please confirm the dentist's new address. Your appointment is at 8 AM tomorrow.",Priority,hard
+The coupon you used has been flagged. Please contact billing within 3 days to avoid a chargeback on your account.,Priority,hard
+Reminder from the school: field trip permission slips are due tomorrow or your child cannot attend.,Priority,hard
+Sale of your house: the buyer's inspector comes tomorrow at noon. Please make sure someone is home.,Priority,hard
+This is not a drill: the VPN certificate expires tonight and you will lose remote access unless you renew it.,Priority,hard
+Congratulations on your promotion! One thing: please sign the new contract by Wednesday so payroll can update.,Priority,hard
+Important: our terms of service change on the 1st. No action is needed on your part.,Updates,hard
+URGENT FYI: the printer on floor 3 is out of order. Technicians are already working on it.,Updates,hard
+Last chance to read: the final installment of our five-part series is now online.,Updates,hard
+Security update: we strengthened login protection on your account. You don't need to do anything.,Updates,hard
+Action completed: your password was changed successfully on May 3.,Updates,hard
+Reminder: this is an automated copy of your receipt for order #7782. No reply is needed.,Updates,hard
+Final notice: this mailing list will be archived next month. You will not receive further messages.,Updates,hard
+Breaking: our status page shows all systems operational after this morning's brief slowdown.,Updates,hard
+Your free trial ended yesterday and your account moved to the basic plan. Your data is safe.,Updates,hard
+"Last day of the exhibition is Sunday. Here is a recap of the highlights, with photos.",Updates,hard
+Alert: scheduled power work in your area tomorrow may cause short outages. No action required.,Updates,hard
+Action required: your reward points expire tonight. Redeem them for a free gift before midnight.,Promotions,hard
+URGENT: only 3 seats left at this price! Book your trip now before the deal ends.,Promotions,hard
+Your cart is about to expire! Complete your purchase in the next hour to keep the 25% discount.,Promotions,hard
+Security alert: your free shipping benefit is about to run out. Renew your membership to keep it.,Promotions,hard
+Payment reminder: finish checkout now and we'll add a bonus $10 gift card to your order.,Promotions,hard
+Final notice: your exclusive upgrade offer closes at midnight. Claim it now.,Promotions,hard
+"Meeting at 3 PM? Make it better with our new conference room headset, 40% off this week.",Promotions,hard
+Account update: you've been selected for a special upgrade. Click to claim your discount.,Promotions,hard
+Don't miss out: your saved items are now on sale and selling fast.,Promotions,hard
+Important: your coupon expires Friday. Use it for 30% off any order.,Promotions,hard
+"Hi, we noticed you left something behind. Here is 10% off to help you decide.",Promotions,hard

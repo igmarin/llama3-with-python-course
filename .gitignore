@@ -59,3 +59,5 @@ htmlcov/
 .env
 .env.*
 !.env.example
+# Session handoff notes (local, not for the repo)
+docs/handoffs/
