@@ -7,18 +7,10 @@ Minimal example using [`llama-cpp-python`](https://github.com/abetlen/llama-cpp-
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install -e ".[dev]"      # add ".[finetune]" for lesson 3
 ```
 
-`requirements.txt` pins the dependencies for this project:
-
-```
-llama-cpp-python
-huggingface-hub
-```
-
-- `llama-cpp-python` — the core library for loading and running GGUF models.
-- `huggingface-hub` — used by `download_model.py` to fetch model files.
+Dependencies are declared in `pyproject.toml` (core, `finetune`, `dev`).
 
 ## Download a model
 
@@ -33,14 +25,14 @@ Or download manually from HuggingFace and place the `.gguf` file in `models/`.
 
 ## Examples
 
-- `Part1/chatting_llama.py` — basic question/answer with Llama 3.
-- `example.py` — same idea with an explicit chat template (system/user/assistant).
+- `lessons/01_basics/01_chat.py` — basic question/answer with Llama 3.
+- `lessons/01_basics/04_chat_template.py` — same idea with an explicit chat template.
 
 Run either after downloading the model:
 
 ```bash
-python Part1/chatting_llama.py
-python example.py
+python lessons/01_basics/01_chat.py
+python lessons/01_basics/04_chat_template.py
 ```
 
 Edit the `llama_path` / `MODEL_PATH` variable in each file if your model is elsewhere.

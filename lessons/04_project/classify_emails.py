@@ -3,13 +3,13 @@ import pandas as pd
 from llama_cpp import Llama
 
 # Path to the downloaded GGUF model file.
-llama_path = "../models/Llama-3.2-3B-Instruct-Q4_K_M.gguf"
+llama_path = "models/Llama-3.2-3B-Instruct-Q4_K_M.gguf"
 
 # Initialize the model
 llm = Llama(model_path=llama_path, verbose=False)
 
 # Load the email dataset
-emails_df = pd.read_csv('../data/email_categories_data.csv')
+emails_df = pd.read_csv('data/email_categories_data.csv')
 # Display the first few rows of our dataset
 print("Preview of our email dataset:")
 emails_df.head(2)

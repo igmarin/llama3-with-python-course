@@ -1,8 +1,0 @@
-batch_size: 8
-device: cpu
-learning_rate: 3.0e-05
-model: models/Llama-3.2-3B-Instruct-Q4_K_M.gguf
-n_ctx: 2048
-n_gpu_layers: -1
-output_dir: ./finetune_results
-verbose: false
