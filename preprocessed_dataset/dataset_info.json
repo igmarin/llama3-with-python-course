@@ -1,0 +1,20 @@
+{
+  "citation": "",
+  "description": "",
+  "features": {
+    "email": {
+      "dtype": "large_string",
+      "_type": "Value"
+    },
+    "category": {
+      "dtype": "large_string",
+      "_type": "Value"
+    },
+    "intent_example": {
+      "dtype": "string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": ""
+}
