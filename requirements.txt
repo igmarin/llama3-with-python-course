@@ -2,3 +2,7 @@ llama-cpp-python
 huggingface-hub
 pandas
 datasets
+trl
+transformers
+evaluate
+scikit-learn
