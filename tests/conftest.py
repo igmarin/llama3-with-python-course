@@ -30,7 +30,20 @@ class FakeLLM:
 
     def create_chat_completion(self, messages, **kwargs):
         self.calls.append({"messages": [dict(m) for m in messages], **kwargs})
-        return {"choices": [{"message": {"role": "assistant", "content": self.replies.pop(0)}}]}
+        reply = self.replies.pop(0)
+        if kwargs.get("stream"):
+            return self._stream(reply)
+        return {"choices": [{"message": {"role": "assistant", "content": reply}}]}
+
+    @staticmethod
+    def _stream(reply):
+        yield {"choices": [{"delta": {"role": "assistant"}}]}
+        for word in reply.split(" "):
+            yield {"choices": [{"delta": {"content": word + " "}}]}
+        yield {"choices": [{"delta": {}}]}
+
+    def tokenize(self, data, add_bos=True):
+        return data.decode().split()  # one token per word
 
 
 @pytest.fixture
