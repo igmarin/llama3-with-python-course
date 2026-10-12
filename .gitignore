@@ -61,3 +61,9 @@ htmlcov/
 !.env.example
 # Session handoff notes (local, not for the repo)
 docs/handoffs/
+
+# Fine-tuning outputs (regenerate with the lesson 3 scripts)
+finetune_data/
+adapters/
+finetune_results/
+preprocessed_dataset/

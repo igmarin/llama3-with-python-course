@@ -36,6 +36,7 @@ class ModelProfile:
     n_ctx: int
     n_gpu_layers: int
     n_threads: int | None = None
+    mlx_repo: str | None = None  # same model in MLX format, for fine-tuning on Apple Silicon
 
     @property
     def path(self) -> Path:

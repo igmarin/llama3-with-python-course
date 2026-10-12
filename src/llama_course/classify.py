@@ -101,21 +101,26 @@ def metrics(y_true: Sequence[str], y_pred: Sequence[str]) -> dict[str, Any]:
     return {"accuracy": float((t == p).mean()) if len(t) else 0.0, "per_class": per_class, "confusion": confusion}
 
 
-def evaluate(llm: Any, df: pd.DataFrame) -> dict[str, Any]:
-    """Classify every row of ``df`` and score it.
-
-    Args:
-        llm: A ``Llama`` instance.
-        df: Rows with ``email``, ``category`` and ``difficulty`` columns.
+def score_predictions(df: pd.DataFrame, preds: Sequence[str]) -> dict[str, Any]:
+    """Score predictions (one per row of ``df``, :data:`INVALID` for unusable ones).
 
     Returns:
         The :func:`metrics` result plus ``accuracy_by_difficulty`` and ``invalid`` (count).
     """
-    preds = [predict(llm, email) or INVALID for email in df["email"]]
     result = metrics(df["category"], preds)
-    correct = pd.Series(preds, index=df.index) == df["category"]
+    correct = pd.Series(list(preds), index=df.index) == df["category"]
     result["accuracy_by_difficulty"] = {
         d: float(correct[df["difficulty"] == d].mean()) for d in sorted(df["difficulty"].unique())
     }
-    result["invalid"] = preds.count(INVALID)
+    result["invalid"] = list(preds).count(INVALID)
     return result
+
+
+def evaluate(llm: Any, df: pd.DataFrame) -> dict[str, Any]:
+    """Classify every row of ``df`` with ``llm`` and score it with :func:`score_predictions`.
+
+    Args:
+        llm: A ``Llama`` instance.
+        df: Rows with ``email``, ``category`` and ``difficulty`` columns.
+    """
+    return score_predictions(df, [predict(llm, email) or INVALID for email in df["email"]])

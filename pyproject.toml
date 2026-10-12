@@ -11,7 +11,10 @@ requires-python = ">=3.10"
 dependencies = ["llama-cpp-python", "huggingface-hub", "numpy", "pandas", "pydantic", "pyyaml"]
 
 [project.optional-dependencies]
-finetune = ["datasets", "trl", "transformers", "evaluate", "scikit-learn"]
+finetune = [
+    "mlx-lm; sys_platform == 'darwin' and platform_machine == 'arm64'",
+    "rouge-score",
+]
 dev = ["pytest", "ruff"]
 
 [tool.setuptools.packages.find]

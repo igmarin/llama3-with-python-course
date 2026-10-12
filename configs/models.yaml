@@ -1,12 +1,14 @@
 # Model profiles. Pick one with: export LLAMA_PROFILE=<name>
 # Fields: repo + file (Hugging Face GGUF), n_ctx (context window),
-# n_gpu_layers (-1 = offload all layers to Metal/CUDA), n_threads (null = auto).
+# n_gpu_layers (-1 = offload all layers to Metal/CUDA), n_threads (null = auto),
+# mlx_repo (optional: the same model in MLX format, used for fine-tuning).
 default: laptop-16gb
 
 profiles:
   laptop-16gb:            # MacBook Pro 16GB: ~2 GB model file
     repo: bartowski/Llama-3.2-3B-Instruct-GGUF
     file: Llama-3.2-3B-Instruct-Q4_K_M.gguf
+    mlx_repo: mlx-community/Llama-3.2-3B-Instruct-4bit   # used by lesson 3 (fine-tuning)
     n_ctx: 4096
     n_gpu_layers: -1
     n_threads: null
@@ -14,6 +16,7 @@ profiles:
   studio-128gb:           # Mac Studio 128GB: ~43 GB model file
     repo: bartowski/Llama-3.3-70B-Instruct-GGUF
     file: Llama-3.3-70B-Instruct-Q4_K_M.gguf
+    mlx_repo: mlx-community/Llama-3.3-70B-Instruct-4bit
     n_ctx: 8192
     n_gpu_layers: -1
     n_threads: null
