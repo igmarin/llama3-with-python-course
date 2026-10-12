@@ -1,26 +1,30 @@
 # Course documentation
 
-Start with the [README](../README.md) to install and run your first lesson.
+Start here. To install and run your first lesson, follow the [quick start in the README](../README.md#quick-start).
 
-## Learning order
+## Learn
 
-1. **Basics** (`lessons/01_basics`): load a model and chat with it.
-2. **Prompting** (`lessons/02_prompting`): control the format of what you get back.
-3. Then any of these, in any order:
-   - **Project** (`lessons/04_project`): classify emails and measure the accuracy.
-   - **Generation** (`lessons/05_generation`): sampling, streaming, context limits.
-   - **RAG** (`lessons/06_rag`): answer from your own documents.
-   - **Tools** (`lessons/07_tools`): let the model call functions.
-   - **Fine-tuning** (`lessons/03_finetuning`): train it to do your task better. Do the project first,
-     because it provides the baseline score.
+| Page | Use it to |
+|------|-----------|
+| [Tutorial: build an email classifier](tutorial.md) | Go from zero to a working classifier in about 20 minutes |
+| [Lesson pages](#lesson-pages) | Understand the idea behind each lesson, with exercises |
+| [References](references.md) | Read more, grouped by topic |
 
-Every lesson script opens with a docstring: the goal, the idea, the command to run, and what you
-should see.
+## How to
+
+| Guide | Use it to |
+|-------|-----------|
+| [Change models](howto/switch-models.md) | Download and switch between 3B, 8B and 70B models |
+| [Add a model profile](howto/add-a-model-profile.md) | Make a new model selectable by name |
+| [Run the tests](howto/run-the-tests.md) | Check your setup, with or without a model |
+| [Change generation settings](howto/change-generation-settings.md) | Control randomness, answer length and context size |
+| [Add your own emails](howto/add-your-own-emails.md) | Score the classifier on your own data |
 
 ## Lesson pages
 
 Each page explains the ideas behind a lesson, walks through the code, lists common mistakes, gives
-an exercise with an answer, and links to further reading.
+an exercise with an answer, and links to further reading. Do lessons 1 and 2 first, in order. The
+others are independent. Do lesson 4 before lesson 3, because it provides the baseline score.
 
 | Page | Covers |
 |------|--------|
@@ -32,13 +36,15 @@ an exercise with an answer, and links to further reading.
 | [6. RAG](lessons/06-rag.md) | Embeddings, cosine search, citations, refusing, prompt injection |
 | [7. Tools](lessons/07-tools.md) | Tool calling, Pydantic validation, retries |
 
-## Reference pages
+Every lesson script also opens with a docstring: the goal, the idea, the command to run, and what
+you should see.
+
+## Reference
 
 | Page | Read it when |
 |------|--------------|
-| [References](references.md) | You want to read more, grouped by topic |
-| [Models and benchmarks](models.md) | You want a different model, or want to know what your machine can run |
-| [Datasets](../data/README.md) | You want to know what the data contains or add your own |
+| [Models and benchmarks](models.md) | You want to know what your machine can run, and how fast |
+| [Datasets](../data/README.md) | You want to know what the data contains |
 
 ## Code map
 

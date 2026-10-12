@@ -13,6 +13,14 @@ profiles:
     n_gpu_layers: -1
     n_threads: null
 
+  laptop-8b:              # Llama 3.1 8B: smarter than 3B, fits a 16 GB machine (4.9 GB file)
+    repo: bartowski/Meta-Llama-3.1-8B-Instruct-GGUF
+    file: Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf
+    mlx_repo: mlx-community/Meta-Llama-3.1-8B-Instruct-4bit
+    n_ctx: 4096
+    n_gpu_layers: -1
+    n_threads: null
+
   studio-128gb:           # Mac Studio 128GB: ~43 GB model file
     repo: bartowski/Llama-3.3-70B-Instruct-GGUF
     file: Llama-3.3-70B-Instruct-Q4_K_M.gguf

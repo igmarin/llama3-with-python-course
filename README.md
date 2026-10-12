@@ -28,6 +28,8 @@ download is 2 GB. If the last command prints text about databases, you are ready
 
 ## The lessons
 
+New here? Follow the [tutorial](docs/tutorial.md): from zero to a working email classifier in about 20 minutes.
+
 Run lessons from the repository root. Do 1 and 2 first, in order. The rest build on them but are
 independent of each other.
 
@@ -76,4 +78,4 @@ ruff check .
 | `data/` | Datasets, all synthetic. See [data/README.md](data/README.md) |
 | `scripts/` | Model download, benchmark, data split |
 | `tests/` | Tests. Most use a fake model, so they run anywhere |
-| `docs/` | Guides. Start at [docs/index.md](docs/index.md) |
+| `docs/` | Tutorial, how-to guides, lesson pages. Start at [docs/index.md](docs/index.md) |

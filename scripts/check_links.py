@@ -1,4 +1,4 @@
-"""Check that every http(s) link in the docs still resolves.
+"""Check that every link in the docs works: web links resolve, relative file links exist.
 
     python scripts/check_links.py                 # README.md, docs/, lessons/, data/
     python scripts/check_links.py some/file.md    # specific files or folders
@@ -23,6 +23,18 @@ HEADERS = {"User-Agent": "Mozilla/5.0 (link checker for llama3-with-python-cours
 def find_links(text: str) -> set[str]:
     """Return the distinct URLs in ``text``, without trailing punctuation."""
     return {m.rstrip(".,;:") for m in URL.findall(text)}
+
+
+RELATIVE = re.compile(r"\]\((?!https?://|mailto:|#)([^)#\s]+)")
+
+
+def broken_relative_links(path: Path) -> list[str]:
+    """Return relative Markdown link targets in ``path`` that point to missing files."""
+    return [
+        target
+        for target in RELATIVE.findall(path.read_text())
+        if not (path.parent / target).exists()
+    ]
 
 
 def collect(paths: list[Path]) -> dict[str, list[str]]:
@@ -66,13 +78,22 @@ def main() -> None:
     args = [Path(a).resolve() for a in sys.argv[1:]]
     paths = args or [ROOT / "README.md", ROOT / "docs", ROOT / "lessons", ROOT / "data"]
     links = collect([p for p in paths if p.exists()])
+    missing = [
+        f"{f.relative_to(ROOT)}: {target}"
+        for p in paths if p.exists()
+        for f in ([p] if p.is_file() else p.rglob("*.md"))
+        if f.suffix == ".md" and "handoffs" not in f.parts and ".venv" not in f.parts and f.is_relative_to(ROOT)
+        for target in broken_relative_links(f)
+    ]
+    for item in missing:
+        print(f"missing file   {item}")
     with ThreadPoolExecutor(max_workers=4) as pool:
         results = dict(zip(links, pool.map(check, links)))
     bad = {u: r for u, r in results.items() if r != "ok"}
     for url, status in sorted(bad.items()):
         print(f"{status:<14} {url}   ({', '.join(links[url])})")
     print(f"\n{len(links) - len(bad)} of {len(links)} links ok.")
-    sys.exit(1 if any(r != "blocked" for r in bad.values()) else 0)
+    sys.exit(1 if missing or any(r != "blocked" for r in bad.values()) else 0)
 
 
 if __name__ == "__main__":

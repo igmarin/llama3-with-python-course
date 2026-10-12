@@ -9,6 +9,7 @@ model and its settings. Choose a profile with `LLAMA_PROFILE`, or point at any `
 | Profile | Model | File size | Machine it suits |
 |---------|-------|-----------|------------------|
 | `laptop-16gb` (default) | Llama 3.2 3B Instruct, Q4_K_M | 2.0 GB | 16 GB laptop |
+| `laptop-8b` | Llama 3.1 8B Instruct, Q4_K_M | 4.9 GB | 16 GB laptop |
 | `studio-128gb` | Llama 3.3 70B Instruct, Q4_K_M | about 43 GB | 64 GB or more |
 | `embedding` | nomic-embed-text v1.5, Q8_0 | 0.15 GB | any; used by the RAG lesson |
 
@@ -40,24 +41,9 @@ memory.
 
 ## Add a profile
 
-Copy a block in `configs/models.yaml` and change the fields:
-
-```yaml
-profiles:
-  laptop-8b:
-    repo: bartowski/Meta-Llama-3.1-8B-Instruct-GGUF   # Hugging Face repo with the GGUF files
-    file: Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf      # one file from that repo
-    n_ctx: 4096            # context window, in tokens
-    n_gpu_layers: -1       # -1 = run every layer on the GPU (Metal on a Mac)
-    n_threads: null        # null = let llama.cpp choose
-    mlx_repo: mlx-community/Meta-Llama-3.1-8B-Instruct-4bit   # optional: for fine-tuning
-```
-
-Then run `python scripts/download_model.py --profile laptop-8b`. The 8B file is 4.9 GB, which fits
-on a 16 GB machine. This profile is an example and has not been tested here.
-
-Use a single `.gguf` file. Large models are sometimes split into several parts, and the download
-script takes one file name.
+Copy a block in `configs/models.yaml`, change the fields, and download it. The step-by-step guide is
+[Add a model profile](howto/add-a-model-profile.md). Use a single `.gguf` file; a model split into
+several parts will not work with the download script.
 
 ## Measure your machine
 
@@ -83,7 +69,13 @@ Short prompts, 128 new tokens, temperature 0, median of 9 runs after one warm-up
 | Profile | Model | Machine | Load | First token | Speed | Peak memory |
 |---------|-------|---------|------|-------------|-------|-------------|
 | `laptop-16gb` | Llama 3.2 3B Q4_K_M | MacBook Pro, Apple Silicon, 16 GB | 0.5 s | 0.02 s | 53.9 tokens/s | 2,577 MB |
+| `laptop-8b` | Llama 3.1 8B Q4_K_M | MacBook Pro, Apple Silicon, 16 GB | 1.6 s | 0.04 s | 23.0 tokens/s | 5,339 MB |
 | `studio-128gb` | Llama 3.3 70B Q4_K_M | Mac Studio, 128 GB | _not measured yet_ | _not measured yet_ | _not measured yet_ | _not measured yet_ |
+
+Generation speed drops as the model grows: the 8B model has almost three times as many weights as the
+3B model and runs at less than half the speed. The 8B model also scored 93.9% on the email test set
+against 100% for the 3B model, but the test set has 33 emails and the prompt was compared on the 3B
+model, so do not read that as proof that 8B is worse.
 
 The load time of 0.5 s was measured with the file already in the operating system's cache. A cold
 start takes longer.
