@@ -34,7 +34,10 @@ SCHEMA = {
     "required": ["category"],
 }
 
-# Written for this prompt; none of these appear in data/.
+# Worked examples you can pass as ``examples=``. They are written for this prompt and none
+# appear in data/. They do not help: on the 129 training-split emails, accuracy fell from
+# 98.4% (no examples) to 88.4% (these six), mostly Priority emails labelled Updates.
+# The default is therefore no examples. Keep them to see how an example can mislead.
 FEW_SHOT_EXAMPLES: tuple[tuple[str, str], ...] = (
     ("Your card was charged twice. Call the bank today so they can reverse one charge.", "Priority"),
     ("Your weekly digest: 5 new articles and 2 replies to your comments.", "Updates"),
@@ -46,9 +49,9 @@ FEW_SHOT_EXAMPLES: tuple[tuple[str, str], ...] = (
 
 
 def build_messages(
-    email: str, examples: Sequence[tuple[str, str]] = FEW_SHOT_EXAMPLES
+    email: str, examples: Sequence[tuple[str, str]] = ()
 ) -> list[dict[str, str]]:
-    """Build the chat: instructions, worked examples as past turns, then the email."""
+    """Build the chat: instructions, optional worked examples as past turns, then the email."""
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
     for text, label in examples:
         messages.append({"role": "user", "content": text})
@@ -57,7 +60,7 @@ def build_messages(
     return messages
 
 
-def predict(llm: Any, email: str, examples: Sequence[tuple[str, str]] = FEW_SHOT_EXAMPLES) -> str | None:
+def predict(llm: Any, email: str, examples: Sequence[tuple[str, str]] = ()) -> str | None:
     """Return the model's label, or ``None`` if the reply is unusable."""
     try:
         reply = chat_json(
@@ -69,7 +72,7 @@ def predict(llm: Any, email: str, examples: Sequence[tuple[str, str]] = FEW_SHOT
     return label if label in LABELS else None
 
 
-def classify(llm: Any, email: str, examples: Sequence[tuple[str, str]] = FEW_SHOT_EXAMPLES) -> str:
+def classify(llm: Any, email: str, examples: Sequence[tuple[str, str]] = ()) -> str:
     """Return exactly one valid label; falls back to :data:`FALLBACK` on a bad reply."""
     return predict(llm, email, examples) or FALLBACK
 
@@ -116,11 +119,15 @@ def score_predictions(df: pd.DataFrame, preds: Sequence[str]) -> dict[str, Any]:
     return result
 
 
-def evaluate(llm: Any, df: pd.DataFrame) -> dict[str, Any]:
+def evaluate(
+    llm: Any, df: pd.DataFrame, examples: Sequence[tuple[str, str]] = ()
+) -> dict[str, Any]:
     """Classify every row of ``df`` with ``llm`` and score it with :func:`score_predictions`.
 
     Args:
         llm: A ``Llama`` instance.
         df: Rows with ``email``, ``category`` and ``difficulty`` columns.
+        examples: Optional worked examples for the prompt.
     """
-    return score_predictions(df, [predict(llm, email) or INVALID for email in df["email"]])
+    preds = [predict(llm, email, examples) or INVALID for email in df["email"]]
+    return score_predictions(df, preds)

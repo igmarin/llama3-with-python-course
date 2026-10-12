@@ -35,11 +35,18 @@ def test_invalid_reply_falls_back_but_predict_reports_none(fake_llm, bad):
     assert predict(fake_llm([bad]), "x") is None
 
 
-def test_messages_end_with_the_email_after_the_examples():
+def test_default_prompt_has_no_examples():
     msgs = build_messages("hello")
+    assert [m["role"] for m in msgs] == ["system", "user"]
+    assert msgs[-1] == {"role": "user", "content": "hello"}
+
+
+def test_examples_become_past_turns_before_the_email():
+    msgs = build_messages("hello", FEW_SHOT_EXAMPLES)
     assert msgs[0]["role"] == "system"
     assert msgs[-1] == {"role": "user", "content": "hello"}
     assert len(msgs) == 2 + 2 * len(FEW_SHOT_EXAMPLES)
+    assert msgs[2]["content"] == json.dumps({"category": FEW_SHOT_EXAMPLES[0][1]})
 
 
 def test_few_shot_examples_do_not_leak_from_the_dataset():

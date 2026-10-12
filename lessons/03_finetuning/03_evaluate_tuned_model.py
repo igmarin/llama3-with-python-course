@@ -6,6 +6,9 @@ Concept:  Training loss going down proves nothing about new emails. The honest
           Both get the same short prompt, with no examples; the fine-tuned one
           has learned the task from data instead of from the prompt.
           Read the "hard" row first: easy emails are usually solved by both.
+          Keep the comparison in perspective: the rules-and-schema prompt from
+          lesson 4 already scores 100% on this test set. Fine-tuning pays off when
+          a prompt gets long, slow or fragile, or when the task has no short rules.
 Requires: pip install -e ".[finetune]" and lessons 3.1 and 3.2 run first.
 Run:      python lessons/03_finetuning/03_evaluate_tuned_model.py
 Expected: A table of accuracy for base vs tuned, overall and for easy/hard emails,

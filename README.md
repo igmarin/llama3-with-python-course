@@ -41,7 +41,8 @@ independent of each other.
 | [6. RAG](lessons/06_rag) | Answer from your own documents, refuse when they don't say, resist prompt injection | 5 s |
 | [7. Tools](lessons/07_tools) | Let the model call Python functions, validated output with Pydantic | 10 s to 1 min |
 
-Times are on a MacBook Pro (Apple Silicon, 16 GB) with the 3B model. Lesson 6 needs a second small
+Each lesson has a page in [docs/lessons](docs/lessons) with the ideas, common mistakes, an exercise
+and further reading. Times are on a MacBook Pro (Apple Silicon, 16 GB) with the 3B model. Lesson 6 needs a second small
 model first: `python scripts/download_model.py --profile embedding`. Lesson 3.2 downloads a 1.8 GB
 copy of the model in MLX format the first time it runs.
 
