@@ -7,7 +7,7 @@ name = "llama-course"
 version = "0.1.0"
 description = "A small Python + LLM course using Llama models locally."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.10,<3.15"
 dependencies = ["llama-cpp-python", "huggingface-hub", "numpy", "pandas", "pydantic", "pyyaml"]
 
 [project.optional-dependencies]
