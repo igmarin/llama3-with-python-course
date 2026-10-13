@@ -51,6 +51,6 @@ handles bad replies such as broken JSON. Add a test the same way:
 
 ```python
 def test_my_helper(fake_llm):
-    llm = fake_llm(["Priority"])
+    llm = fake_llm(["Repair"])
     ...  # call your code with llm, then check llm.calls
 ```

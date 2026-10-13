@@ -8,7 +8,7 @@ Concept:  Lesson 2.4 constrained JSON with a hand-written schema. A Pydantic mod
           and asks once more. Schema constraints guide generation; Pydantic is the
           check you can trust.
 Run:      python lessons/07_tools/02_validated_output.py
-Expected: Three parsed inventories, then the share of the 32 inventory sentences in
+Expected: Three parsed delivery notes, then the share of the 32 delivery notes in
           data/inventory_text.csv whose counts all match (compared as sorted lists of
           counts, because the model may name items differently).
 """
@@ -22,8 +22,8 @@ from llama_course.llm import get_llm
 from llama_course.structured import InvalidModelReply, chat_model
 
 SYSTEM = (
-    "Extract every item and its count from the text. "
-    "Convert number words to digits. Use plural item names."
+    "Extract every part and its quantity from the delivery note. "
+    "Convert number words to digits. Use plural part names."
 )
 
 

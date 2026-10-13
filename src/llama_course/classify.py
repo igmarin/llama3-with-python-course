@@ -1,4 +1,4 @@
-"""Classify emails into Priority, Updates or Promotions with a Llama model.
+"""Sort customer messages to a bike shop into Repair, Order or Feedback.
 
 The model is asked for JSON that matches a schema whose ``category`` can only be
 one of :data:`~llama_course.data.LABELS`, so it cannot invent a new label. If the
@@ -16,16 +16,19 @@ import pandas as pd
 from llama_course.data import LABELS
 from llama_course.structured import InvalidJSONReply, chat_json
 
-FALLBACK = "Updates"
+# Used when the model's reply is unusable. In a real shop, route these to a person.
+FALLBACK = "Feedback"
 INVALID = "invalid"
 
 SYSTEM_PROMPT = (
-    "You sort emails into exactly one category.\n"
-    "- Priority: the reader must act or respond soon (deadlines, security, payments, appointments).\n"
-    "- Updates: information only, no action needed (receipts, newsletters, status, release notes).\n"
-    "- Promotions: marketing that tries to sell something (sales, coupons, offers).\n"
-    "Judge by what the email asks of the reader, not by urgent-sounding words. "
-    'Reply with JSON like {"category": "Updates"}.'
+    "You sort customer messages sent to a bike shop into exactly one category.\n"
+    "- Repair: the customer wants work done on a bike or part they already have "
+    "(fixing, servicing, adjusting, fitting).\n"
+    "- Order: the customer wants to buy, reserve, pay, cancel, return or exchange something, "
+    "or asks about stock or a delivery, including a problem with an item that just arrived.\n"
+    "- Feedback: praise, complaints or suggestions that do not ask the shop to do anything.\n"
+    "Judge by what the customer wants now, not by the words they use. "
+    'Reply with JSON like {"category": "Order"}.'
 )
 
 SCHEMA = {
@@ -34,37 +37,36 @@ SCHEMA = {
     "required": ["category"],
 }
 
-# Worked examples you can pass as ``examples=``. They are written for this prompt and none
-# appear in data/. They do not help: on the 129 training-split emails, accuracy fell from
-# 98.4% (no examples) to 88.4% (these six), mostly Priority emails labelled Updates.
-# The default is therefore no examples. Keep them to see how an example can mislead.
+# Worked examples, used by default. They are written for this prompt and none appear in
+# data/. On the 129 training-split messages (3B model) they raised accuracy from 92.2%
+# (rules only) to 95.3%, but lowered it on hard messages from 88.9% to 81.5%.
 FEW_SHOT_EXAMPLES: tuple[tuple[str, str], ...] = (
-    ("Your card was charged twice. Call the bank today so they can reverse one charge.", "Priority"),
-    ("Your weekly digest: 5 new articles and 2 replies to your comments.", "Updates"),
-    ("Hurry! Take 30% off sneakers until midnight with code RUN30.", "Promotions"),
-    ("URGENT notice: the cafeteria is changing its opening hours. No action needed.", "Updates"),
-    ("Can you send me the signed form before noon? The office closes at one.", "Priority"),
-    ("Last chance: your free upgrade expires tonight. Claim it now!", "Promotions"),
+    ("My rear derailleur makes a ticking sound. Can I bring the bike in on Monday?", "Repair"),
+    ("Do you have the Cityline helmet in size L? I'd like to buy two.", "Order"),
+    ("The new shop sign looks great from the street.", "Feedback"),
+    ("Thanks for the fast service! The front brake is squeaking again, can you check it?", "Repair"),
+    ("The lights I ordered arrived without batteries. Please send them.", "Order"),
+    ("URGENT: your phone number on the website is missing a digit. Just letting you know.", "Feedback"),
 )
 
 
 def build_messages(
-    email: str, examples: Sequence[tuple[str, str]] = ()
+    message: str, examples: Sequence[tuple[str, str]] = FEW_SHOT_EXAMPLES
 ) -> list[dict[str, str]]:
-    """Build the chat: instructions, optional worked examples as past turns, then the email."""
+    """Build the chat: instructions, optional worked examples as past turns, then the message."""
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
     for text, label in examples:
         messages.append({"role": "user", "content": text})
         messages.append({"role": "assistant", "content": json.dumps({"category": label})})
-    messages.append({"role": "user", "content": email})
+    messages.append({"role": "user", "content": message})
     return messages
 
 
-def predict(llm: Any, email: str, examples: Sequence[tuple[str, str]] = ()) -> str | None:
+def predict(llm: Any, message: str, examples: Sequence[tuple[str, str]] = FEW_SHOT_EXAMPLES) -> str | None:
     """Return the model's label, or ``None`` if the reply is unusable."""
     try:
         reply = chat_json(
-            llm, build_messages(email, examples), schema=SCHEMA, max_tokens=30, temperature=0.0
+            llm, build_messages(message, examples), schema=SCHEMA, max_tokens=30, temperature=0.0
         )
     except InvalidJSONReply:
         return None
@@ -72,9 +74,9 @@ def predict(llm: Any, email: str, examples: Sequence[tuple[str, str]] = ()) -> s
     return label if label in LABELS else None
 
 
-def classify(llm: Any, email: str, examples: Sequence[tuple[str, str]] = ()) -> str:
+def classify(llm: Any, message: str, examples: Sequence[tuple[str, str]] = FEW_SHOT_EXAMPLES) -> str:
     """Return exactly one valid label; falls back to :data:`FALLBACK` on a bad reply."""
-    return predict(llm, email, examples) or FALLBACK
+    return predict(llm, message, examples) or FALLBACK
 
 
 def metrics(y_true: Sequence[str], y_pred: Sequence[str]) -> dict[str, Any]:
@@ -120,14 +122,14 @@ def score_predictions(df: pd.DataFrame, preds: Sequence[str]) -> dict[str, Any]:
 
 
 def evaluate(
-    llm: Any, df: pd.DataFrame, examples: Sequence[tuple[str, str]] = ()
+    llm: Any, df: pd.DataFrame, examples: Sequence[tuple[str, str]] = FEW_SHOT_EXAMPLES
 ) -> dict[str, Any]:
     """Classify every row of ``df`` with ``llm`` and score it with :func:`score_predictions`.
 
     Args:
         llm: A ``Llama`` instance.
-        df: Rows with ``email``, ``category`` and ``difficulty`` columns.
-        examples: Optional worked examples for the prompt.
+        df: Rows with ``message``, ``category`` and ``difficulty`` columns.
+        examples: Worked examples for the prompt. Pass ``()`` for rules only.
     """
-    preds = [predict(llm, email, examples) or INVALID for email in df["email"]]
+    preds = [predict(llm, message, examples) or INVALID for message in df["message"]]
     return score_predictions(df, preds)

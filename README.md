@@ -24,11 +24,11 @@ python lessons/01_basics/01_chat.py
 ```
 
 Installing takes a few minutes, because `llama-cpp-python` compiles on your machine. The model
-download is 2 GB. If the last command prints text about databases, you are ready.
+download is 2 GB. If the last command prints text about bicycle tires, you are ready.
 
 ## The lessons
 
-New here? Follow the [tutorial](docs/tutorial.md): from zero to a working email classifier in about 20 minutes.
+New here? Follow the [tutorial](docs/tutorial.md): from zero to a working classifier for a bike shop's customer messages in about 20 minutes.
 
 Run lessons from the repository root. Do 1 and 2 first, in order. The rest build on them but are
 independent of each other.
@@ -38,7 +38,7 @@ independent of each other.
 | [1. Basics](lessons/01_basics) | Load a model, ask a question, chat messages, system prompts, the chat template | seconds each |
 | [2. Prompting](lessons/02_prompting) | Prompt formats, few-shot examples, JSON output, JSON Schema, a chat that remembers | seconds each |
 | [3. Fine-tuning](lessons/03_finetuning) | Prepare data, train a LoRA adapter, test base against tuned, score summaries with ROUGE | 1 to 25 s, training about 1 min |
-| [4. Project](lessons/04_project) | An email classifier scored on a held-out test set | 10 s |
+| [4. Project](lessons/04_project) | Sort a bike shop's customer messages, scored on a held-out test set | 10 s |
 | [5. Generation](lessons/05_generation) | Temperature and seed, streaming, the context window | seconds each |
 | [6. RAG](lessons/06_rag) | Answer from your own documents, refuse when they don't say, resist prompt injection | 5 s |
 | [7. Tools](lessons/07_tools) | Let the model call Python functions, validated output with Pydantic | 10 s to 1 min |
@@ -54,7 +54,7 @@ Models are described in `configs/models.yaml`. Pick one by name, with no code ch
 
 ```bash
 python scripts/download_model.py --profile studio-128gb   # Llama 3.3 70B, a 43 GB file
-LLAMA_PROFILE=studio-128gb python lessons/04_project/classify_emails.py
+LLAMA_PROFILE=studio-128gb python lessons/04_project/classify_messages.py
 ```
 
 See [docs/models.md](docs/models.md) for the profiles, how to add your own, and speed

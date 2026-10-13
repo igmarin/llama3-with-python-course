@@ -1,9 +1,9 @@
-"""Split data/email_categories_data.csv into train.csv and test.csv.
+"""Split data/messages.csv into train.csv and test.csv.
 
 The split is stratified by (category, difficulty) and seeded, so every run gives
-the same files and both splits contain easy and hard emails of every category.
+the same files and both splits contain easy and hard messages of every category.
 
-    python scripts/split_emails.py
+    python scripts/split_messages.py
 """
 
 import pandas as pd
@@ -15,7 +15,7 @@ SEED = 42
 
 
 def main() -> None:
-    df = pd.read_csv(DATA_DIR / "email_categories_data.csv")
+    df = pd.read_csv(DATA_DIR / "messages.csv")
     test = (
         df.groupby(["category", "difficulty"], group_keys=False)
         .sample(frac=TEST_FRACTION, random_state=SEED)

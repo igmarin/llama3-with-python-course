@@ -26,7 +26,7 @@ from llama_course.llm import ROOT, ModelNotFoundError, get_llm, get_profile
 PROMPTS = [
     "Explain what a hash table is in three sentences.",
     "Write a short email asking a colleague to review a pull request.",
-    "List four differences between a list and a tuple in Python.",
+    "List four things to check on a bicycle before a long ride.",
 ]
 
 

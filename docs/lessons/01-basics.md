@@ -19,7 +19,7 @@ instructions (`Instruct`), compressed to about 4.5 bits per weight (`Q4_K_M`). C
 weights is called quantization. It makes the file small enough for a laptop at a small cost in
 quality.
 
-**Completion.** A language model continues text. `llm("What is the most used database?")` does not
+**Completion.** A language model continues text. `llm("Why do bicycle tires lose air?")` does not
 answer; it writes what would plausibly come next. That can be an answer, or more questions, or a
 rambling essay. Lesson 1.1 shows this.
 
@@ -33,7 +33,7 @@ rambling essay. Lesson 1.1 shows this.
 | `assistant` | The model's earlier replies |
 
 `create_chat_completion(messages=...)` returns the next assistant message. Lesson 1.3 uses a
-system prompt to limit the assistant to internet-service questions.
+system prompt to turn the model into a bike shop's help desk that refuses anything else.
 
 **The chat template.** The model only reads text. Roles are marked with special tokens such as
 `<|start_header_id|>user<|end_header_id|>`. `create_chat_completion` adds them for you. Lesson 1.4
@@ -75,7 +75,7 @@ writing.
    print(len(llm.tokenize(prompt.encode(), add_bos=False)))
    ```
 
-   It prints 68 for the 208-character prompt: tokens are word pieces, not words or characters.
+   It prints 75 for the 246-character prompt: tokens are word pieces, not words or characters.
 </details>
 
 ## Go deeper

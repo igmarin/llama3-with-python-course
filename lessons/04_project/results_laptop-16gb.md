@@ -1,12 +1,12 @@
-# Email classifier results: laptop-16gb, rules only
+# Message classifier results: laptop-16gb, rules plus six worked examples
 
-Test emails: 33. Accuracy: **100.0%**. Unusable replies: 0.
+Test messages: 33. Accuracy: **100.0%**. Unusable replies: 0.
 
-| Class | Precision | Recall | Emails |
+| Class | Precision | Recall | Messages |
 |-------|-----------|--------|--------|
-| Priority | 100.0% | 100.0% | 11 |
-| Updates | 100.0% | 100.0% | 11 |
-| Promotions | 100.0% | 100.0% | 11 |
+| Repair | 100.0% | 100.0% | 11 |
+| Order | 100.0% | 100.0% | 11 |
+| Feedback | 100.0% | 100.0% | 11 |
 
 | Difficulty | Accuracy |
 |------------|----------|
@@ -16,9 +16,9 @@ Test emails: 33. Accuracy: **100.0%**. Unusable replies: 0.
 Confusion matrix (rows = true label, columns = predicted):
 
 ```
-predicted   Priority  Updates  Promotions
-true                                     
-Priority          11        0           0
-Updates            0       11           0
-Promotions         0        0          11
+predicted  Repair  Order  Feedback
+true                              
+Repair         11      0         0
+Order           0     11         0
+Feedback        0      0        11
 ```

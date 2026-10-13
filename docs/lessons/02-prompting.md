@@ -19,16 +19,21 @@ writes `Instruction:`, `Question:` and `Answer:`, so the likeliest continuation 
 
 **Few-shot prompting.** Show a few input and label pairs and leave the last label blank. The model
 copies the pattern. This is called few-shot prompting; giving no examples is zero-shot.
-`few_shot_prompt` builds the text. Examples are not free: lesson 4 shows a case where six examples
-made the model worse.
+`few_shot_prompt` builds the text. Lesson 2.2 rates cycling routes as Easy, Moderate or Hard. Its
+new route is harder than every example, and with examples alone the 3B model answers `Very Hard`, a
+label that does not exist. Examples teach the format, not the list of allowed answers. One line
+naming the labels fixes it. Lesson 4 shows that examples can also help on some inputs and hurt on
+others.
 
-**JSON mode.** `response_format={"type": "json_object"}` forces valid JSON. llama.cpp does this by
+**JSON mode.** `response_format={"type": "json_object"}` forces valid JSON. Lesson 2.3 turns a
+supplier's delivery note into a dictionary of parts and quantities. llama.cpp does this by
 restricting which tokens the model may pick at each step, using a grammar. A JSON Schema goes further
-and fixes the keys and types (lesson 2.4). `chat_json` sends the request and parses the reply.
+and fixes the keys and types: lesson 2.4 pulls a name, a price and a weight out of a product
+description. `chat_json` sends the request and parses the reply.
 
 **Memory is your job.** The model remembers nothing between calls. `Conversation` keeps the list
 of messages and sends all of it each turn, which is why "a different city in the same country"
-works in lesson 2.5. The list grows every turn; lesson 5 covers the limit.
+works in lesson 2.5: a bike recommendation, then a follow-up about the same ride. The list grows every turn; lesson 5 covers the limit.
 
 ## Code map
 
@@ -41,7 +46,7 @@ works in lesson 2.5. The list grows every turn; lesson 5 covers the limit.
 ## Common mistakes
 
 - **A reply cut off mid-JSON.** If `max_tokens` is too small, the JSON stops mid-string and
-  parsing fails with `InvalidJSONReply`. Lesson 2.4 asks for a short answer and leaves room.
+  parsing fails with `InvalidJSONReply`. Leave room for the whole object.
 - **Valid JSON, wrong content.** JSON mode guarantees syntax, not truth. The model can still
   miscount. Check the values you care about.
 - **Sharing a mutable default.** An earlier version of `Conversation` used `history=[]` as a
@@ -51,17 +56,19 @@ works in lesson 2.5. The list grows every turn; lesson 5 covers the limit.
 
 ## Exercise
 
-Classify "It was fine. Not good, not bad." with the two examples in lesson 2.2. Then add a third
-example labelled `Neutral` and run it again. What does the model print each time?
+In lesson 2.4, add a `frame_material` string field to `SCHEMA` and to `required`. The description
+never says what the frame is made of. What does the model return? How do you let it say "unknown"?
 
 <details>
 <summary>Answer</summary>
 
-Both runs print `Neutral,`. Even with only Positive and Negative examples the 3B model chose
-`Neutral`, because it already knows the word. What the examples fix is the format: one label
-word, followed by a comma. That is why the trailing comma appears in the output. Examples mostly
-teach the shape of the answer. They matter more when a label is unusual, or when the model's own
-choice would be wrong. Add the neutral example if you want the model to use `Neutral` reliably.
+It returns `'frame_material': 'hardtail'`. The schema demands a string, so the model must write
+something, and it takes the nearest word in the text, which describes the frame's shape, not its
+material. A required field forces an answer even when there is none.
+
+Allow `null` with `"frame_material": {"type": ["string", "null"]}`, and tell the model in the system
+prompt: "Use null for anything the description does not state." Then the 3B model returns
+`'frame_material': None`. (Both runs at temperature 0.)
 </details>
 
 ## Go deeper

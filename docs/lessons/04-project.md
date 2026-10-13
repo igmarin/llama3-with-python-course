@@ -1,77 +1,85 @@
-# Lesson 4: Email classifier project
+# Lesson 4: Customer-message classifier project
 
-You sort emails into Priority, Updates or Promotions with a Llama model, and measure how often it is
-right.
+You sort messages sent to the Northwind Bikes shop into **Repair**, **Order** or **Feedback**, so each
+one reaches the right person, and you measure how often the model is right.
 
 ```bash
-python lessons/04_project/classify_emails.py            # rules only (default)
-python lessons/04_project/classify_emails.py --few-shot # add six worked examples
-python lessons/04_project/classify_emails.py --save     # write results_<profile>.md
+python lessons/04_project/classify_messages.py               # rules plus six examples (default)
+python lessons/04_project/classify_messages.py --rules-only  # rules without examples
+python lessons/04_project/classify_messages.py --save        # write results_<profile>.md
 ```
 
 ## The ideas
 
-**The prompt states the rules.** The system prompt defines each category by what the reader must do:
-Priority needs action soon, Updates is information only, Promotions tries to sell something. It
-also says to judge by what the email asks, not by urgent-sounding words. The hard emails in
-`data/` are written to catch a model that goes by the words.
+**The prompt states the rules.** The system prompt defines each category by what the customer wants
+now. Repair is work on a bike or part they already have. Order is buying, reserving, paying,
+returning, stock or delivery. Feedback is praise, complaints or suggestions that ask for nothing.
+The hard messages in `data/` are written to catch a model that goes by the words: praise followed by
+a repair request, a mechanic's advice that leads to a purchase, an "URGENT" note that asks for
+nothing.
 
 **The schema limits the answer.** The reply must be JSON with a `category` that is one of the three
 labels. The model cannot invent a fourth. If the reply is still unusable, `classify` returns a
-default label, while `predict` returns `None` so the evaluation can count the failure.
+fallback label, while `predict` returns `None` so the evaluation can count the failure.
 
-**Score on emails the prompt was not built on.** `data/test.csv` has 33 emails the model never
-sees while you design the prompt. Report accuracy for easy and hard emails separately.
+**Score on messages the prompt was not built on.** `data/test.csv` has 33 messages the model never
+sees while you design the prompt. Report accuracy for easy and hard messages separately.
 
-**Examples can hurt.** The few-shot variant adds six worked examples as earlier turns of the chat.
-On the 129 training-split emails it scored 88.4%, against 98.4% for rules only. Most of the lost
-accuracy was Priority emails labelled Updates. That is why the default has no examples.
+**Examples are a trade-off.** The default prompt adds six worked examples as earlier turns of the
+chat. Compared on the 129 training-split messages with the 3B model:
 
-| 3B model | Rules only | Six examples |
-|----------|-----------|--------------|
-| Training split (129 emails) | 98.4% | 88.4% |
-| Test split (33 emails) | 100% | 90.9% |
+| 3B model, training split | Rules only | Rules plus six examples |
+|--------------------------|-----------|--------------------------|
+| All 129 messages | 92.2% | 95.3% |
+| 27 hard messages | 88.9% | 81.5% |
 
-The prompt was compared on the training split and the test set was scored afterwards. A 100% score
-on 33 synthetic emails means the test set is too easy to tell good prompts apart. To learn more,
-add harder emails (how-to guide in the docs index).
+The examples fixed many Order messages that the rules-only prompt called Feedback, but they made
+the model worse on hard messages: it copied surface patterns from the examples. Overall accuracy was
+the metric chosen in advance, so the default keeps the examples. If hard messages matter most to
+you, the choice flips.
+
+On the 33 test messages, both prompts scored 100%, and so did the 8B model. A test set that every
+setup passes cannot rank them. The training-split numbers above, and the 8B model's 97.7% overall
+and 96.3% on hard training messages, are more informative. To learn more, add harder messages
+([how-to](../howto/add-your-own-messages.md)).
 
 ## Code map
 
 | File | What it shows |
 |------|---------------|
-| `src/llama_course/classify.py` | `build_messages`, `predict`, `classify`, `metrics`, `evaluate` |
-| `src/llama_course/data.py` | `load_emails("train" or "test")`, which checks columns and labels |
-| `lessons/04_project/results_laptop-16gb.md` | Saved output for the 3B model |
+| `src/llama_course/classify.py` | `SYSTEM_PROMPT`, `FEW_SHOT_EXAMPLES`, `predict`, `classify`, `metrics`, `evaluate` |
+| `src/llama_course/data.py` | `load_messages("train" or "test")`, which checks columns and labels |
+| `lessons/04_project/results_*.md` | Saved output for each profile and prompt |
 
 ## Common mistakes
 
-- **Tuning on the test set.** Compare prompts on training emails. Look at the test set once.
-- **Reporting one number.** 100% overall can hide failures on hard emails. Split the score.
-- **Trusting a tiny test set.** One email is 3 points here. Add data before you believe a 3-point
-  difference.
+- **Tuning on the test set.** Compare prompts on training messages. Look at the test set once.
+- **Reporting one number.** Overall accuracy can hide failures on hard messages. Split the score.
+- **Trusting a tiny test set.** One message is 3 points here, and every setup scored 100%.
 - **Ignoring unusable replies.** A model that fails to answer is wrong. The report counts them.
 
 ## Exercise
 
-Compare the two prompts yourself on the training emails. Use `predict` with and without
-`FEW_SHOT_EXAMPLES`, and score with `score_predictions`.
+Reproduce the comparison above: score both prompts on the training messages with `predict` and
+`score_predictions`.
 
 <details>
 <summary>Answer</summary>
 
 ```python
 from llama_course.classify import FEW_SHOT_EXAMPLES, INVALID, predict, score_predictions
-from llama_course.data import load_emails
+from llama_course.data import load_messages
 from llama_course.llm import get_llm
 
-llm, df = get_llm(), load_emails("train")
+llm, df = get_llm(), load_messages("train")
 for examples in ((), FEW_SHOT_EXAMPLES):
-    preds = [predict(llm, e, examples) or INVALID for e in df["email"]]
-    print(len(examples), score_predictions(df, preds)["accuracy"])
+    preds = [predict(llm, m, examples) or INVALID for m in df["message"]]
+    result = score_predictions(df, preds)
+    print(len(examples), result["accuracy"], result["accuracy_by_difficulty"])
 ```
 
-It prints about 0.984 with no examples and 0.884 with six (3B model, temperature 0).
+With the 3B model at temperature 0 it prints about 0.922 overall and 0.889 on hard messages with no
+examples, and 0.953 and 0.815 with six.
 </details>
 
 ## Go deeper

@@ -6,7 +6,7 @@ Start here. To install and run your first lesson, follow the [quick start in the
 
 | Page | Use it to |
 |------|-----------|
-| [Tutorial: build an email classifier](tutorial.md) | Go from zero to a working classifier in about 20 minutes |
+| [Tutorial: build a customer-message classifier](tutorial.md) | Go from zero to a working classifier in about 20 minutes |
 | [Lesson pages](#lesson-pages) | Understand the idea behind each lesson, with exercises |
 | [References](references.md) | Read more, grouped by topic |
 
@@ -18,7 +18,7 @@ Start here. To install and run your first lesson, follow the [quick start in the
 | [Add a model profile](howto/add-a-model-profile.md) | Make a new model selectable by name |
 | [Run the tests](howto/run-the-tests.md) | Check your setup, with or without a model |
 | [Change generation settings](howto/change-generation-settings.md) | Control randomness, answer length and context size |
-| [Add your own emails](howto/add-your-own-emails.md) | Score the classifier on your own data |
+| [Add your own messages](howto/add-your-own-messages.md) | Score the classifier on your own data |
 
 ## Lesson pages
 
@@ -31,7 +31,7 @@ others are independent. Do lesson 4 before lesson 3, because it provides the bas
 | [1. Basics](lessons/01-basics.md) | GGUF files, completion vs chat, system prompts, the chat template |
 | [2. Prompting](lessons/02-prompting.md) | Prompt formats, few-shot, JSON mode, JSON Schema, conversation memory |
 | [3. Fine-tuning](lessons/03-finetuning.md) | LoRA, train/validation/test data, accuracy, ROUGE |
-| [4. Project](lessons/04-project.md) | The email classifier, honest evaluation, when examples hurt |
+| [4. Project](lessons/04-project.md) | The message classifier, honest evaluation, what examples cost |
 | [5. Generation](lessons/05-generation.md) | Temperature and seed, streaming, tokens and the context window |
 | [6. RAG](lessons/06-rag.md) | Embeddings, cosine search, citations, refusing, prompt injection |
 | [7. Tools](lessons/07-tools.md) | Tool calling, Pydantic validation, retries |
@@ -56,7 +56,7 @@ The lessons import their helpers from `src/llama_course/`:
 | `conversation.py`, `prompts.py` | Multi-turn chat and prompt builders |
 | `structured.py` | JSON output, with optional Pydantic validation |
 | `generation.py`, `context.py` | Streaming, token counting, trimming a long chat |
-| `classify.py`, `data.py` | The email classifier and the datasets |
+| `classify.py`, `data.py` | The message classifier and the datasets |
 | `rag.py` | Chunking, search, cited answers |
 | `tools.py`, `shop_tools.py` | Tool calling and the example tools |
 | `finetune.py`, `rouge.py` | Training data and scoring |

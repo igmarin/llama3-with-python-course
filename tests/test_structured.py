@@ -10,8 +10,8 @@ from llama_course.structured import (
 
 
 def test_returns_parsed_object(fake_llm):
-    llm = fake_llm(['{"apples": 15}'])
-    assert chat_json(llm, [{"role": "user", "content": "x"}]) == {"apples": 15}
+    llm = fake_llm(['{"inner tubes": 15}'])
+    assert chat_json(llm, [{"role": "user", "content": "x"}]) == {"inner tubes": 15}
     assert llm.calls[0]["response_format"] == {"type": "json_object"}
 
 
@@ -24,8 +24,8 @@ def test_schema_is_sent_when_given(fake_llm):
 
 
 def test_malformed_json_raises_with_raw_reply(fake_llm):
-    llm = fake_llm(['{"apples": 1'])  # cut off
-    with pytest.raises(InvalidJSONReply, match="apples"):
+    llm = fake_llm(['{"inner tubes": 1'])  # cut off
+    with pytest.raises(InvalidJSONReply, match="inner tubes"):
         chat_json(llm, [])
 
 
@@ -39,14 +39,14 @@ class Inventory(BaseModel):
 
 
 def test_chat_model_returns_a_validated_instance(fake_llm):
-    llm = fake_llm(['{"items": [{"name": "apples", "count": 15}]}'])
+    llm = fake_llm(['{"items": [{"name": "inner tubes", "count": 15}]}'])
     inv = chat_model(llm, [{"role": "user", "content": "x"}], Inventory)
-    assert inv.items[0] == Item(name="apples", count=15)
+    assert inv.items[0] == Item(name="inner tubes", count=15)
     assert llm.calls[0]["response_format"]["schema"] == Inventory.model_json_schema()
 
 
 def test_chat_model_sends_the_error_back_and_retries(fake_llm):
-    llm = fake_llm(['{"items": [{"name": "apples", "count": -1}]}', '{"items": [{"name": "apples", "count": 1}]}'])
+    llm = fake_llm(['{"items": [{"name": "inner tubes", "count": -1}]}', '{"items": [{"name": "inner tubes", "count": 1}]}'])
     messages = [{"role": "user", "content": "x"}]
     assert chat_model(llm, messages, Inventory).items[0].count == 1
     assert "count" in llm.calls[1]["messages"][-1]["content"]

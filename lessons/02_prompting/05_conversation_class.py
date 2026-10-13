@@ -2,18 +2,20 @@
 
 Goal:     Ask follow-up questions that depend on earlier answers.
 Concept:  The model has no memory. ``Conversation`` keeps the message list and
-          sends all of it each turn, which is why "a different city in the same
-          country" works. The history grows every turn and must fit in ``n_ctx``.
+          sends all of it each turn, which is why "something lighter for the same
+          ride" works: the model still sees the first request. The history grows
+          every turn and must fit in ``n_ctx``.
 Run:      python lessons/02_prompting/05_conversation_class.py
-Expected: A "City, Country" answer, then a second city in the same country.
+Expected: A bike type for each request. The follow-up stays on the same kind of
+          riding.
 """
 
 from llama_course.conversation import Conversation
 from llama_course.llm import get_llm
 
 SYSTEM = (
-    "You are a travel expert that recommends a travel destination based on a prompt. "
-    "Return the location name only as 'City, Country'."
+    "You are a bike shop assistant. Recommend one type of bicycle for the rider's "
+    "needs. Reply with the bike type and one short reason."
 )
 
 
@@ -22,12 +24,12 @@ def main() -> None:
 
     # Single turn
     chatbot = Conversation(llm, system_prompt=SYSTEM)
-    print(chatbot.create_completion("I'd like to learn about the Aztecs.", max_tokens=20))
+    print(chatbot.create_completion("I want to ride forest trails with roots and rocks.", max_tokens=40))
 
     # Two turns: the second only makes sense with the first in history
     chatbot = Conversation(llm, system_prompt=SYSTEM)
-    print(chatbot.create_completion("Recommend a Spanish-speaking city.", max_tokens=20))
-    print(chatbot.create_completion("A different city in the same country", max_tokens=20))
+    print(chatbot.create_completion("I commute 12 km to work on city streets.", max_tokens=40))
+    print(chatbot.create_completion("Something I can fold and take on the train for the same ride.", max_tokens=40))
 
 
 if __name__ == "__main__":

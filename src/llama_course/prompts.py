@@ -17,8 +17,8 @@ def qa_prompt(instruction: str, question: str) -> str:
 def few_shot_prompt(
     examples: Sequence[tuple[str, str]],
     query: str,
-    input_label: str = "Review",
-    output_label: str = "Sentiment",
+    input_label: str = "Input",
+    output_label: str = "Label",
 ) -> str:
     """Build a numbered few-shot prompt; the model completes the last label.
 
@@ -29,11 +29,11 @@ def few_shot_prompt(
         output_label: Name written before each label.
 
     Example:
-        >>> print(few_shot_prompt([("Great!", "Positive")], "Awful."))
-        Review 1: Great!
-        Sentiment 1: Positive,
-        Review 2: Awful.
-        Sentiment 2:
+        >>> print(few_shot_prompt([("Flat river path", "Easy")], "Alpine pass", "Route", "Difficulty"))
+        Route 1: Flat river path
+        Difficulty 1: Easy,
+        Route 2: Alpine pass
+        Difficulty 2:
     """
     lines = []
     for i, (text, label) in enumerate(examples, start=1):

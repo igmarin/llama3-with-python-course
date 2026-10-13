@@ -1,4 +1,4 @@
-"""Prepare email data for LoRA fine-tuning with mlx-lm, and read the model's answers.
+"""Prepare customer-message data for LoRA fine-tuning with mlx-lm, and read the model's answers.
 
 This module has no MLX import, so it runs and is tested anywhere. The MLX calls live
 in the lesson scripts.
@@ -17,24 +17,24 @@ from typing import Any
 
 import pandas as pd
 
-from llama_course.data import LABELS, load_emails
+from llama_course.data import LABELS, load_messages
 from llama_course.llm import ROOT
 
-SYSTEM_PROMPT = "Classify the email as Priority, Updates, or Promotions. Reply with the label only."
+SYSTEM_PROMPT = "Classify the customer message as Repair, Order, or Feedback. Reply with the label only."
 DATA_DIR = ROOT / "finetune_data"
 
 
-def prompt_messages(email: str) -> list[dict[str, str]]:
+def prompt_messages(message: str) -> list[dict[str, str]]:
     """The chat the model sees at training and at test time, without the answer."""
     return [
         {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "user", "content": email},
+        {"role": "user", "content": message},
     ]
 
 
-def chat_example(email: str, label: str) -> dict[str, Any]:
+def chat_example(message: str, label: str) -> dict[str, Any]:
     """One training example in mlx-lm's ``messages`` format."""
-    return {"messages": prompt_messages(email) + [{"role": "assistant", "content": label}]}
+    return {"messages": prompt_messages(message) + [{"role": "assistant", "content": label}]}
 
 
 def split_validation(
@@ -57,7 +57,7 @@ def split_validation(
 
 def write_jsonl(df: pd.DataFrame, path: Path) -> None:
     """Write one ``chat_example`` per row of ``df``."""
-    lines = (json.dumps(chat_example(r.email, r.category)) for r in df.itertuples())
+    lines = (json.dumps(chat_example(r.message, r.category)) for r in df.itertuples())
     path.write_text("\n".join(lines) + "\n")
 
 
@@ -68,8 +68,8 @@ def prepare_data(out_dir: Path = DATA_DIR) -> dict[str, int]:
         Number of examples per file.
     """
     out_dir.mkdir(exist_ok=True)
-    train, valid = split_validation(load_emails("train"))
-    parts = {"train": train, "valid": valid, "test": load_emails("test")}
+    train, valid = split_validation(load_messages("train"))
+    parts = {"train": train, "valid": valid, "test": load_messages("test")}
     for name, df in parts.items():
         write_jsonl(df, out_dir / f"{name}.jsonl")
     return {name: len(df) for name, df in parts.items()}

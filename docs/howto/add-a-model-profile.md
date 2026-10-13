@@ -41,8 +41,8 @@ uses little memory. The same steps work for any GGUF model on Hugging Face.
    LLAMA_PROFILE=tiny-1b python lessons/01_basics/03_system_prompt.py
    ```
 
-   You see the profile printed, then a one-line refusal such as `I can't answer that.` (This was run
-   with this exact profile. The 1B model's wording differs from the 3B model's.)
+   You see the profile printed, then the shop's refusal: `I can only help with questions about
+   bikes.` (This was run with this exact profile.)
 
 5. Measure it:
 
@@ -50,7 +50,7 @@ uses little memory. The same steps work for any GGUF model on Hugging Face.
    python scripts/benchmark.py --profile tiny-1b
    ```
 
-   On a 16 GB MacBook Pro this showed 128 tokens per second and 1.1 GB of peak memory, against 54
+   On a 16 GB MacBook Pro this showed 104 tokens per second and 1.1 GB of peak memory, against 45
    tokens per second and 2.6 GB for the 3B model.
 
 ## Notes

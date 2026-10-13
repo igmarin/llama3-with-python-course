@@ -2,48 +2,48 @@ import json
 
 import pytest
 
-from llama_course.data import LABELS, load_emails, load_inventory, load_summaries
+from llama_course.data import LABELS, load_inventory, load_messages, load_summaries
 
 
-def test_emails_schema_and_labels():
-    df = load_emails()
-    assert list(df.columns) == ["email", "category", "difficulty"]
+def test_messages_schema_and_labels():
+    df = load_messages()
+    assert list(df.columns) == ["message", "category", "difficulty"]
     assert set(df["category"]) == set(LABELS)
     assert set(df["difficulty"]) == {"easy", "hard"}
 
 
-def test_emails_size_and_no_duplicates():
-    df = load_emails()
+def test_messages_size_and_no_duplicates():
+    df = load_messages()
     assert len(df) >= 150
-    assert df["email"].is_unique
+    assert df["message"].is_unique
 
 
 def test_classes_are_balanced():
-    counts = load_emails()["category"].value_counts()
+    counts = load_messages()["category"].value_counts()
     assert counts.max() - counts.min() <= 0.05 * counts.sum()
 
 
 def test_about_a_fifth_are_hard():
-    share = (load_emails()["difficulty"] == "hard").mean()
+    share = (load_messages()["difficulty"] == "hard").mean()
     assert 0.15 <= share <= 0.25
 
 
 def test_train_and_test_do_not_overlap_and_cover_everything():
-    train, test, full = load_emails("train"), load_emails("test"), load_emails()
-    assert set(train["email"]).isdisjoint(test["email"])
-    assert set(train["email"]) | set(test["email"]) == set(full["email"])
+    train, test, full = load_messages("train"), load_messages("test"), load_messages()
+    assert set(train["message"]).isdisjoint(test["message"])
+    assert set(train["message"]) | set(test["message"]) == set(full["message"])
 
 
 @pytest.mark.parametrize("split", ["train", "test"])
 def test_each_split_has_every_label_and_hard_cases(split):
-    df = load_emails(split)
+    df = load_messages(split)
     assert set(df["category"]) == set(LABELS)
     assert (df["difficulty"] == "hard").any()
 
 
 def test_unknown_split_is_rejected():
     with pytest.raises(ValueError, match="split"):
-        load_emails("validation")
+        load_messages("validation")
 
 
 def test_summaries_are_shorter_than_their_text():

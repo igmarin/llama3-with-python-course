@@ -48,12 +48,14 @@ still apply.
 
 On a 16 GB MacBook Pro (Apple Silicon), same prompts, Q4_K_M files:
 
-| Profile | Speed | Peak memory | Email test accuracy |
-|---------|-------|-------------|---------------------|
-| `laptop-16gb` (3B) | 53.9 tokens/s | 2.6 GB | 100% |
-| `laptop-8b` (8B) | 23.0 tokens/s | 5.3 GB | 93.9% |
+| Profile | Speed | Peak memory | Test messages (33) | Training messages (129) | Hard training messages (27) |
+|---------|-------|-------------|--------------------|-------------------------|-----------------------------|
+| `laptop-16gb` (3B) | 45.4 tokens/s | 2.6 GB | 100% | 95.3% | 81.5% |
+| `laptop-8b` (8B) | 23.2 tokens/s | 5.3 GB | 100% | 97.7% | 96.3% |
 
-The test set has 33 emails, so one email is 3 points. See [Models and benchmarks](../models.md).
+Accuracy is for the message classifier in lesson 4 with its default prompt. Both models pass every
+test message, so the training messages show the difference: the 8B model handles the hard ones much
+better, at half the speed. See [Models and benchmarks](../models.md).
 
 ## If something fails
 

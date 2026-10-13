@@ -1,24 +1,24 @@
-# Email classifier results: laptop-8b, rules only
+# Message classifier results: laptop-8b, rules plus six worked examples
 
-Test emails: 33. Accuracy: **93.9%**. Unusable replies: 0.
+Test messages: 33. Accuracy: **100.0%**. Unusable replies: 0.
 
-| Class | Precision | Recall | Emails |
+| Class | Precision | Recall | Messages |
 |-------|-----------|--------|--------|
-| Priority | 84.6% | 100.0% | 11 |
-| Updates | 100.0% | 100.0% | 11 |
-| Promotions | 100.0% | 81.8% | 11 |
+| Repair | 100.0% | 100.0% | 11 |
+| Order | 100.0% | 100.0% | 11 |
+| Feedback | 100.0% | 100.0% | 11 |
 
 | Difficulty | Accuracy |
 |------------|----------|
 | easy | 100.0% |
-| hard | 66.7% |
+| hard | 100.0% |
 
 Confusion matrix (rows = true label, columns = predicted):
 
 ```
-predicted   Priority  Updates  Promotions
-true                                     
-Priority          11        0           0
-Updates            0       11           0
-Promotions         2        0           9
+predicted  Repair  Order  Feedback
+true                              
+Repair         11      0         0
+Order           0     11         0
+Feedback        0      0        11
 ```

@@ -3,18 +3,20 @@
 Goal:     Turn free text into data your program can use.
 Concept:  ``response_format={"type": "json_object"}`` forces the model to emit
           valid JSON. ``chat_json`` also parses it and raises
-          ``InvalidJSONReply`` if the reply was cut off.
+          ``InvalidJSONReply`` if the reply was cut off. The input is a
+          delivery note from a bike shop's supplier.
 Run:      python lessons/02_prompting/03_json_inventory.py
-Expected: {'apples': 15, 'oranges': 33, 'potatoes': 5052}. The model converts
-          the spelled-out numbers; small models sometimes get one wrong.
+Expected: {'inner_tubes': 24, 'brake_pads': 60, 'saddles': 7}. The model turns "two
+          dozen" into 24 and picks the key spelling itself; small models sometimes
+          get a number wrong.
 """
 
 from llama_course.llm import get_llm
 from llama_course.structured import chat_json
 
 SYSTEM = (
-    "You convert inventory lists from text to JSON, extracting item counts and names "
-    "from the text as keys and values in the form: item: count; for example, 'banana': 32."
+    "You turn delivery notes into JSON. Use each part name as a key and its quantity "
+    "as an integer value, for example {\"chains\": 3}."
 )
 
 
@@ -22,7 +24,7 @@ def main() -> None:
     llm = get_llm()
     messages = [
         {"role": "system", "content": SYSTEM},
-        {"role": "user", "content": "Fifteen apples, thirty-three oranges, and five thousand fifty-two potatoes."},
+        {"role": "user", "content": "Delivered today: two dozen inner tubes, sixty brake pads and seven saddles."},
     ]
     print(chat_json(llm, messages, max_tokens=200))
 

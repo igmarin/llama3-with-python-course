@@ -14,7 +14,7 @@ python lessons/03_finetuning/04_rouge_summaries.py
 ## The ideas
 
 **Fine-tuning teaches by example.** Instead of describing the task in the prompt, you show the model
-many pairs: an email, and the right label. The prompt can then be short.
+many pairs: a customer message, and the right label. The prompt can then be short.
 
 **LoRA trains a small add-on.** Changing every weight of a 3B model needs far more memory than a
 laptop has. LoRA (low-rank adaptation) freezes the model and trains small extra matrices instead.
@@ -32,12 +32,12 @@ the 3B model train in 16 GB. The course uses `mlx-lm`, which runs on Apple Silic
 
 **Validation loss.** Loss measures how wrong the model's answers are. Training loss always falls.
 If validation loss starts to rise while training loss keeps falling, the model is memorising the
-training emails. Choose the number of training steps from validation loss.
+training messages. Choose the number of training steps from validation loss.
 
 **Accuracy and the confusion matrix.** For labels, accuracy is the share of correct answers. A
-confusion matrix shows which labels get mixed up, so you can see that Priority emails are being
-called Updates. Lesson 3.3 reports easy and hard emails separately, because a model can score well
-on easy emails and fail the hard ones.
+confusion matrix shows which labels get mixed up, so you can see that Order messages are being
+called Feedback. Lesson 3.3 reports easy and hard messages separately, because a model can score well
+on easy messages and fail the hard ones.
 
 **ROUGE.** A summary has no single right answer, so lesson 3.4 compares it with a human summary by
 word overlap. ROUGE-1 counts shared words, ROUGE-2 shared word pairs, ROUGE-L the longest shared
@@ -57,22 +57,25 @@ on the same texts.
 
 | | Base | Tuned (60 steps) |
 |---|------|-------|
-| All 33 test emails | 90.9% | 93.9% |
-| 6 hard emails | 83.3% | 100% |
+| All 33 test messages | 84.8% | 97.0% |
+| 27 easy messages | 81.5% | 96.3% |
+| 6 hard messages | 100% | 100% |
 
-The test set is small: one email is 3 points. Treat a difference of one or two emails as noise.
-The base model here gets a short prompt with no rules. The rules-and-schema prompt from lesson 4
-scores 100% on the same emails, so a good prompt beat fine-tuning on this easy synthetic data.
-Fine-tuning helps when a prompt gets long, slow or fragile, or when the task has no short rules.
+The test set is small: one message is 3 points. Treat a difference of one or two messages as
+noise. The base model here gets a short prompt with no rules. The prompt from lesson 4 (rules,
+examples and a schema) scores 100% on the same messages, so on this synthetic data a good prompt
+matched fine-tuning. Fine-tuning helps when a prompt gets long, slow or fragile, or when the task has
+no short rules.
 
 ## Common mistakes
 
 - **Choosing settings from the test score.** If you try several settings and keep the one with the
-  best test score, the test score no longer tells you how the model does on new emails. Choose
+  best test score, the test score no longer tells you how the model does on new messages. Choose
   from validation loss, then run the test once.
-- **Training too long.** The training loss reached 0 while validation loss rose.
+- **Training too long.** If validation loss rises while training loss keeps falling, stop earlier.
+  Check the curve on every run; it depends on your data.
 - **Judging on the training data.** A model that memorised its examples scores 100% on them.
-- **Comparing unequal setups.** Base and tuned must get the same prompt and the same emails.
+- **Comparing unequal setups.** Base and tuned must get the same prompt and the same messages.
 
 ## Exercise
 
@@ -82,13 +85,15 @@ validation loss, and to the test accuracy? What should you conclude?
 <details>
 <summary>Answer</summary>
 
-Validation loss was 0.065 at step 50, then 0.200, 0.180 and 0.175 at steps 100, 150 and 200,
-while training loss fell to 0.000. The model memorises the training emails. With 60 steps the
-validation loss was 0.053, 0.071 and 0.114 at steps 20, 40 and 60.
+Validation loss was 0.282 at step 50, 0.059 at step 100, 0.001 at step 150 and 0.000 at step 200.
+It never rises, so there is no sign of memorising on these 18 validation messages. With 60 steps it
+was 0.487, 0.442 and 0.001 at steps 20, 40 and 60. Both runs end near 0, so the cheaper 60 steps
+is the right choice.
 
-Test accuracy at 200 steps was 97.0%, higher than the 93.9% at 60 steps. That is a one-email
-difference on 33 emails, and it is not a reason to pick 200: choosing steps by test score would
-spend the test set. The course picks the setting from validation loss.
+Test accuracy at 200 steps was 100%, against 97.0% at 60 steps. That is a one-message difference on
+33 messages, and it is not a reason to pick 200: choosing steps by test score would spend the test
+set. The 18 validation messages are also too few and too easy to show memorising. With your own
+data, add more validation examples before you trust a flat validation curve.
 </details>
 
 ## Go deeper

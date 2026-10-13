@@ -1,34 +1,34 @@
-email,category,difficulty
-Breaking: our status page shows all systems operational after this morning's brief slowdown.,Updates,hard
-New course launch: learn Python in 30 days. Early-bird price ends soon.,Promotions,easy
-The conference schedule is now online. Sessions begin at 9 AM on both days.,Updates,easy
-Limited edition sneakers are back in stock. Grab a pair before they sell out.,Promotions,easy
-The production server is down and customers cannot check out. Can you join the incident call now?,Priority,easy
-The coupon you used has been flagged. Please contact billing within 3 days to avoid a chargeback on your account.,Priority,hard
-Refer a friend and you both get $25 credit.,Promotions,easy
-Security alert: your free shipping benefit is about to run out. Renew your membership to keep it.,Promotions,hard
-"New season, new look: save 25% on all sweaters this week.",Promotions,easy
-Reminder: your passport renewal documents must be submitted by Monday.,Priority,easy
-Your account will be suspended in 48 hours unless you verify your phone number.,Priority,easy
-Season finale sale: all garden tools buy one get one 50% off.,Promotions,easy
-Your electricity will be disconnected tomorrow unless the overdue balance is paid.,Priority,easy
-Exclusive offer: Buy one get one free on all courses,Promotions,easy
-Enjoy double points on every purchase this weekend.,Promotions,easy
-Service update: the app will be read-only for 30 minutes during a database upgrade on Sunday.,Updates,easy
-Reminder: the grant application is due at noon tomorrow. We are still missing your budget page.,Priority,easy
-Your loan payment is due in 2 days. Set up autopay to avoid a missed payment.,Priority,easy
-Your profile was viewed 14 times this week.,Updates,easy
-Your hotel booking could not be charged. Provide a new card within 12 hours to keep the reservation.,Priority,easy
-Your electricity usage last month was 8% lower than the month before.,Updates,easy
-System maintenance scheduled for this Saturday from 2-4 AM UTC,Updates,easy
-Status update: the outage from Tuesday was caused by an expired certificate and is fully resolved.,Updates,easy
-"Release notes for version 3.4: faster search, smaller downloads, and several bug fixes.",Updates,easy
-"Spring cleaning sale on vacuum cleaners: up to 35% off, today and tomorrow.",Promotions,easy
-Your monthly reading report: you finished 3 books and 4 articles.,Updates,easy
-Action required: your credit card ending in 4421 was declined. Update your billing details today.,Priority,easy
-Payment reminder: finish checkout now and we'll add a bonus $10 gift card to your order.,Promotions,hard
-"Last day of the exhibition is Sunday. Here is a recap of the highlights, with photos.",Updates,hard
-Two-factor code: 482913. It expires in 10 minutes. Do not share it with anyone.,Priority,easy
-Congratulations on your promotion! One thing: please sign the new contract by Wednesday so payroll can update.,Priority,hard
-Try our new seasonal menu and get a free dessert with any entree.,Promotions,easy
-Monthly digest: the five most read articles in the engineering blog.,Updates,easy
+message,category,difficulty
+Your newsletter tip on chain wax was great. Could you wax my chain the same way?,Repair,hard
+Is the e-bike on sale until Sunday?,Order,easy
+My bike was stolen and recovered with a damaged lock mount. Can you repair it?,Repair,easy
+Do you ship accessories to Puerto Rico?,Order,easy
+Your newsletter has great tips. Keep it up!,Feedback,easy
+Your repair prices are fair. I've compared them with three other shops.,Feedback,hard
+Do you sell gift cards? I'd like one for $100.,Order,easy
+Your repair was perfect. Now I'd like to buy a second bike for my partner.,Order,hard
+Can I order a custom-built wheelset?,Order,easy
+I enjoyed the talk about bike touring in Patagonia.,Feedback,easy
+Your staff knew a lot about e-bikes. Very impressive.,Feedback,easy
+Please hold the red road bike for me until Friday.,Order,easy
+The kids' corner keeps my son busy while I shop. Brilliant.,Feedback,easy
+Where is my order #4471? It was supposed to arrive yesterday.,Order,easy
+I'd like to buy the floor pump you showed me in the store.,Order,easy
+My suspension fork leaks oil. Do you service forks?,Repair,easy
+I appreciated the honest advice not to buy an expensive bike I didn't need.,Feedback,easy
+The new opening hours suit me much better.,Feedback,easy
+The derailleur hanger bent when the bike fell over. Can you straighten or replace it?,Repair,easy
+The free air pump outside the shop saved my day. Thank you.,Feedback,easy
+The saddle won't stay at the height I set. Can you fix the seat post clamp?,Repair,easy
+I got a flat on my way home. Can you replace the inner tube today?,Repair,easy
+Can you bleed the brakes and replace the fluid on my mountain bike?,Repair,easy
+The gears click and won't settle on the third cog. Can you look at it?,Repair,easy
+My order arrived without the pedals listed on the invoice.,Order,easy
+The bottom bracket makes a grinding noise. Please book me in.,Repair,easy
+The fitting session made a huge difference. My back no longer hurts.,Feedback,easy
+"My chain is worn out, so I'll fix it myself. Can you ship me a 12-speed chain?",Order,hard
+"I'm happy with the service, but my bottle cage bolt snapped in the frame. Can you get it out?",Repair,hard
+Your mechanic explained everything clearly. I learned a lot.,Feedback,easy
+Can't believe how good my old bike feels after your service. Thanks!,Feedback,hard
+Please send me an invoice for my last purchase for my company.,Order,easy
+My tandem needs its timing chain adjusted.,Repair,easy

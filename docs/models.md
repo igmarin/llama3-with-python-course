@@ -15,7 +15,7 @@ model and its settings. Choose a profile with `LLAMA_PROFILE`, or point at any `
 
 ```bash
 python scripts/download_model.py --profile studio-128gb
-LLAMA_PROFILE=studio-128gb python lessons/04_project/classify_emails.py
+LLAMA_PROFILE=studio-128gb python lessons/04_project/classify_messages.py
 ```
 
 The `studio-128gb` profile has not been run yet. The first measurement belongs in the table at the
@@ -68,14 +68,18 @@ Short prompts, 128 new tokens, temperature 0, median of 9 runs after one warm-up
 
 | Profile | Model | Machine | Load | First token | Speed | Peak memory |
 |---------|-------|---------|------|-------------|-------|-------------|
-| `laptop-16gb` | Llama 3.2 3B Q4_K_M | MacBook Pro, Apple Silicon, 16 GB | 0.5 s | 0.02 s | 53.9 tokens/s | 2,577 MB |
-| `laptop-8b` | Llama 3.1 8B Q4_K_M | MacBook Pro, Apple Silicon, 16 GB | 1.6 s | 0.04 s | 23.0 tokens/s | 5,339 MB |
+| `laptop-16gb` | Llama 3.2 3B Q4_K_M | MacBook Pro, Apple Silicon, 16 GB | 0.5 s | 0.02 s | 45.4 tokens/s | 2,577 MB |
+| `laptop-8b` | Llama 3.1 8B Q4_K_M | MacBook Pro, Apple Silicon, 16 GB | 2.7 s | 0.04 s | 23.2 tokens/s | 5,252 MB |
 | `studio-128gb` | Llama 3.3 70B Q4_K_M | Mac Studio, 128 GB | _not measured yet_ | _not measured yet_ | _not measured yet_ | _not measured yet_ |
 
 Generation speed drops as the model grows: the 8B model has almost three times as many weights as the
-3B model and runs at less than half the speed. The 8B model also scored 93.9% on the email test set
-against 100% for the 3B model, but the test set has 33 emails and the prompt was compared on the 3B
-model, so do not read that as proof that 8B is worse.
+3B model and runs at about half the speed. Speeds also vary between runs: an earlier run of the 3B
+model with slightly different prompts measured 53.9 tokens/s. Compare models on the same day and
+prompts.
+
+The bigger model is more accurate where it matters. On the message classifier in lesson 4, both
+models pass all 33 test messages, but on the 27 hard training messages the 8B model scored 96.3%
+against 81.5% for the 3B model.
 
 The load time of 0.5 s was measured with the file already in the operating system's cache. A cold
 start takes longer.

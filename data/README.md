@@ -5,38 +5,41 @@ people or messages, and is released under CC0 (public domain).
 
 | File | Rows | Columns | Used for |
 |------|------|---------|----------|
-| `email_categories_data.csv` | 162 | `email`, `category`, `difficulty` | Email classifier (lesson 4) and fine-tuning (lesson 3) |
+| `messages.csv` | 162 | `message`, `category`, `difficulty` | Message classifier (lesson 4) and fine-tuning (lesson 3) |
 | `train.csv` / `test.csv` | 129 / 33 | same | Fixed 80/20 split of the file above |
 | `summaries.csv` | 31 | `text`, `summary` | ROUGE evaluation: `summary` is the reference |
-| `inventory_text.csv` | 32 | `text`, `expected_json` | JSON extraction (lesson 2.3) |
-| `docs/*.md` | 5 files | Markdown | RAG lesson (lesson 6): a fictional bike shop's policies |
+| `inventory_text.csv` | 32 | `text`, `expected_json` | JSON extraction (lessons 2.3 and 7.2) |
+| `docs/*.md` | 5 files | Markdown | RAG lesson (lesson 6): the shop's policies |
 
-## Emails
+The course uses one made-up company throughout: Northwind Bikes, a bicycle shop.
 
-- `category` is one of `Priority` (needs action soon), `Updates` (information only),
-  or `Promotions` (marketing). There are 54 of each.
-- `difficulty` is `hard` for 33 rows (about 20%). Hard emails have a tone or keywords that
-  point to the wrong class: a calm message that needs action today, an "URGENT" notice that
-  needs no action, a "Final notice" that is an ad. Report accuracy on easy and hard rows
-  separately.
-- `train.csv` and `test.csv` come from `python scripts/split_emails.py`. The split is seeded
+## Customer messages
+
+- `category` is one of `Repair` (work on a bike or part the customer already has), `Order`
+  (buying, reserving, paying, returning, stock or delivery) or `Feedback` (praise, complaints or
+  suggestions that ask for nothing). There are 54 of each.
+- `difficulty` is `hard` for 33 rows (about 20%). Hard messages use words that point to the wrong
+  class: praise followed by a repair request, a mechanic's advice that leads to a purchase, an
+  "URGENT" note that asks for nothing. Report accuracy on easy and hard rows separately.
+- `train.csv` and `test.csv` come from `python scripts/split_messages.py`. The split is seeded
   and stratified by category and difficulty. Change the data, then run the script again.
 
-## Inventory
+## Delivery notes
 
-`expected_json` maps each item to its count, for example `{"apples": 15}`. Keys are the
-plural item names as written in the sentence (`sofas`, not `sofa`). A small model may name an
-item differently, so compare counts or normalize keys before judging a reply wrong.
+`inventory_text.csv` holds supplier delivery notes. `expected_json` maps each part to its quantity,
+for example `{"inner tubes": 24}`. Keys are plural part names as written in the note (`tandems`,
+not `tandem`). A small model may name a part differently, so compare quantities or normalize keys
+before judging a reply wrong.
 
 ## Loading
 
 ```python
-from llama_course.data import load_emails, load_summaries, load_inventory
+from llama_course.data import load_messages, load_summaries, load_inventory
 
-train = load_emails("train")
+train = load_messages("train")
 ```
 
-`load_emails` checks the columns, rejects empty emails, and rejects unknown labels.
+`load_messages` checks the columns, rejects empty messages, and rejects unknown labels.
 
 ## RAG documents
 
