@@ -189,3 +189,71 @@ def _explain(exc: Exception, toolbox: ToolBox) -> str:
     if isinstance(exc, ValidationError):
         return f"Bad arguments ({describe_errors(exc)})."
     return f"{exc}."
+
+
+def ask_multi(
+    llm: Any, toolbox: ToolBox, question: str, max_turns: int = 5, **kwargs: Any
+) -> ToolAnswer:
+    """Answer ``question``, calling tools in a loop until the model has enough.
+
+    Unlike :func:`ask`, which runs at most one tool, this keeps the same chat
+    going: after each tool result the model can call another tool or stop.
+
+    Args:
+        llm: A ``Llama`` instance.
+        toolbox: The tools the model may use.
+        question: The user's question.
+        max_turns: Most tool calls before stopping. Prevents infinite loops.
+        **kwargs: Passed to ``create_chat_completion``.
+
+    Returns:
+        A :class:`ToolAnswer`. ``tool`` is the last tool called (or None), and
+        ``result`` is its output. ``text`` is the model's final answer.
+
+    Raises:
+        ToolCallFailed: If the first tool call is invalid.
+    """
+    messages: list[dict[str, str]] = [
+        {"role": "system", "content": toolbox.system_prompt()},
+        {"role": "user", "content": question},
+    ]
+    response_format = {"type": "json_object", "schema": toolbox.schema()}
+    last_tool: str | None = None
+    last_result: str | None = None
+
+    for turn in range(max_turns + 1):
+        raw = _content(
+            llm.create_chat_completion(messages=messages, response_format=response_format, **kwargs)
+        )
+        try:
+            call = _parse_call(raw)
+        except InvalidJSONReply as exc:
+            if turn == 0:
+                raise ToolCallFailed(f"Invalid JSON on first turn: {exc}") from exc
+            # Mid-conversation: stop and use what we have.
+            break
+        if call["tool"] == NO_TOOL:
+            break
+        try:
+            from pydantic import ValidationError as VE
+
+            output = toolbox.call(call["tool"], call.get("arguments", {}))
+        except VE as exc:
+            if turn == 0:
+                raise ToolCallFailed(f"Bad arguments on first turn: {describe_errors(exc)}") from exc
+            break
+        last_tool = call["tool"]
+        last_result = output
+        messages += [
+            {"role": "assistant", "content": raw},
+            {"role": "user", "content": f"Tool result: {output}"},
+        ]
+    else:
+        pass  # max_turns reached; fall through to final answer
+
+    text = _final_answer(
+        llm,
+        f"Question: {question}\nLast tool result: {last_result}" if last_result else question,
+        **kwargs,
+    )
+    return ToolAnswer(text, last_tool, call.get("arguments") if last_tool else None, last_result)

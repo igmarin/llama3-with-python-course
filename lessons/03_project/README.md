@@ -28,6 +28,7 @@ All course terms are in the [glossary](../../docs/glossary.md).
 python lessons/03_project/classify_messages.py               # rules plus six examples (default)
 python lessons/03_project/classify_messages.py --rules-only  # rules without examples
 python lessons/03_project/classify_messages.py --save        # write results_<profile>.md
+python lessons/03_project/batch_classify.py                  # throughput and accuracy on a full split
 ```
 
 ## The ideas
@@ -124,6 +125,7 @@ own hard messages, see the [how-to](../../docs/howto/add-your-own-messages.md).
 | [`src/llama_course/classify.py`](../../src/llama_course/classify.py) | `SYSTEM_PROMPT`, `FEW_SHOT_EXAMPLES`, `predict`, `classify`, `metrics`, `evaluate` |
 | [`src/llama_course/data.py`](../../src/llama_course/data.py) | `load_messages("train" or "test")`, which checks columns and labels |
 | [`lessons/03_project/results_*.md`](./) | Saved output for each profile and prompt |
+| [`lessons/03_project/batch_classify.py`](batch_classify.py) | Throughput and accuracy on a full split |
 
 ## Common mistakes
 

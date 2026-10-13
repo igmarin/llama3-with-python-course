@@ -4,7 +4,7 @@ Follow this order:
 
 1. [Setup](setup.md): install the course and download the model.
 2. [Tutorial](tutorial.md): build a working customer-message classifier in about 20 minutes.
-3. The [lessons](#lessons), 1 to 7, in order.
+3. The [lessons](#lessons), 1 to 8, in order.
 
 ```mermaid
 flowchart LR
@@ -48,6 +48,11 @@ Lessons [7](../lessons/07_finetuning/) and [8](../lessons/08_quantization/) comp
 | [Run the tests](howto/run-the-tests.md) | Check your setup, with or without a model |
 | [Change generation settings](howto/change-generation-settings.md) | Control randomness, answer length and context size |
 | [Add your own messages](howto/add-your-own-messages.md) | Score the classifier on your own data |
+| [Chain prompts](howto/chain-prompts.md) | Use the output of one model call as input to the next |
+| [Handle errors](howto/handle-errors.md) | Retry, timeout, and degrade gracefully when the model fails |
+| [Cache responses](howto/cache-responses.md) | Avoid repeating the same model calls |
+| [Serve with FastAPI](howto/serve-with-fastapi.md) | Turn the classifier into a web API |
+| [Judge with a larger model](howto/judge-with-a-larger-model.md) | Use LLM-as-judge to score a smaller model's output |
 
 ## Reference
 

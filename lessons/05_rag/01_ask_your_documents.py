@@ -27,6 +27,12 @@ from llama_course.data import DATA_DIR
 from llama_course.llm import get_llm
 from llama_course.rag import Index, answer, llama_embedder, load_chunks
 
+# Cosine similarity threshold below which a chunk counts as unrelated.
+# 0.6 was set from nine questions on the sample documents: related questions
+# scored 0.68 or more, unrelated ones 0.54 or less. If you change the embedding
+# model or the documents, test it with your own questions and adjust.
+MIN_SCORE = 0.6
+
 QUESTIONS = [
     "How long do I have to return a bike?",
     "How much does express shipping cost?",
@@ -49,7 +55,7 @@ def main() -> None:
     llm = get_llm()
     for question in QUESTIONS:
         (best, score), *_ = index.search(question, k=1)
-        result = answer(llm, index, question, max_tokens=200, temperature=0.0)
+        result = answer(llm, index, question, min_score=MIN_SCORE, max_tokens=200, temperature=0.0)
         print(f"Q: {question}  (best match {best.id}, score {score:.2f})")
         print(f"A: {result.text}")
         if result.found:
