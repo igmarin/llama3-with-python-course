@@ -5,6 +5,23 @@ read.
 
 **Why it matters:** A model's raw answer is prose, but a program needs a fixed format. This is how you get answers your code can use.
 
+Before you start: do [lesson 1](01-basics.md). You should know what a prompt, a token and a chat
+message are.
+
+## New words
+
+| Word | Meaning |
+|------|---------|
+| Few-shot prompting | Showing the model a few solved examples in the prompt so it copies the pattern |
+| Zero-shot | Asking without any examples |
+| JSON | A text format for data, made of keys and values, that Python reads with `json.loads` |
+| JSON Schema | A description of the JSON you expect: which keys, and what type each value has |
+| Grammar | A set of rules that limits which tokens the model may pick next |
+
+All course terms are in the [glossary](../glossary.md).
+
+## Run it
+
 ```bash
 python lessons/02_prompting/01_prompt_formatting.py
 python lessons/02_prompting/02_few_shot.py
@@ -15,8 +32,34 @@ python lessons/02_prompting/05_conversation_class.py
 
 ## The ideas
 
-How JSON mode keeps the reply valid: at every step, tokens that would break the format are
-removed before the model picks one.
+### Format the prompt so the answer comes next
+
+With plain completion, the model continues your text. So write the text so that the answer is the
+natural next thing. Lesson 2.1 writes `Instruction:`, `Question:` and then `Answer:`. After
+`Answer:`, the likeliest continuation is an answer.
+
+A stop string ends the reply early. With `stop=["Question:"]`, the model stops before it starts
+inventing a next question.
+
+### Few-shot prompting
+
+Show a few inputs with their labels, then add a new input with the label left blank. The model
+copies the pattern and fills in the blank. `few_shot_prompt` builds this text for you.
+
+Lesson 2.2 rates cycling routes as Easy, Moderate or Hard, with one example of each. The new
+route is harder than every example. With the examples alone, the 3B model answers `Very Hard`, a
+label that does not exist. Examples show the model the format of the answer. They do not tell it
+which answers are allowed. Adding one line that names the three labels fixes it. Lesson 3 shows
+that examples can also help on some inputs and hurt on others.
+
+### JSON mode
+
+Code can't read a sentence like "about two dozen tubes". It needs data. Passing
+`response_format={"type": "json_object"}` makes the model reply in valid JSON. Lesson 2.3 turns a
+supplier's delivery note into a dictionary of parts and quantities.
+
+This works because of a grammar. At every step, llama.cpp removes the tokens that would break the
+JSON, and the model can only pick from what is left:
 
 ```mermaid
 flowchart LR
@@ -28,35 +71,20 @@ flowchart LR
     D -- yes --> J["chat_json parses it<br/>into a dict"]
 ```
 
-### Format the prompt so the answer comes next
-
-A completion model continues your text. Lesson 2.1
-writes `Instruction:`, `Question:` and `Answer:`, so the likeliest continuation is an answer. A
-`stop` string such as `"Question:"` ends generation before the model invents the next question.
-
-### Few-shot prompting
-
-Show a few input and label pairs and leave the last label blank. The model
-copies the pattern. This is called few-shot prompting; giving no examples is zero-shot.
-`few_shot_prompt` builds the text. Lesson 2.2 rates cycling routes as Easy, Moderate or Hard. Its
-new route is harder than every example, and with examples alone the 3B model answers `Very Hard`, a
-label that does not exist. Examples teach the format, not the list of allowed answers. One line
-naming the labels fixes it. Lesson 3 shows that examples can also help on some inputs and hurt on
-others.
-
-### JSON mode
-
-`response_format={"type": "json_object"}` forces valid JSON. Lesson 2.3 turns a
-supplier's delivery note into a dictionary of parts and quantities. llama.cpp does this by
-restricting which tokens the model may pick at each step, using a grammar. A JSON Schema goes further
-and fixes the keys and types: lesson 2.4 pulls a name, a price and a weight out of a product
-description. `chat_json` sends the request and parses the reply.
+JSON mode makes sure the reply is valid JSON, but not which keys it has. A JSON Schema fixes those
+too. Lesson 2.4 asks for a `name` string, a `price_usd` number and a `weight_kg` number, and
+gets exactly those keys. `chat_json` sends the request and turns the reply into a Python
+dictionary.
 
 ### Memory is your job
 
-The model remembers nothing between calls. `Conversation` keeps the list
-of messages and sends all of it each turn, which is why the follow-up in lesson 2.5, "something I can fold and take on the train
-for the same ride", gets a sensible answer. The list grows every turn; lesson 4 covers the limit.
+The model remembers nothing between calls. Each call starts from zero. To hold a conversation, you
+send the whole history every time.
+
+`Conversation` does this. It keeps the list of messages and sends all of it on each turn. That is
+why the follow-up in lesson 2.5, "something I can fold and take on the train for the same ride",
+gets a sensible answer: the model can still see the first request. The list grows with every turn.
+Lesson 4 covers what happens when it gets too long.
 
 ## Code map
 
@@ -68,14 +96,15 @@ for the same ride", gets a sensible answer. The list grows every turn; lesson 4 
 
 ## Common mistakes
 
-- A reply cut off mid-JSON: if `max_tokens` is too small, the JSON stops mid-string and
+- A reply cut off mid-JSON: if `max_tokens` is too small, the JSON stops in the middle and
   parsing fails with `InvalidJSONReply`. Leave room for the whole object.
-- Valid JSON, wrong content: JSON mode guarantees syntax, not truth. The model can still
+- Valid JSON, wrong content: JSON mode checks the format, not the facts. The model can still
   miscount. Check the values you care about.
-- Sharing a mutable default: an earlier version of `Conversation` used `history=[]` as a
-  default argument, so every chatbot shared one list. The fix is `history=None`. A test covers it.
-- Too many examples: each example is text the model copies. Pick examples that cover the cases
-  you care about, and test with and without them.
+- Sharing a mutable default: an earlier version of `Conversation` used `history=[]` as a default
+  argument. Python creates that list once, so every chatbot shared it. The fix is `history=None`.
+  A test covers it.
+- Too many examples: the model copies whatever is in the examples. Pick examples that cover the
+  cases you care about, and test with and without them.
 
 ## Exercise
 
@@ -85,11 +114,11 @@ never says what the frame is made of. What does the model return? How do you let
 <details>
 <summary>Answer</summary>
 
-It returns `'frame_material': 'hardtail'`. The schema demands a string, so the model must write
-something, and it takes the nearest word in the text, which describes the frame's shape, not its
-material. A required field forces an answer even when there is none.
+It returns `'frame_material': 'hardtail'`. The schema demands a string, so the model has to write
+something. It takes the nearest word in the text, which describes the frame's shape, not its
+material. A required field forces an answer even when the text has none.
 
-Allow `null` with `"frame_material": {"type": ["string", "null"]}`, and tell the model in the system
+To allow "unknown", use `"frame_material": {"type": ["string", "null"]}` and add to the system
 prompt: "Use null for anything the description does not state." Then the 3B model returns
 `'frame_material': None`. (Both runs at temperature 0.)
 </details>

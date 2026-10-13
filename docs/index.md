@@ -51,6 +51,7 @@ Lesson 7 compares against the score from lesson 3, so do 3 first.
 
 | Page | Read it when |
 |------|--------------|
+| [Glossary](glossary.md) | You meet a word you don't know |
 | [Setup](setup.md) | You need the requirements, extra downloads or install fixes |
 | [Models and benchmarks](models.md) | You want to know what your machine can run, and how fast |
 | [References](references.md) | You want to read more, grouped by topic |

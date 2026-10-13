@@ -40,7 +40,7 @@ text about bicycle tires, you are ready.
    Each page explains the ideas and links to its scripts in `lessons/`.
 
 3. Everything else is in the [docs index](docs/index.md): how-to guides (switch to a bigger
-   model, add your own data, run the tests), model benchmarks, and further reading.
+   model, add your own data, run the tests), a glossary, model benchmarks, and further reading.
 
 ## License
 

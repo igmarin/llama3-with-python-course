@@ -5,7 +5,8 @@ prose, and used it to sort customer messages for a bike shop into Repair, Order 
 Feedback, with a score that shows how often it is right. It takes about 20 minutes after the
 install.
 
-Before you start, finish the [setup](setup.md): the install and the 2 GB model download. Run every command from the repository root, with your virtual environment
+New words are explained in the [glossary](glossary.md). Before you start, finish the
+[setup](setup.md): the install and the 2 GB model download. Run every command from the repository root, with your virtual environment
 active.
 
 ## 1. Ask a question
