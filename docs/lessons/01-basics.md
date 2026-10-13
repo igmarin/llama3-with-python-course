@@ -14,18 +14,36 @@ python lessons/01_basics/04_chat_template.py
 
 ## The ideas
 
-**A model file.** The model is one file in GGUF format, the format `llama.cpp` reads. It holds the
+What happens when you send a chat:
+
+```mermaid
+flowchart LR
+    M["Messages<br/>system + user"] --> C["create_chat_completion"]
+    C --> T["Chat template<br/>adds role markers"]
+    T --> G["Model picks<br/>the next token"]
+    G --> E{"End-of-turn<br/>token?"}
+    E -- no --> G
+    E -- yes --> R["Assistant reply"]
+```
+
+### A model file
+
+The model is one file in GGUF format, the format `llama.cpp` reads. It holds the
 weights (the numbers the model learned) and its settings. A name like
 `Llama-3.2-3B-Instruct-Q4_K_M.gguf` says: Llama 3.2, 3 billion weights, tuned to follow
 instructions (`Instruct`), compressed to about 4.5 bits per weight (`Q4_K_M`). Compressing
 weights is called quantization. It makes the file small enough for a laptop at a small cost in
 quality.
 
-**Completion.** A language model continues text. `llm("Why do bicycle tires lose air?")` does not
+### Completion
+
+A language model continues text. `llm("Why do bicycle tires lose air?")` does not
 answer; it writes what would plausibly come next. That can be an answer, or more questions, or a
 rambling essay. Lesson 1.1 shows this.
 
-**Chat.** An instruct model was trained on conversations. You send a list of messages, each with a
+### Chat
+
+An instruct model was trained on conversations. You send a list of messages, each with a
 `role` and `content`:
 
 | Role | Who speaks |
@@ -37,7 +55,9 @@ rambling essay. Lesson 1.1 shows this.
 `create_chat_completion(messages=...)` returns the next assistant message. Lesson 1.3 uses a
 system prompt to turn the model into a bike shop's help desk that refuses anything else.
 
-**The chat template.** The model only reads text. Roles are marked with special tokens such as
+### The chat template
+
+The model only reads text. Roles are marked with special tokens such as
 `<|start_header_id|>user<|end_header_id|>`. `create_chat_completion` adds them for you. Lesson 1.4
 writes them by hand with `llama3_chat_prompt` so you can see what the model receives. It also
 shows why you stop generation on `<|eot_id|>` ("end of turn"): without a stop, the model keeps

@@ -77,7 +77,7 @@ Generation speed drops as the model grows: the 8B model has almost three times a
 model with slightly different prompts measured 53.9 tokens/s. Compare models on the same day and
 prompts.
 
-The bigger model is more accurate where it matters. On the message classifier in lesson 3, both
+The bigger model is more accurate on the hard cases. On the message classifier in lesson 3, both
 models pass all 33 test messages, but on the 27 hard training messages the 8B model scored 96.3%
 against 81.5% for the 3B model.
 

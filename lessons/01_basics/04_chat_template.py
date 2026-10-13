@@ -1,6 +1,6 @@
 """Lesson 1.4: The chat template.
 
-Goal:     See what the model really receives when you send chat messages.
+Goal:     See exactly what the model receives when you send chat messages.
 Concept:  Llama 3 was trained on text with special tokens that mark who is
           speaking (``<|start_header_id|>user<|end_header_id|>`` and so on).
           ``create_chat_completion`` adds them for you. Here we write them by

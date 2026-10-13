@@ -15,11 +15,28 @@ python lessons/02_prompting/05_conversation_class.py
 
 ## The ideas
 
-**Format the prompt so the answer comes next.** A completion model continues your text. Lesson 2.1
+How JSON mode keeps the reply valid: at every step, tokens that would break the format are
+removed before the model picks one.
+
+```mermaid
+flowchart LR
+    P[Prompt] --> M["Model scores<br/>every possible next token"]
+    M --> G["Grammar from the schema<br/>removes tokens that break it"]
+    G --> K[Pick one token]
+    K --> D{"JSON<br/>complete?"}
+    D -- no --> M
+    D -- yes --> J["chat_json parses it<br/>into a dict"]
+```
+
+### Format the prompt so the answer comes next
+
+A completion model continues your text. Lesson 2.1
 writes `Instruction:`, `Question:` and `Answer:`, so the likeliest continuation is an answer. A
 `stop` string such as `"Question:"` ends generation before the model invents the next question.
 
-**Few-shot prompting.** Show a few input and label pairs and leave the last label blank. The model
+### Few-shot prompting
+
+Show a few input and label pairs and leave the last label blank. The model
 copies the pattern. This is called few-shot prompting; giving no examples is zero-shot.
 `few_shot_prompt` builds the text. Lesson 2.2 rates cycling routes as Easy, Moderate or Hard. Its
 new route is harder than every example, and with examples alone the 3B model answers `Very Hard`, a
@@ -27,15 +44,19 @@ label that does not exist. Examples teach the format, not the list of allowed an
 naming the labels fixes it. Lesson 3 shows that examples can also help on some inputs and hurt on
 others.
 
-**JSON mode.** `response_format={"type": "json_object"}` forces valid JSON. Lesson 2.3 turns a
+### JSON mode
+
+`response_format={"type": "json_object"}` forces valid JSON. Lesson 2.3 turns a
 supplier's delivery note into a dictionary of parts and quantities. llama.cpp does this by
 restricting which tokens the model may pick at each step, using a grammar. A JSON Schema goes further
 and fixes the keys and types: lesson 2.4 pulls a name, a price and a weight out of a product
 description. `chat_json` sends the request and parses the reply.
 
-**Memory is your job.** The model remembers nothing between calls. `Conversation` keeps the list
-of messages and sends all of it each turn, which is why "a different city in the same country"
-works in lesson 2.5: a bike recommendation, then a follow-up about the same ride. The list grows every turn; lesson 4 covers the limit.
+### Memory is your job
+
+The model remembers nothing between calls. `Conversation` keeps the list
+of messages and sends all of it each turn, which is why the follow-up in lesson 2.5, "something I can fold and take on the train
+for the same ride", gets a sensible answer. The list grows every turn; lesson 4 covers the limit.
 
 ## Code map
 

@@ -1,7 +1,7 @@
 # Course datasets
 
 All data here is synthetic. It was written for this course, contains no real
-people or messages, and is released under CC0 (public domain).
+people or messages, and is released under [CC0 1.0](LICENSE) (public domain).
 
 | File | Rows | Columns | Used for |
 |------|------|---------|----------|

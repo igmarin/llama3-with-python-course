@@ -6,6 +6,16 @@ Follow this order:
 2. [Tutorial](tutorial.md): build a working customer-message classifier in about 20 minutes.
 3. The [lessons](#lessons), 1 to 7, in order.
 
+```mermaid
+flowchart LR
+    S[Setup] --> T[Tutorial] --> L1[1. Basics] --> L2[2. Prompting]
+    L2 --> L3[3. Project]
+    L2 --> L4[4. Generation]
+    L2 --> L5[5. RAG]
+    L2 --> L6[6. Tools]
+    L3 --> L7[7. Fine-tuning]
+```
+
 Use the [how-to guides](#how-to-guides) and [reference pages](#reference) when you need them.
 
 ## Lessons
@@ -18,7 +28,7 @@ docstring: the goal, the idea, the command to run, and what you should see.
 |--------|----------------|--------|
 | [1. Basics](lessons/01-basics.md) | Every later lesson loads a model and chats with it. This lesson shows what happens underneath, so later errors and odd answers make sense. | GGUF files, completion vs chat, system prompts, the chat template |
 | [2. Prompting](lessons/02-prompting.md) | A model's raw answer is prose, but a program needs a fixed format. This is how you get answers your code can use. | Prompt formats, few-shot, JSON mode, JSON Schema, conversation memory |
-| [3. Project](lessons/03-project.md) | A demo that works once proves little. A score on messages the model has never seen tells you whether to trust it, especially on the tricky cases. | The message classifier, honest evaluation, what examples cost |
+| [3. Project](lessons/03-project.md) | A demo that works once proves little. A score on messages the model has never seen tells you whether to trust it, especially on the tricky cases. | The message classifier, scoring on unseen messages, what examples cost |
 | [4. Generation](lessons/04-generation.md) | The same prompt can give different answers, and a long chat eventually stops fitting. This lesson gives you control over both. | Temperature and seed, streaming, tokens and the context window |
 | [5. RAG](lessons/05-rag.md) | The model knows nothing about your shop. Without this it guesses; with it, every answer comes from your documents, with a source you can check. | Embeddings, cosine search, citations, refusing, prompt injection |
 | [6. Tools](lessons/06-tools.md) | Models guess at facts and arithmetic. Here the model calls your code for exact answers, and your code checks every call first. | Tool calling, Pydantic validation, retries |

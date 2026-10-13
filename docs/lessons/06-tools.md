@@ -13,33 +13,60 @@ python lessons/06_tools/02_validated_output.py
 ## The ideas
 
 A language model guesses text. It cannot look up your stock or do exact arithmetic. Tool calling
-splits the job:
+splits the job: the model picks a function and its arguments, as JSON such as
+`{"tool": "get_stock", "arguments": {"item": "helmets"}}`; your code checks and runs it; the model
+writes the answer from the result.
 
-```
-question -> model picks {"tool": "get_stock", "arguments": {"item": "helmets"}}
-         -> your code validates the arguments and runs the function
-         -> the model writes the answer from the result
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant A as ask() in your code
+    participant M as Model
+    U->>A: Question
+    A->>M: Question + tool list + JSON schema
+    M-->>A: Tool name and arguments, as JSON
+    A->>A: Validate the arguments with Pydantic
+    alt Invalid call
+        A->>M: The error, and one more try
+        M-->>A: Corrected call
+    end
+    A->>A: Run the Python function
+    A->>M: New chat: question + tool result
+    M-->>A: Plain-text answer
+    A-->>U: Answer
 ```
 
-**The model never runs code.** It writes JSON. Only functions you registered in a `ToolBox` can
+### The model never runs code
+
+It writes JSON. Only functions you registered in a `ToolBox` can
 run, and the example tools are pure: no files, no network, no shell.
 
-**The schema forces a valid call.** `ToolBox.schema()` builds a JSON Schema from the tools: one
+### The schema forces a valid call
+
+`ToolBox.schema()` builds a JSON Schema from the tools: one
 option per tool, with its name and argument types, plus `no_tool`. The model cannot name a tool
 that does not exist.
 
-**Pydantic validates the arguments.** Each tool describes its arguments as a Pydantic class, for
-example `order_total: float = Field(ge=0)`. A negative total is rejected before the function runs.
-Pydantic is the check you can trust. The schema only guides generation.
+### Pydantic validates the arguments
 
-**Errors go back to the model.** An unknown tool, bad arguments or broken JSON are sent back with
+Each tool describes its arguments as a Pydantic class, for
+example `order_total: float = Field(ge=0)`. A negative total is rejected before the function runs.
+Pydantic does the real check; the schema only guides generation.
+
+### Errors go back to the model
+
+An unknown tool, bad arguments or broken JSON are sent back with
 an explanation. The model gets one more try, then `ToolCallFailed` is raised. A `ToolError` raised
 by a tool itself (for example "unknown item") becomes the result, and the model explains it.
 
-**Why a fresh chat for the answer.** The tool-call chat tells the model to reply with JSON only.
+### Why a fresh chat for the answer
+
+The tool-call chat tells the model to reply with JSON only.
 Reusing it made the final answer come back as JSON too, so the answer step starts a new chat.
 
-**Native tool calling.** llama-cpp-python can pass `tools=` to the model's template, but it has no
+### Native tool calling
+
+llama-cpp-python can pass `tools=` to the model's template, but it has no
 parser for Llama 3's replies, so this course builds the loop itself.
 
 Lesson 6.2 applies the same idea without tools: `chat_model` asks for JSON matching a Pydantic

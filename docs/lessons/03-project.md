@@ -13,21 +13,49 @@ python lessons/03_project/classify_messages.py --save        # write results_<pr
 
 ## The ideas
 
-**The prompt states the rules.** The system prompt defines each category by what the customer wants
+The classifier, and how it is judged:
+
+```mermaid
+flowchart LR
+    Msg[Customer message] --> P["Rules + six examples<br/>+ the message"]
+    P --> L[Llama]
+    L --> S["JSON schema allows only<br/>Repair, Order, Feedback"]
+    S --> Lab[Label]
+```
+
+```mermaid
+flowchart TD
+    D[162 labelled messages] --> Sp[split_messages.py]
+    Sp -->|129| Tr["train.csv<br/>compare prompts here"]
+    Sp -->|33| Te["test.csv<br/>score once, at the end"]
+    Tr --> Ch[Choose the prompt]
+    Ch --> Te
+    Te --> R["Accuracy, easy vs hard,<br/>confusion matrix"]
+```
+
+### The prompt states the rules
+
+The system prompt defines each category by what the customer wants
 now. Repair is work on a bike or part they already have. Order is buying, reserving, paying,
 returning, stock or delivery. Feedback is praise, complaints or suggestions that ask for nothing.
 The hard messages in `data/` are written to catch a model that goes by the words: praise followed by
 a repair request, a mechanic's advice that leads to a purchase, an "URGENT" note that asks for
 nothing.
 
-**The schema limits the answer.** The reply must be JSON with a `category` that is one of the three
+### The schema limits the answer
+
+The reply must be JSON with a `category` that is one of the three
 labels. The model cannot invent a fourth. If the reply is still unusable, `classify` returns a
 fallback label, while `predict` returns `None` so the evaluation can count the failure.
 
-**Score on messages the prompt was not built on.** `data/test.csv` has 33 messages the model never
+### Score on messages the prompt was not built on
+
+`data/test.csv` has 33 messages the model never
 sees while you design the prompt. Report accuracy for easy and hard messages separately.
 
-**Examples are a trade-off.** The default prompt adds six worked examples as earlier turns of the
+### Examples are a trade-off
+
+The default prompt adds six worked examples as earlier turns of the
 chat. Compared on the 129 training-split messages with the 3B model:
 
 | 3B model, training split | Rules only | Rules plus six examples |
@@ -36,7 +64,8 @@ chat. Compared on the 129 training-split messages with the 3B model:
 | 27 hard messages | 88.9% | 81.5% |
 
 The examples fixed many Order messages that the rules-only prompt called Feedback, but they made
-the model worse on hard messages: it copied surface patterns from the examples. Overall accuracy was
+the model worse on hard messages. The course did not investigate why; the confusion matrix from
+`--save` is the place to start. Overall accuracy was
 the metric chosen in advance, so the default keeps the examples. If hard messages matter most to
 you, the choice flips.
 

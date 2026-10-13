@@ -15,16 +15,30 @@ python lessons/07_finetuning/04_rouge_summaries.py
 
 ## The ideas
 
-**Fine-tuning teaches by example.** Instead of describing the task in the prompt, you show the model
+### Fine-tuning teaches by example
+
+Instead of describing the task in the prompt, you show the model
 many pairs: a customer message, and the right label. The prompt can then be short.
 
-**LoRA trains a small add-on.** Changing every weight of a 3B model needs far more memory than a
+### LoRA trains a small add-on
+
+Changing every weight of a 3B model needs far more memory than a
 laptop has. LoRA (low-rank adaptation) freezes the model and trains small extra matrices instead.
 Here that is 0.216% of the parameters (6.9 million of 3.2 billion). The result is an adapter of a few
 megabytes that sits on top of the original model. Training on a 4-bit model is called QLoRA. It is what lets
 the 3B model train in 16 GB. The course uses `mlx-lm`, which runs on Apple Silicon.
 
-**Three data sets, three jobs.**
+```mermaid
+flowchart LR
+    B["Base model, 4-bit<br/>3.2 billion weights, frozen"] --> Tr
+    T["train.jsonl<br/>111 examples"] --> Tr["mlx_lm lora<br/>trains the adapter only"]
+    Tr --> Ad["LoRA adapter<br/>6.9 million weights"]
+    V["valid.jsonl<br/>18 examples"] --> L["Validation loss<br/>every 20 steps"]
+    Tr --> L
+    Ad --> Ev["Score base and tuned<br/>on test.jsonl, 33 examples"]
+```
+
+### Three data sets, three jobs
 
 | File | Used for |
 |------|----------|
@@ -32,16 +46,22 @@ the 3B model train in 16 GB. The course uses `mlx-lm`, which runs on Apple Silic
 | `valid.jsonl` (18) | Checked during training to spot memorising. The model never learns from it |
 | `test.jsonl` (33) | The final exam. Looked at once |
 
-**Validation loss.** Loss measures how wrong the model's answers are. Training loss always falls.
+### Validation loss
+
+Loss measures how wrong the model's answers are. Training loss usually keeps falling.
 If validation loss starts to rise while training loss keeps falling, the model is memorising the
 training messages. Choose the number of training steps from validation loss.
 
-**Accuracy and the confusion matrix.** For labels, accuracy is the share of correct answers. A
-confusion matrix shows which labels get mixed up, so you can see that Order messages are being
-called Feedback. Lesson 7.3 reports easy and hard messages separately, because a model can score well
+### Accuracy and the confusion matrix
+
+For labels, accuracy is the share of correct answers. A
+confusion matrix shows which labels get mixed up, so you can see, for example, Order messages
+being called Feedback. Lesson 7.3 reports easy and hard messages separately, because a model can score well
 on easy messages and fail the hard ones.
 
-**ROUGE.** A summary has no single right answer, so lesson 7.4 compares it with a human summary by
+### ROUGE
+
+A summary has no single right answer, so lesson 7.4 compares it with a human summary by
 word overlap. ROUGE-1 counts shared words, ROUGE-2 shared word pairs, ROUGE-L the longest shared
 sequence. It is crude: a good summary in different words scores low. Use it to compare two models
 on the same texts.

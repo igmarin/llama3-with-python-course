@@ -13,7 +13,9 @@ python lessons/04_generation/03_context_window.py
 
 ## The ideas
 
-**Sampling.** At each step the model gives every possible next token a probability, then one is
+### Sampling
+
+At each step the model gives every possible next token a probability, then one is
 picked. These settings change the pick:
 
 | Setting | Effect |
@@ -25,15 +27,31 @@ picked. These settings change the pick:
 
 For classification and extraction use temperature 0. For writing, 0.7 is a common start.
 
-**Streaming.** The model writes one token at a time. With `stream=True` you receive each token as it
+### Streaming
+
+The model writes one token at a time. With `stream=True` you receive each token as it
 exists, so the reader starts early. Time to first token matters more for chat than total time.
 `stream_chat` yields the text pieces.
 
-**Tokens and the context window.** A token is a word piece, about 1.3 per English word. The model
+### Tokens and the context window
+
+A token is a word piece, about 1.3 per English word. The model
 reads at most `n_ctx` tokens at once, and that budget covers your whole chat plus the reply. A
 longer prompt raises `ValueError: Requested tokens (1802) exceed context window of 512`.
 `trim_history` drops the oldest turns until the chat fits. It keeps the system prompt and the
 newest message, and it never leaves the history starting with an assistant reply.
+
+How `trim_history` keeps a long chat inside the context window:
+
+```mermaid
+flowchart TD
+    H[Chat history + new message] --> F{"Fits in n_ctx<br/>minus room for the reply?"}
+    F -- yes --> Send[Send to the model]
+    F -- no --> K{"Do system prompt +<br/>newest message fit?"}
+    K -- no --> Err[ContextTooLong error]
+    K -- yes --> Drop[Drop the oldest turn]
+    Drop --> F
+```
 
 ## Code map
 

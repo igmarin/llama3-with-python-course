@@ -8,8 +8,8 @@ Concept:  Classification with an LLM is a prompt (rules plus a few worked
           easy and hard messages separately.
           Examples are a trade-off. On the 129 training messages they raised
           accuracy from 92.2% to 95.3%, but lowered it on hard messages from 88.9%
-          to 81.5%: the model copies the examples' surface patterns. Compare
-          prompts on training data with ``--rules-only``, then score the test set once.
+          to 81.5%. Compare prompts on training data with ``--rules-only``,
+          then score the test set once.
           Run again with another profile to compare models:
               LLAMA_PROFILE=laptop-8b python lessons/03_project/classify_messages.py
 Run:      python lessons/03_project/classify_messages.py [--limit N] [--rules-only] [--save]

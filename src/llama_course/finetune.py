@@ -5,7 +5,7 @@ in the lesson scripts.
 
 Fine-tuning teaches the model our task from examples, so the prompt can be short:
 no rules, no worked examples. Each training example is a chat in which the
-assistant's reply is just the label.
+assistant's reply is the label alone.
 """
 
 from __future__ import annotations

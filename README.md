@@ -28,8 +28,8 @@ If the last command prints text about bicycle tires, you are ready.
 
    | Lesson | Why it matters |
    |--------|----------------|
-   | [1. Basics](docs/lessons/01-basics.md) | Every later lesson builds on this: what a model file is and how a chat really works |
-   | [2. Prompting](docs/lessons/02-prompting.md) | Get answers in a format your code can use, not just prose |
+   | [1. Basics](docs/lessons/01-basics.md) | Every later lesson builds on this: what a model file is and how a chat works underneath |
+   | [2. Prompting](docs/lessons/02-prompting.md) | Get answers in a format your code can read |
    | [3. Project](docs/lessons/03-project.md) | Build a real task and measure how often it is right |
    | [4. Generation](docs/lessons/04-generation.md) | Control randomness, and keep long chats inside the model's limit |
    | [5. RAG](docs/lessons/05-rag.md) | Answer from your own documents and admit when they don't say |
@@ -40,3 +40,7 @@ If the last command prints text about bicycle tires, you are ready.
 
 3. **Everything else** is in the [docs index](docs/index.md): how-to guides (switch to a bigger
    model, add your own data, run the tests), model benchmarks, and further reading.
+
+## License
+
+Code and docs: [MIT](LICENSE). Datasets in `data/`: [CC0 1.0](data/LICENSE), public domain.

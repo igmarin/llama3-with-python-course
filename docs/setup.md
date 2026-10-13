@@ -6,7 +6,7 @@ Everything about your computer and the install. The [README](../README.md) has t
 
 | Item | Requirement |
 |------|-------------|
-| Computer | A Mac with Apple Silicon is best. Lesson 7 (fine-tuning) needs one. Other lessons should also run on Linux, but this was not tested here |
+| Computer | A Mac with Apple Silicon. Lesson 7 (fine-tuning) requires one. Other lessons should also run on Linux, but this was not tested here |
 | Memory | 16 GB of RAM for the default 3B model |
 | Disk | About 6 GB free for the models |
 | Python | 3.10 to 3.14. Python 3.15 is too new: the MLX package used in lesson 7 has no build for it yet |

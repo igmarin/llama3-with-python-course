@@ -119,7 +119,7 @@ You just used pieces of lessons 1 to 3. The lessons explain each piece properly,
 
 | Lesson | What it adds to what you just built |
 |--------|-------------------------------------|
-| [1. Basics](lessons/01-basics.md) | What `get_llm()` loads and what a chat message really is (steps 1 and 2) |
+| [1. Basics](lessons/01-basics.md) | What `get_llm()` loads and what a chat message contains (steps 1 and 2) |
 | [2. Prompting](lessons/02-prompting.md) | How the JSON in step 3 is forced, and how to fix its keys and types |
 | [3. Project](lessons/03-project.md) | How the classifier in steps 4 to 6 is built and scored, and what the worked examples cost |
 | [4. Generation](lessons/04-generation.md) | Why answers vary between runs, and what happens when a chat gets too long |

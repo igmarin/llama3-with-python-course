@@ -1,7 +1,7 @@
 """Lesson 7.3: Did fine-tuning help?
 
 Goal:     Compare the base model and the fine-tuned model on messages neither has seen.
-Concept:  Training loss going down proves nothing about new messages. The honest
+Concept:  Training loss going down proves nothing about new messages. The real
           check is the held-out test set, scored the same way for both models.
           Both get the same short prompt, with no examples; the fine-tuned one
           has learned the task from data instead of from the prompt.

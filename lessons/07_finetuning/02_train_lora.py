@@ -18,7 +18,7 @@ Concept:  Full fine-tuning updates every weight, which needs far more memory tha
           messages and you should stop earlier. Here it reaches 0.001 by step 60 and
           stays near 0 up to step 200, so 60 steps is enough and cheaper. Choose the
           number of iterations from validation loss, never from the test set, or the
-          test score stops being honest.
+          test score no longer predicts new messages.
 Memory:   laptop-16gb  (3B, 4-bit)  about 4 to 6 GB while training.
           studio-128gb (70B, 4-bit) about 45 to 60 GB; raise --batch-size freely.
           These are estimates; check Activity Monitor on your machine.
