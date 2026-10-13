@@ -3,6 +3,8 @@
 You sort messages sent to the Northwind Bikes shop into **Repair**, **Order** or **Feedback**, so each
 one reaches the right person, and you measure how often the model is right.
 
+**Why it matters:** A demo that works once proves little. A score on messages the model has never seen tells you whether to trust it, especially on the tricky cases.
+
 ```bash
 python lessons/03_project/classify_messages.py               # rules plus six examples (default)
 python lessons/03_project/classify_messages.py --rules-only  # rules without examples

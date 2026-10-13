@@ -3,6 +3,8 @@
 You control how the model writes: how random it is, when you see the text, and how much it can
 read.
 
+**Why it matters:** The same prompt can give different answers, and a long chat eventually stops fitting. This lesson gives you control over both.
+
 ```bash
 python lessons/04_generation/01_sampling.py
 python lessons/04_generation/02_streaming.py

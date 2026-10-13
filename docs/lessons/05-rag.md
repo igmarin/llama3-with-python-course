@@ -3,6 +3,8 @@
 You make the model answer from documents it has never seen, cite them, refuse when they don't
 contain the answer, and resist instructions hidden in a document.
 
+**Why it matters:** The model knows nothing about your shop. Without this it guesses; with it, every answer comes from your documents, with a source you can check.
+
 ```bash
 python scripts/download_model.py --profile embedding
 python lessons/05_rag/01_ask_your_documents.py

@@ -3,6 +3,8 @@
 You let the model call Python functions, and you turn its JSON into typed objects that are checked
 before use.
 
+**Why it matters:** Models guess at facts and arithmetic. Here the model calls your code for exact answers, and your code checks every call first.
+
 ```bash
 python lessons/06_tools/01_tool_calling.py
 python lessons/06_tools/02_validated_output.py

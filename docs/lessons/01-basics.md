@@ -3,6 +3,8 @@
 You load a Llama model, ask it a question, and learn the difference between plain text
 completion and a chat.
 
+**Why it matters:** Every later lesson loads a model and chats with it. This lesson shows what happens underneath, so later errors and odd answers make sense.
+
 ```bash
 python lessons/01_basics/01_chat.py
 python lessons/01_basics/02_conversation.py

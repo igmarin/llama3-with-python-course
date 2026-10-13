@@ -14,15 +14,15 @@ Each page explains the ideas behind a lesson, walks through the code, lists comm
 an exercise with an answer, and links to further reading. Every lesson script also opens with a
 docstring: the goal, the idea, the command to run, and what you should see.
 
-| Lesson | Covers |
-|--------|--------|
-| [1. Basics](lessons/01-basics.md) | GGUF files, completion vs chat, system prompts, the chat template |
-| [2. Prompting](lessons/02-prompting.md) | Prompt formats, few-shot, JSON mode, JSON Schema, conversation memory |
-| [3. Project](lessons/03-project.md) | The message classifier, honest evaluation, what examples cost |
-| [4. Generation](lessons/04-generation.md) | Temperature and seed, streaming, tokens and the context window |
-| [5. RAG](lessons/05-rag.md) | Embeddings, cosine search, citations, refusing, prompt injection |
-| [6. Tools](lessons/06-tools.md) | Tool calling, Pydantic validation, retries |
-| [7. Fine-tuning](lessons/07-finetuning.md) | LoRA, train/validation/test data, accuracy, ROUGE (Apple Silicon only) |
+| Lesson | Why it matters | Covers |
+|--------|----------------|--------|
+| [1. Basics](lessons/01-basics.md) | Every later lesson loads a model and chats with it. This lesson shows what happens underneath, so later errors and odd answers make sense. | GGUF files, completion vs chat, system prompts, the chat template |
+| [2. Prompting](lessons/02-prompting.md) | A model's raw answer is prose, but a program needs a fixed format. This is how you get answers your code can use. | Prompt formats, few-shot, JSON mode, JSON Schema, conversation memory |
+| [3. Project](lessons/03-project.md) | A demo that works once proves little. A score on messages the model has never seen tells you whether to trust it, especially on the tricky cases. | The message classifier, honest evaluation, what examples cost |
+| [4. Generation](lessons/04-generation.md) | The same prompt can give different answers, and a long chat eventually stops fitting. This lesson gives you control over both. | Temperature and seed, streaming, tokens and the context window |
+| [5. RAG](lessons/05-rag.md) | The model knows nothing about your shop. Without this it guesses; with it, every answer comes from your documents, with a source you can check. | Embeddings, cosine search, citations, refusing, prompt injection |
+| [6. Tools](lessons/06-tools.md) | Models guess at facts and arithmetic. Here the model calls your code for exact answers, and your code checks every call first. | Tool calling, Pydantic validation, retries |
+| [7. Fine-tuning](lessons/07-finetuning.md) | When a prompt gets long, slow or fragile, you can teach the task by example instead. This lesson shows how, and how to check that it paid off. | LoRA, train/validation/test data, accuracy, ROUGE (Apple Silicon only) |
 
 Lessons 1 and 2 are the base for everything else. Lessons 4, 5 and 6 can be done in any order.
 Lesson 7 compares against the score from lesson 3, so do 3 first.

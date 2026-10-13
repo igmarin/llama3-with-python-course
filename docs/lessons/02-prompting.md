@@ -3,6 +3,8 @@
 You shape what the model gives back: its layout, its examples, and a JSON format your program can
 read.
 
+**Why it matters:** A model's raw answer is prose, but a program needs a fixed format. This is how you get answers your code can use.
+
 ```bash
 python lessons/02_prompting/01_prompt_formatting.py
 python lessons/02_prompting/02_few_shot.py

@@ -26,15 +26,15 @@ If the last command prints text about bicycle tires, you are ready.
    minutes.
 2. **The lessons**, in order:
 
-   | Lesson | You learn |
-   |--------|-----------|
-   | [1. Basics](docs/lessons/01-basics.md) | Load a model, chat messages, system prompts, the chat template |
-   | [2. Prompting](docs/lessons/02-prompting.md) | Prompt formats, few-shot examples, JSON output, a chat that remembers |
-   | [3. Project](docs/lessons/03-project.md) | Sort customer messages and measure the accuracy honestly |
-   | [4. Generation](docs/lessons/04-generation.md) | Temperature and seed, streaming, the context window |
-   | [5. RAG](docs/lessons/05-rag.md) | Answer from your own documents, resist prompt injection |
-   | [6. Tools](docs/lessons/06-tools.md) | Let the model call Python functions, validated output |
-   | [7. Fine-tuning](docs/lessons/07-finetuning.md) | Train a LoRA adapter and test whether it helped |
+   | Lesson | Why it matters |
+   |--------|----------------|
+   | [1. Basics](docs/lessons/01-basics.md) | Every later lesson builds on this: what a model file is and how a chat really works |
+   | [2. Prompting](docs/lessons/02-prompting.md) | Get answers in a format your code can use, not just prose |
+   | [3. Project](docs/lessons/03-project.md) | Build a real task and measure how often it is right |
+   | [4. Generation](docs/lessons/04-generation.md) | Control randomness, and keep long chats inside the model's limit |
+   | [5. RAG](docs/lessons/05-rag.md) | Answer from your own documents and admit when they don't say |
+   | [6. Tools](docs/lessons/06-tools.md) | Let the model call your code for exact answers, safely |
+   | [7. Fine-tuning](docs/lessons/07-finetuning.md) | Teach the task by example, then check whether it paid off |
 
    Each page explains the ideas and links to its scripts in `lessons/`.
 

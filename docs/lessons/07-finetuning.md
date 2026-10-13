@@ -3,6 +3,8 @@
 You train a small add-on for the model on your own examples, then check whether it helped. You also
 learn how to score generated text.
 
+**Why it matters:** When a prompt gets long, slow or fragile, you can teach the task by example instead. This lesson shows how, and how to check that it paid off.
+
 ```bash
 pip install -e ".[finetune]"     # Apple Silicon only
 python lessons/07_finetuning/01_prepare_data.py
