@@ -26,7 +26,7 @@ uses little memory. The same steps work for any GGUF model on Hugging Face.
    | `n_ctx` | Context window in tokens. Larger needs more memory |
    | `n_gpu_layers` | `-1` runs every layer on the GPU (Metal on a Mac) |
    | `n_threads` | `null` lets llama.cpp choose |
-   | `mlx_repo` | Optional. The same model in MLX format, needed only for lesson 3 fine-tuning |
+   | `mlx_repo` | Optional. The same model in MLX format, needed only for lesson 7 fine-tuning |
 
 3. Download it:
 

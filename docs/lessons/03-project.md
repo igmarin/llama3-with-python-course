@@ -1,12 +1,12 @@
-# Lesson 4: Customer-message classifier project
+# Lesson 3: Customer-message classifier project
 
 You sort messages sent to the Northwind Bikes shop into **Repair**, **Order** or **Feedback**, so each
 one reaches the right person, and you measure how often the model is right.
 
 ```bash
-python lessons/04_project/classify_messages.py               # rules plus six examples (default)
-python lessons/04_project/classify_messages.py --rules-only  # rules without examples
-python lessons/04_project/classify_messages.py --save        # write results_<profile>.md
+python lessons/03_project/classify_messages.py               # rules plus six examples (default)
+python lessons/03_project/classify_messages.py --rules-only  # rules without examples
+python lessons/03_project/classify_messages.py --save        # write results_<profile>.md
 ```
 
 ## The ideas
@@ -49,7 +49,7 @@ and 96.3% on hard training messages, are more informative. To learn more, add ha
 |------|---------------|
 | `src/llama_course/classify.py` | `SYSTEM_PROMPT`, `FEW_SHOT_EXAMPLES`, `predict`, `classify`, `metrics`, `evaluate` |
 | `src/llama_course/data.py` | `load_messages("train" or "test")`, which checks columns and labels |
-| `lessons/04_project/results_*.md` | Saved output for each profile and prompt |
+| `lessons/03_project/results_*.md` | Saved output for each profile and prompt |
 
 ## Common mistakes
 
@@ -87,7 +87,7 @@ examples, and 0.953 and 0.815 with six.
 - [scikit-learn: model evaluation](https://scikit-learn.org/stable/modules/model_evaluation.html):
   accuracy, precision, recall and the confusion matrix.
 - [Pydantic JSON Schema](https://docs.pydantic.dev/latest/concepts/json_schema/): schemas from
-  Python classes (used in lesson 7).
+  Python classes (used in lesson 6).
 - [Prompt Engineering Guide](https://www.promptingguide.ai/): when examples help and when they
   don't.
 - [Llama 3 model card and prompt formats](https://www.llama.com/docs/model-cards-and-prompt-formats/meta-llama-3/):

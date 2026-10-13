@@ -1,4 +1,4 @@
-"""Lesson 5.3: The context window.
+"""Lesson 4.3: The context window.
 
 Goal:     Count tokens and keep a long chat from overflowing the model.
 Concept:  The model can only read ``n_ctx`` tokens at once: the whole chat so far
@@ -6,7 +6,7 @@ Concept:  The model can only read ``n_ctx`` tokens at once: the whole chat so fa
           word). A chat that keeps growing will exceed the window, and the model
           raises an error. ``trim_history`` drops the oldest turns and keeps the
           system prompt and the newest message.
-Run:      python lessons/05_generation/03_context_window.py
+Run:      python lessons/04_generation/03_context_window.py
 Expected: A token count, the error from an oversized prompt, then a chat of 40
           turns trimmed to fit a small budget while still answering.
 """

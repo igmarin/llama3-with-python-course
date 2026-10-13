@@ -1,4 +1,4 @@
-"""Lesson 3.4: Scoring generated text with ROUGE.
+"""Lesson 7.4: Scoring generated text with ROUGE.
 
 Goal:     Measure summaries, where there is no single correct answer.
 Concept:  Accuracy works for labels. A summary can be right in many wordings, so we
@@ -7,7 +7,7 @@ Concept:  Accuracy works for labels. A summary can be right in many wordings, so
           texts, such as a base model and a fine-tuned one. This lesson scores the
           base model's one-sentence summaries of data/summaries.csv.
 Requires: pip install -e ".[finetune]"
-Run:      python lessons/03_finetuning/04_rouge_summaries.py
+Run:      python lessons/07_finetuning/04_rouge_summaries.py
 Expected: One example summary next to its reference, then ROUGE-1/2/L averages over
           31 texts. Last run: ROUGE-1 0.51, ROUGE-2 0.22, ROUGE-L 0.43.
 """

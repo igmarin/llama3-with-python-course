@@ -38,7 +38,7 @@ Put your own labelled customer messages into the classifier project and score th
 4. Score the model:
 
    ```bash
-   python lessons/04_project/classify_messages.py
+   python lessons/03_project/classify_messages.py
    ```
 
    Adding the three messages above gave 100% again. Compare against a baseline you ran on the same

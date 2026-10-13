@@ -45,7 +45,7 @@ Control how random the answers are, how long they can be, and how much the model
    more memory.
 
 4. Keep a long chat inside the window. Use `trim_history` from `llama_course.context`; see
-   [lesson 5](../lessons/05-generation.md).
+   [lesson 4](../lessons/04-generation.md).
 
 ## Notes
 

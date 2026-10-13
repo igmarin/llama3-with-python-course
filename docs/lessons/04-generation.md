@@ -1,12 +1,12 @@
-# Lesson 5: Generation
+# Lesson 4: Generation
 
 You control how the model writes: how random it is, when you see the text, and how much it can
 read.
 
 ```bash
-python lessons/05_generation/01_sampling.py
-python lessons/05_generation/02_streaming.py
-python lessons/05_generation/03_context_window.py
+python lessons/04_generation/01_sampling.py
+python lessons/04_generation/02_streaming.py
+python lessons/04_generation/03_context_window.py
 ```
 
 ## The ideas

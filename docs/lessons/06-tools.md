@@ -1,11 +1,11 @@
-# Lesson 7: Tools and validated output
+# Lesson 6: Tools and validated output
 
 You let the model call Python functions, and you turn its JSON into typed objects that are checked
 before use.
 
 ```bash
-python lessons/07_tools/01_tool_calling.py
-python lessons/07_tools/02_validated_output.py
+python lessons/06_tools/01_tool_calling.py
+python lessons/06_tools/02_validated_output.py
 ```
 
 ## The ideas
@@ -40,7 +40,7 @@ Reusing it made the final answer come back as JSON too, so the answer step start
 **Native tool calling.** llama-cpp-python can pass `tools=` to the model's template, but it has no
 parser for Llama 3's replies, so this course builds the loop itself.
 
-Lesson 7.2 applies the same idea without tools: `chat_model` asks for JSON matching a Pydantic
+Lesson 6.2 applies the same idea without tools: `chat_model` asks for JSON matching a Pydantic
 class, validates it, and retries once with the error shown to the model. On the 32 supplier
 delivery notes the quantities matched on 30, and no reply was invalid. Validation catches a wrong
 type or a negative count, not a wrong number: that still needs a check against known answers.

@@ -1,4 +1,4 @@
-"""Lesson 7.2: Validated structured output with Pydantic.
+"""Lesson 6.2: Validated structured output with Pydantic.
 
 Goal:     Get typed Python objects from the model and catch bad values.
 Concept:  Lesson 2.4 constrained JSON with a hand-written schema. A Pydantic model
@@ -7,7 +7,7 @@ Concept:  Lesson 2.4 constrained JSON with a hand-written schema. A Pydantic mod
           schema, validates the reply, and on failure shows the model its own error
           and asks once more. Schema constraints guide generation; Pydantic is the
           check you can trust.
-Run:      python lessons/07_tools/02_validated_output.py
+Run:      python lessons/06_tools/02_validated_output.py
 Expected: Three parsed delivery notes, then the share of the 32 delivery notes in
           data/inventory_text.csv whose counts all match (compared as sorted lists of
           counts, because the model may name items differently).

@@ -1,4 +1,4 @@
-"""Lesson 5.1: Sampling settings.
+"""Lesson 4.1: Sampling settings.
 
 Goal:     See how ``temperature`` and ``seed`` change the output.
 Concept:  At each step the model gives every possible next token a probability, and
@@ -7,7 +7,7 @@ Concept:  At each step the model gives every possible next token a probability, 
           more often (varied, riskier). ``top_p`` and ``top_k`` cut off the unlikely
           tail before picking. A fixed ``seed`` makes the random picks repeatable,
           so the same settings give the same text.
-Run:      python lessons/05_generation/01_sampling.py
+Run:      python lessons/04_generation/01_sampling.py
 Expected: Three runs at each temperature (0 gives three identical lines; 1.5 varies
           the most in wording), then two identical lines from the same seed.
 """

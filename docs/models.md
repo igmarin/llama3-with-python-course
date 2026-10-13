@@ -15,7 +15,7 @@ model and its settings. Choose a profile with `LLAMA_PROFILE`, or point at any `
 
 ```bash
 python scripts/download_model.py --profile studio-128gb
-LLAMA_PROFILE=studio-128gb python lessons/04_project/classify_messages.py
+LLAMA_PROFILE=studio-128gb python lessons/03_project/classify_messages.py
 ```
 
 The `studio-128gb` profile has not been run yet. The first measurement belongs in the table at the
@@ -77,7 +77,7 @@ Generation speed drops as the model grows: the 8B model has almost three times a
 model with slightly different prompts measured 53.9 tokens/s. Compare models on the same day and
 prompts.
 
-The bigger model is more accurate where it matters. On the message classifier in lesson 4, both
+The bigger model is more accurate where it matters. On the message classifier in lesson 3, both
 models pass all 33 test messages, but on the 27 hard training messages the 8B model scored 96.3%
 against 81.5% for the 3B model.
 

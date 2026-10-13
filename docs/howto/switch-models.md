@@ -11,7 +11,7 @@ Run the course on a different Llama model without editing any code.
    ```
 
    You get `['laptop-16gb', 'laptop-8b', 'studio-128gb', 'embedding']`. The `embedding` profile is
-   not a chat model; lesson 6 uses it.
+   not a chat model; lesson 5 uses it.
 
 2. Download the one you want:
 
@@ -53,7 +53,7 @@ On a 16 GB MacBook Pro (Apple Silicon), same prompts, Q4_K_M files:
 | `laptop-16gb` (3B) | 45.4 tokens/s | 2.6 GB | 100% | 95.3% | 81.5% |
 | `laptop-8b` (8B) | 23.2 tokens/s | 5.3 GB | 100% | 97.7% | 96.3% |
 
-Accuracy is for the message classifier in lesson 4 with its default prompt. Both models pass every
+Accuracy is for the message classifier in lesson 3 with its default prompt. Both models pass every
 test message, so the training messages show the difference: the 8B model handles the hard ones much
 better, at half the speed. See [Models and benchmarks](../models.md).
 

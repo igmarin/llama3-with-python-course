@@ -1,4 +1,4 @@
-"""Lesson 3.2: Fine-tune with LoRA.
+"""Lesson 7.2: Fine-tune with LoRA.
 
 Goal:     Train a small add-on ("adapter") that makes Llama better at sorting customer messages.
 Concept:  Full fine-tuning updates every weight, which needs far more memory than a
@@ -23,7 +23,7 @@ Memory:   laptop-16gb  (3B, 4-bit)  about 4 to 6 GB while training.
           studio-128gb (70B, 4-bit) about 45 to 60 GB; raise --batch-size freely.
           These are estimates; check Activity Monitor on your machine.
 Requires: pip install -e ".[finetune]"   (Apple Silicon only)
-Run:      python lessons/03_finetuning/02_train_lora.py
+Run:      python lessons/07_finetuning/02_train_lora.py
 Expected: Validation loss about 12 at step 1, under 0.5 at steps 20 and 40, and close
           to 0 at step 60, then "Saved adapter" under adapters/. The 3B model takes about a minute on an M-series Mac.
 """
@@ -45,7 +45,7 @@ def main() -> None:
     if not profile.mlx_repo:
         sys.exit(f"Profile {profile.name!r} has no mlx_repo in configs/models.yaml.")
     if not (DATA_DIR / "train.jsonl").exists():
-        sys.exit("Run lessons/03_finetuning/01_prepare_data.py first.")
+        sys.exit("Run lessons/07_finetuning/01_prepare_data.py first.")
 
     command = [
         sys.executable, "-m", "mlx_lm", "lora",

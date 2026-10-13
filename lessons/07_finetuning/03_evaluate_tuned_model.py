@@ -1,4 +1,4 @@
-"""Lesson 3.3: Did fine-tuning help?
+"""Lesson 7.3: Did fine-tuning help?
 
 Goal:     Compare the base model and the fine-tuned model on messages neither has seen.
 Concept:  Training loss going down proves nothing about new messages. The honest
@@ -6,12 +6,12 @@ Concept:  Training loss going down proves nothing about new messages. The honest
           Both get the same short prompt, with no examples; the fine-tuned one
           has learned the task from data instead of from the prompt.
           Read the "hard" row first: easy messages are usually solved by both.
-          Keep the comparison in perspective: the prompt from lesson 4 (rules,
+          Keep the comparison in perspective: the prompt from lesson 3 (rules,
           examples and a schema) already scores 100% on this test set. Fine-tuning
           pays off when a prompt gets long, slow or fragile, or when the task has
           no short rules.
-Requires: pip install -e ".[finetune]" and lessons 3.1 and 3.2 run first.
-Run:      python lessons/03_finetuning/03_evaluate_tuned_model.py
+Requires: pip install -e ".[finetune]" and lessons 7.1 and 7.2 run first.
+Run:      python lessons/07_finetuning/03_evaluate_tuned_model.py
 Expected: A table of accuracy for base vs tuned, overall and for easy/hard messages,
           plus the number of replies that did not contain exactly one label.
           Last run on the 3B model: base 84.8%, tuned 97.0% overall; easy messages
@@ -46,7 +46,7 @@ def predict_all(model, tokenizer, messages) -> list[str]:
 def main() -> None:
     profile = get_profile()
     if not ADAPTER_DIR.exists():
-        sys.exit("No adapter found. Run lessons/03_finetuning/02_train_lora.py first.")
+        sys.exit("No adapter found. Run lessons/07_finetuning/02_train_lora.py first.")
     test = load_messages("test")
 
     print(f"Base model: {profile.mlx_repo}")

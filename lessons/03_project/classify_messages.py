@@ -1,4 +1,4 @@
-"""Lesson 4: Customer-message classifier project.
+"""Lesson 3: Customer-message classifier project.
 
 Goal:     Measure how well a local Llama model sorts customer messages for a bike
           shop into Repair, Order or Feedback, so each reaches the right person.
@@ -11,8 +11,8 @@ Concept:  Classification with an LLM is a prompt (rules plus a few worked
           to 81.5%: the model copies the examples' surface patterns. Compare
           prompts on training data with ``--rules-only``, then score the test set once.
           Run again with another profile to compare models:
-              LLAMA_PROFILE=laptop-8b python lessons/04_project/classify_messages.py
-Run:      python lessons/04_project/classify_messages.py [--limit N] [--rules-only] [--save]
+              LLAMA_PROFILE=laptop-8b python lessons/03_project/classify_messages.py
+Run:      python lessons/03_project/classify_messages.py [--limit N] [--rules-only] [--save]
 Expected: Accuracy, per-class precision/recall, accuracy on easy vs hard messages,
           and a confusion matrix. ``--save`` writes results_<profile>.md next to
           this file (results_<profile>_rules_only.md with ``--rules-only``).

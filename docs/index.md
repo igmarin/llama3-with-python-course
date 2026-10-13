@@ -1,16 +1,33 @@
 # Course documentation
 
-Start here. To install and run your first lesson, follow the [quick start in the README](../README.md#quick-start).
+Follow this order:
 
-## Learn
+1. [Setup](setup.md): install the course and download the model.
+2. [Tutorial](tutorial.md): build a working customer-message classifier in about 20 minutes.
+3. The [lessons](#lessons), 1 to 7, in order.
 
-| Page | Use it to |
-|------|-----------|
-| [Tutorial: build a customer-message classifier](tutorial.md) | Go from zero to a working classifier in about 20 minutes |
-| [Lesson pages](#lesson-pages) | Understand the idea behind each lesson, with exercises |
-| [References](references.md) | Read more, grouped by topic |
+Use the [how-to guides](#how-to-guides) and [reference pages](#reference) when you need them.
 
-## How to
+## Lessons
+
+Each page explains the ideas behind a lesson, walks through the code, lists common mistakes, gives
+an exercise with an answer, and links to further reading. Every lesson script also opens with a
+docstring: the goal, the idea, the command to run, and what you should see.
+
+| Lesson | Covers |
+|--------|--------|
+| [1. Basics](lessons/01-basics.md) | GGUF files, completion vs chat, system prompts, the chat template |
+| [2. Prompting](lessons/02-prompting.md) | Prompt formats, few-shot, JSON mode, JSON Schema, conversation memory |
+| [3. Project](lessons/03-project.md) | The message classifier, honest evaluation, what examples cost |
+| [4. Generation](lessons/04-generation.md) | Temperature and seed, streaming, tokens and the context window |
+| [5. RAG](lessons/05-rag.md) | Embeddings, cosine search, citations, refusing, prompt injection |
+| [6. Tools](lessons/06-tools.md) | Tool calling, Pydantic validation, retries |
+| [7. Fine-tuning](lessons/07-finetuning.md) | LoRA, train/validation/test data, accuracy, ROUGE (Apple Silicon only) |
+
+Lessons 1 and 2 are the base for everything else. Lessons 4, 5 and 6 can be done in any order.
+Lesson 7 compares against the score from lesson 3, so do 3 first.
+
+## How-to guides
 
 | Guide | Use it to |
 |-------|-----------|
@@ -20,31 +37,26 @@ Start here. To install and run your first lesson, follow the [quick start in the
 | [Change generation settings](howto/change-generation-settings.md) | Control randomness, answer length and context size |
 | [Add your own messages](howto/add-your-own-messages.md) | Score the classifier on your own data |
 
-## Lesson pages
-
-Each page explains the ideas behind a lesson, walks through the code, lists common mistakes, gives
-an exercise with an answer, and links to further reading. Do lessons 1 and 2 first, in order. The
-others are independent. Do lesson 4 before lesson 3, because it provides the baseline score.
-
-| Page | Covers |
-|------|--------|
-| [1. Basics](lessons/01-basics.md) | GGUF files, completion vs chat, system prompts, the chat template |
-| [2. Prompting](lessons/02-prompting.md) | Prompt formats, few-shot, JSON mode, JSON Schema, conversation memory |
-| [3. Fine-tuning](lessons/03-finetuning.md) | LoRA, train/validation/test data, accuracy, ROUGE |
-| [4. Project](lessons/04-project.md) | The message classifier, honest evaluation, what examples cost |
-| [5. Generation](lessons/05-generation.md) | Temperature and seed, streaming, tokens and the context window |
-| [6. RAG](lessons/06-rag.md) | Embeddings, cosine search, citations, refusing, prompt injection |
-| [7. Tools](lessons/07-tools.md) | Tool calling, Pydantic validation, retries |
-
-Every lesson script also opens with a docstring: the goal, the idea, the command to run, and what
-you should see.
-
 ## Reference
 
 | Page | Read it when |
 |------|--------------|
+| [Setup](setup.md) | You need the requirements, extra downloads or install fixes |
 | [Models and benchmarks](models.md) | You want to know what your machine can run, and how fast |
+| [References](references.md) | You want to read more, grouped by topic |
 | [Datasets](../data/README.md) | You want to know what the data contains |
+
+## What is where
+
+| Folder | Contents |
+|--------|----------|
+| `lessons/` | The course scripts, numbered in the order to do them |
+| `src/llama_course/` | Code the lessons share (see the code map below) |
+| `configs/models.yaml` | Model profiles |
+| `data/` | Datasets, all synthetic. See [data/README.md](../data/README.md) |
+| `scripts/` | Model download, benchmark, data split, link check |
+| `tests/` | Tests. Most use a fake model, so they run anywhere |
+| `docs/` | This documentation |
 
 ## Code map
 

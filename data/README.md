@@ -5,11 +5,11 @@ people or messages, and is released under CC0 (public domain).
 
 | File | Rows | Columns | Used for |
 |------|------|---------|----------|
-| `messages.csv` | 162 | `message`, `category`, `difficulty` | Message classifier (lesson 4) and fine-tuning (lesson 3) |
+| `messages.csv` | 162 | `message`, `category`, `difficulty` | Message classifier (lesson 3) and fine-tuning (lesson 7) |
 | `train.csv` / `test.csv` | 129 / 33 | same | Fixed 80/20 split of the file above |
 | `summaries.csv` | 31 | `text`, `summary` | ROUGE evaluation: `summary` is the reference |
-| `inventory_text.csv` | 32 | `text`, `expected_json` | JSON extraction (lessons 2.3 and 7.2) |
-| `docs/*.md` | 5 files | Markdown | RAG lesson (lesson 6): the shop's policies |
+| `inventory_text.csv` | 32 | `text`, `expected_json` | JSON extraction (lessons 2.3 and 6.2) |
+| `docs/*.md` | 5 files | Markdown | RAG lesson (lesson 5): the shop's policies |
 
 The course uses one made-up company throughout: Northwind Bikes, a bicycle shop.
 

@@ -1,14 +1,14 @@
-# Lesson 3: Fine-tuning
+# Lesson 7: Fine-tuning
 
 You train a small add-on for the model on your own examples, then check whether it helped. You also
 learn how to score generated text.
 
 ```bash
 pip install -e ".[finetune]"     # Apple Silicon only
-python lessons/03_finetuning/01_prepare_data.py
-python lessons/03_finetuning/02_train_lora.py
-python lessons/03_finetuning/03_evaluate_tuned_model.py
-python lessons/03_finetuning/04_rouge_summaries.py
+python lessons/07_finetuning/01_prepare_data.py
+python lessons/07_finetuning/02_train_lora.py
+python lessons/07_finetuning/03_evaluate_tuned_model.py
+python lessons/07_finetuning/04_rouge_summaries.py
 ```
 
 ## The ideas
@@ -36,10 +36,10 @@ training messages. Choose the number of training steps from validation loss.
 
 **Accuracy and the confusion matrix.** For labels, accuracy is the share of correct answers. A
 confusion matrix shows which labels get mixed up, so you can see that Order messages are being
-called Feedback. Lesson 3.3 reports easy and hard messages separately, because a model can score well
+called Feedback. Lesson 7.3 reports easy and hard messages separately, because a model can score well
 on easy messages and fail the hard ones.
 
-**ROUGE.** A summary has no single right answer, so lesson 3.4 compares it with a human summary by
+**ROUGE.** A summary has no single right answer, so lesson 7.4 compares it with a human summary by
 word overlap. ROUGE-1 counts shared words, ROUGE-2 shared word pairs, ROUGE-L the longest shared
 sequence. It is crude: a good summary in different words scores low. Use it to compare two models
 on the same texts.
@@ -49,7 +49,7 @@ on the same texts.
 | File | What it shows |
 |------|---------------|
 | `src/llama_course/finetune.py` | Training examples as chats, the validation split, `parse_label` |
-| `src/llama_course/classify.py` | `score_predictions`, the metrics shared with lesson 4 |
+| `src/llama_course/classify.py` | `score_predictions`, the metrics shared with lesson 3 |
 | `src/llama_course/rouge.py` | `rouge_scores` |
 | `configs/models.yaml` | `mlx_repo`: the MLX copy of each model |
 
@@ -62,7 +62,7 @@ on the same texts.
 | 6 hard messages | 100% | 100% |
 
 The test set is small: one message is 3 points. Treat a difference of one or two messages as
-noise. The base model here gets a short prompt with no rules. The prompt from lesson 4 (rules,
+noise. The base model here gets a short prompt with no rules. The prompt from lesson 3 (rules,
 examples and a schema) scores 100% on the same messages, so on this synthetic data a good prompt
 matched fine-tuning. Fine-tuning helps when a prompt gets long, slow or fragile, or when the task has
 no short rules.
@@ -79,7 +79,7 @@ no short rules.
 
 ## Exercise
 
-In `02_train_lora.py`, set `ITERS = 200` and run lessons 3.2 and 3.3 again. What happens to
+In `02_train_lora.py`, set `ITERS = 200` and run lessons 7.2 and 7.3 again. What happens to
 validation loss, and to the test accuracy? What should you conclude?
 
 <details>

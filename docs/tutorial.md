@@ -5,8 +5,7 @@ prose, and used it to sort customer messages for a bike shop into **Repair**, **
 **Feedback**, with a score that shows how often it is right. It takes about 20 minutes after the
 install.
 
-Before you start, finish the [quick start in the README](../README.md#quick-start): the install and
-the 2 GB model download. Run every command from the repository root, with your virtual environment
+Before you start, finish the [setup](setup.md): the install and the 2 GB model download. Run every command from the repository root, with your virtual environment
 active.
 
 ## 1. Ask a question
@@ -86,19 +85,19 @@ One right answer proves little. The repository holds 33 labelled test messages, 
 not built on:
 
 ```bash
-python lessons/04_project/classify_messages.py
+python lessons/03_project/classify_messages.py
 ```
 
 You see the accuracy, precision and recall per category, accuracy on easy and hard messages, and a
 confusion matrix (which categories get mixed up). On the 3B model it scored 100% on this test set.
-[Lesson 4](lessons/04-project.md) explains why that number says less than it seems, and how the
+[Lesson 3](lessons/03-project.md) explains why that number says less than it seems, and how the
 worked examples helped on some messages and hurt on others.
 
 ## 6. Try a bigger model
 
 ```bash
 python scripts/download_model.py --profile laptop-8b
-LLAMA_PROFILE=laptop-8b python lessons/04_project/classify_messages.py
+LLAMA_PROFILE=laptop-8b python lessons/03_project/classify_messages.py
 ```
 
 The 8B model is 4.9 GB and generates about 23 tokens per second, against 45 for the 3B model. It also
@@ -116,6 +115,6 @@ accuracy. You can now:
 
 ## Where next
 
-- [Lesson 6](lessons/06-rag.md): answer questions from the shop's policy documents.
-- [Lesson 7](lessons/07-tools.md): let the model call Python functions.
-- [Lesson 3](lessons/03-finetuning.md): fine-tune the model on the messages.
+- [Lesson 5](lessons/05-rag.md): answer questions from the shop's policy documents.
+- [Lesson 6](lessons/06-tools.md): let the model call Python functions.
+- [Lesson 7](lessons/07-finetuning.md): fine-tune the model on the messages.

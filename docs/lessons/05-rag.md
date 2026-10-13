@@ -1,11 +1,11 @@
-# Lesson 6: Answering from your documents (RAG)
+# Lesson 5: Answering from your documents (RAG)
 
 You make the model answer from documents it has never seen, cite them, refuse when they don't
 contain the answer, and resist instructions hidden in a document.
 
 ```bash
 python scripts/download_model.py --profile embedding
-python lessons/06_rag/01_ask_your_documents.py
+python lessons/05_rag/01_ask_your_documents.py
 ```
 
 ## The ideas
@@ -64,7 +64,7 @@ Ask "Can I return a custom-built bike?" What does the answer cite, and what is t
 <details>
 <summary>Answer</summary>
 
-Add the question to `QUESTIONS` in lesson 6.1. The best match is `returns#2` with score 0.82, and the
+Add the question to `QUESTIONS` in lesson 5.1. The best match is `returns#2` with score 0.82, and the
 answer is: Custom-built bikes and items marked "final sale" cannot be returned [1]. It cites
 `returns#2`. Add your own page to `data/docs/` and ask about it to see the new text found.
 </details>

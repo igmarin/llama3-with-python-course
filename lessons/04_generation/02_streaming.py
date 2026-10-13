@@ -1,10 +1,10 @@
-"""Lesson 5.2: Streaming.
+"""Lesson 4.2: Streaming.
 
 Goal:     Show the reply as it is generated instead of after it finishes.
 Concept:  A model produces text one token at a time. With ``stream=True`` you get
           each token as soon as it exists, so a user starts reading right away.
           Time to first token matters more for chat feel than total time.
-Run:      python lessons/05_generation/02_streaming.py
+Run:      python lessons/04_generation/02_streaming.py
 Expected: A short story that appears word by word, then the time to first token
           and the total time.
 """

@@ -56,7 +56,7 @@ writing.
   mid-sentence, or run longer than you want. Set it.
 - **Putting `<|begin_of_text|>` in a hand-written prompt.** llama.cpp adds it, and you get a
   warning about a duplicate token. `llama3_chat_prompt` leaves it out for this reason.
-- **Expecting the same answer every run.** The default `temperature` adds randomness. Lesson 5
+- **Expecting the same answer every run.** The default `temperature` adds randomness. Lesson 4
   covers it.
 
 ## Exercise

@@ -1,4 +1,4 @@
-"""Lesson 3.1: Prepare training data.
+"""Lesson 7.1: Prepare training data.
 
 Goal:     Turn the labelled customer messages into the files that LoRA training reads.
 Concept:  Fine-tuning shows the model many (input, correct answer) pairs. Each pair
@@ -6,10 +6,10 @@ Concept:  Fine-tuning shows the model many (input, correct answer) pairs. Each p
           label as the assistant's reply. Three files are needed:
             train.jsonl  examples the model learns from
             valid.jsonl  examples it never learns from, used to watch for memorising
-            test.jsonl   the final exam, only used in lesson 3.3
-          The test set is the same 33 messages the base model was scored on in lesson 4,
+            test.jsonl   the final exam, only used in lesson 7.3
+          The test set is the same 33 messages the base model was scored on in lesson 3,
           and it is never used for training or tuning.
-Run:      python lessons/03_finetuning/01_prepare_data.py
+Run:      python lessons/07_finetuning/01_prepare_data.py
 Expected: Counts per file (111 / 18 / 33) and one example.
 """
 

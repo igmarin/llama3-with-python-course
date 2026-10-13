@@ -1,4 +1,4 @@
-"""Lesson 6.1: Answer questions from your own documents (RAG).
+"""Lesson 5.1: Answer questions from your own documents (RAG).
 
 Goal:     Make the model answer from documents it has never seen, and say so when
           the documents do not have the answer.
@@ -15,7 +15,7 @@ Concept:  RAG = retrieval-augmented generation.
           marks documents as data and tells the model to ignore commands inside them.
           ``helmets.md`` contains such an attack on purpose.
 Setup:    python scripts/download_model.py --profile embedding
-Run:      python lessons/06_rag/01_ask_your_documents.py
+Run:      python lessons/05_rag/01_ask_your_documents.py
 Expected: Cited answers for the first three questions. The helmet question about
           "free this week" is answered from the sizing guide, not from the injected
           note. The World Cup question gets "I could not find that in the documents."

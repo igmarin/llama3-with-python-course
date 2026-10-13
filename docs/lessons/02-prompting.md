@@ -22,7 +22,7 @@ copies the pattern. This is called few-shot prompting; giving no examples is zer
 `few_shot_prompt` builds the text. Lesson 2.2 rates cycling routes as Easy, Moderate or Hard. Its
 new route is harder than every example, and with examples alone the 3B model answers `Very Hard`, a
 label that does not exist. Examples teach the format, not the list of allowed answers. One line
-naming the labels fixes it. Lesson 4 shows that examples can also help on some inputs and hurt on
+naming the labels fixes it. Lesson 3 shows that examples can also help on some inputs and hurt on
 others.
 
 **JSON mode.** `response_format={"type": "json_object"}` forces valid JSON. Lesson 2.3 turns a
@@ -33,7 +33,7 @@ description. `chat_json` sends the request and parses the reply.
 
 **Memory is your job.** The model remembers nothing between calls. `Conversation` keeps the list
 of messages and sends all of it each turn, which is why "a different city in the same country"
-works in lesson 2.5: a bike recommendation, then a follow-up about the same ride. The list grows every turn; lesson 5 covers the limit.
+works in lesson 2.5: a bike recommendation, then a follow-up about the same ride. The list grows every turn; lesson 4 covers the limit.
 
 ## Code map
 
