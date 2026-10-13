@@ -13,10 +13,11 @@ Concept:  Classification with an LLM is a prompt (rules plus a few worked
           Run again with another profile to compare models:
               LLAMA_PROFILE=laptop-8b python lessons/03_project/classify_messages.py
 Read:     README.md in this folder explains the ideas and new words.
-Run:      python lessons/03_project/classify_messages.py [--limit N] [--rules-only] [--save]
+Run:      python lessons/03_project/classify_messages.py [--split challenge] [--rules-only] [--save]
 Expected: Accuracy, per-class precision/recall, accuracy on easy vs hard messages,
           and a confusion matrix. ``--save`` writes results_<profile>.md next to
-          this file (results_<profile>_rules_only.md with ``--rules-only``).
+          this file (with _rules_only and _challenge added for those options).
+          Last run on the 3B model: test 100%; challenge 98.3% (rules only 90.0%).
 """
 
 import argparse
@@ -27,12 +28,12 @@ from llama_course.data import load_messages
 from llama_course.llm import get_llm, get_profile
 
 
-def report(result: dict, profile: str, n: int, rules_only: bool) -> str:
+def report(result: dict, profile: str, n: int, rules_only: bool, split: str) -> str:
     """Format evaluation results as Markdown."""
     lines = [
         f"# Message classifier results: {profile}, {'rules only' if rules_only else 'rules plus six worked examples'}",
         "",
-        f"Test messages: {n}. Accuracy: **{result['accuracy']:.1%}**. "
+        f"{split.capitalize()} messages: {n}. Accuracy: **{result['accuracy']:.1%}**. "
         f"Unusable replies: {result['invalid']}.",
         "",
         "| Class | Precision | Recall | Messages |",
@@ -50,20 +51,21 @@ def report(result: dict, profile: str, n: int, rules_only: bool) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--limit", type=int, help="Only classify the first N test messages.")
+    parser.add_argument("--limit", type=int, help="Only classify the first N messages.")
+    parser.add_argument("--split", choices=["test", "challenge"], default="test", help="Which messages to score.")
     parser.add_argument("--rules-only", action="store_true", help="Leave the six worked examples out of the prompt.")
     parser.add_argument("--save", action="store_true", help="Write results_<profile>.md.")
     args = parser.parse_args()
 
-    test = load_messages("test")
+    test = load_messages(args.split)
     if args.limit:
         test = test.head(args.limit)
     profile = get_profile().name
     examples = () if args.rules_only else FEW_SHOT_EXAMPLES
-    text = report(evaluate(get_llm(), test, examples), profile, len(test), args.rules_only)
+    text = report(evaluate(get_llm(), test, examples), profile, len(test), args.rules_only, args.split)
     print(text)
     if args.save:
-        out = Path(__file__).parent / f"results_{profile}{'_rules_only' if args.rules_only else ''}.md"
+        out = Path(__file__).parent / f"results_{profile}{'_rules_only' if args.rules_only else ''}{'_challenge' if args.split == 'challenge' else ''}.md"
         out.write_text(text)
         print(f"Saved {out}")
 

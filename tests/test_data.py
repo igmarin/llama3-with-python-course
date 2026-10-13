@@ -59,3 +59,14 @@ def test_inventory_json_is_a_dict_of_positive_ints():
     for raw in df["expected_json"]:
         data = json.loads(raw)
         assert data and all(isinstance(v, int) and v > 0 for v in data.values())
+
+
+def test_challenge_set_is_hard_balanced_and_separate():
+    challenge = load_messages("challenge")
+    assert len(challenge) >= 60
+    assert (challenge["difficulty"] == "hard").all()
+    counts = challenge["category"].value_counts()
+    assert set(counts.index) == set(LABELS)
+    assert counts.max() - counts.min() <= 0.1 * len(challenge)
+    assert challenge["message"].is_unique
+    assert set(challenge["message"]).isdisjoint(load_messages()["message"])

@@ -91,8 +91,16 @@ python lessons/03_project/classify_messages.py
 
 You see the accuracy, precision and recall per category, accuracy on easy and hard messages, and a
 confusion matrix (which categories get mixed up). On the 3B model it scored 100% on this test set.
-[Lesson 3](../lessons/03_project/) explains why that number says less than it seems, and how the
-worked examples helped on some messages and hurt on others.
+
+That is too easy to be useful, so try the harder challenge set: 60 messages that hide the request
+after praise, mix topics, or use slang.
+
+```bash
+python lessons/03_project/classify_messages.py --split challenge
+```
+
+The 3B model scored 98.3%. [Lesson 3](../lessons/03_project/) explains what these numbers do and
+don't tell you, and how the worked examples help.
 
 ## 6. Try a bigger model
 
@@ -102,8 +110,8 @@ LLAMA_PROFILE=laptop-8b python lessons/03_project/classify_messages.py
 ```
 
 The 8B model is 4.9 GB and generates about 23 tokens per second, against 45 for the 3B model. It also
-scores 100% on the test messages. On the 129 training messages it was more accurate than the 3B model
-on hard messages: 96.3% against 81.5%. See [Change models](howto/switch-models.md) for the details.
+scores 100% on the test messages and 98.3% on the challenge set. On the hard training messages it
+was more accurate than the 3B model: 96.3% against 81.5%. See [Change models](howto/switch-models.md) for the details.
 
 ## What you built
 

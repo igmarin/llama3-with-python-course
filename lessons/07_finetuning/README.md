@@ -107,14 +107,19 @@ on the same texts, not to judge a single summary.
 | | Base | Tuned (60 steps) |
 |---|------|-------|
 | All 33 test messages | 84.8% | 97.0% |
-| 27 easy messages | 81.5% | 96.3% |
-| 6 hard messages | 100% | 100% |
+| 27 easy test messages | 81.5% | 96.3% |
+| 6 hard test messages | 100% | 100% |
+| 60 challenge messages (all hard) | 70.0% | 93.3% |
 
 The test set is small: one message is 3 points, so treat a difference of one or two messages as
-noise. The base model here gets a short prompt with no rules. The prompt from [lesson 3](../03_project/) (rules,
-examples and a schema) scores 100% on the same messages. On this synthetic data, a good prompt did
-as well as fine-tuning. Fine-tuning pays off when a prompt gets long, slow or fragile, or when the
-task has no short rules.
+noise. The challenge set (see [lesson 3](../03_project/)) is larger and harder, and there the
+adapter adds 23 points.
+
+The base model here gets one short line of instructions and no examples. The full prompt from
+[lesson 3](../03_project/) (rules, examples and a schema) scores 100% on the test set and 98.3% on
+the challenge set, ahead of the tuned model's 93.3%. So on this data, a careful prompt still beat
+fine-tuning. Fine-tuning pays off when a prompt gets long, slow or fragile, or when the task has no
+short rules.
 
 ## Common mistakes
 

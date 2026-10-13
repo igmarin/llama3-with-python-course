@@ -48,7 +48,9 @@ Put your own labelled customer messages into the classifier project and score th
 ## Tips
 
 - To find out where the model fails, add hard messages. A test set where everything passes cannot
-  rank two prompts or two models.
+  rank two prompts or two models. Hard messages can also go into
+  [`data/challenge.csv`](../../data/challenge.csv), which is never split; score it with
+  `--split challenge`. Keep the three categories even there too.
 - Add rows to the three categories evenly. The data tests expect the classes to stay within 5% of
   each other.
 - Do not compare prompts on the test messages. Compare on `train.csv`, then score the test set once.

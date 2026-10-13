@@ -7,6 +7,7 @@ people or messages, and is released under [CC0 1.0](LICENSE) (public domain).
 |------|------|---------|----------|
 | [`messages.csv`](messages.csv) | 162 | `message`, `category`, `difficulty` | Message classifier ([lesson 3](../lessons/03_project/)) and fine-tuning ([lesson 7](../lessons/07_finetuning/)) |
 | [`train.csv`](train.csv) / [`test.csv`](test.csv) | 129 / 33 | same | Fixed 80/20 split of the file above |
+| [`challenge.csv`](challenge.csv) | 60 | same | A harder second test: 20 hard messages per category, never split or used to choose a prompt |
 | [`summaries.csv`](summaries.csv) | 31 | `text`, `summary` | ROUGE evaluation: `summary` is the reference |
 | [`inventory_text.csv`](inventory_text.csv) | 32 | `text`, `expected_json` | JSON extraction ([lessons 2.3](../lessons/02_prompting/03_json_inventory.py) and 6.2) |
 | [`docs/*.md`](docs/) | 5 files | Markdown | RAG lesson ([lesson 5](../lessons/05_rag/)): the shop's policies |

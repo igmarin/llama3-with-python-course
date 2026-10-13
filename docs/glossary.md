@@ -6,6 +6,7 @@ Every term the course uses, in plain words. The last column links to where each 
 |------|---------|--------------|
 | Accuracy | The share of answers that are correct | [3](../lessons/03_project/) |
 | Adapter | The small add-on that LoRA trains: a file of a few megabytes, loaded on top of the original model | [7](../lessons/07_finetuning/) |
+| Challenge set | A second, harder test set of 60 hard messages, used only for scoring | [3](../lessons/03_project/) |
 | Chat template | The rules for writing roles into the text the model reads, using special tokens | [1](../lessons/01_basics/) |
 | Chunk | A short piece of a document, small enough to put in a prompt | [5](../lessons/05_rag/) |
 | Classifier | A program that puts each input into one of a fixed set of categories (labels) | [3](../lessons/03_project/) |

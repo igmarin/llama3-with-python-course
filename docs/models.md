@@ -86,8 +86,8 @@ model with slightly different prompts measured 53.9 tokens/s. Compare models on 
 prompts.
 
 The bigger model is more accurate on the hard cases. On the message classifier in [lesson 3](../lessons/03_project/), both
-models pass all 33 test messages, but on the 27 hard training messages the 8B model scored 96.3%
-against 81.5% for the 3B model.
+models pass all 33 test messages and score 98.3% on the 60-message challenge set, but on the 27
+hard training messages the 8B model scored 96.3% against 81.5% for the 3B model.
 
 The load time of 0.5 s was measured with the file already in the operating system's cache. The
 first load after a restart reads the file from disk and takes longer.

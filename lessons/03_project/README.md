@@ -93,10 +93,29 @@ the model worse on hard messages. The course did not investigate why; the confus
 `--save` is the place to start. Overall accuracy was the measure chosen in advance, so the default
 keeps the examples. If hard messages matter most to you, the choice flips.
 
+### A harder check: the challenge set
+
 On the 33 test messages, both prompts scored 100%, and so did the 8B model. When every setup gets
-everything right, the test cannot tell them apart. The training numbers above are more useful here,
-as is the 8B model's score on the training split: 97.7% overall and 96.3% on hard messages. To
-make the test harder, add more hard messages ([how-to](../../docs/howto/add-your-own-messages.md)).
+everything right, the test cannot tell them apart. So the course has a second, harder test:
+[`data/challenge.csv`](../../data/challenge.csv), 60 hard messages (20 per category) that were never
+used to build or choose a prompt. They mix topics, use slang and typos, and hide the request after
+praise or a complaint.
+
+```bash
+python lessons/03_project/classify_messages.py --split challenge
+```
+
+| Challenge set (60 messages) | Accuracy |
+|-----------------------------|----------|
+| 3B, rules only | 90.0% |
+| 3B, rules plus six examples | 98.3% |
+| 8B, rules plus six examples | 98.3% |
+
+Here the examples clearly help: rules only missed 6 messages, mostly Order messages called
+Feedback. That is the opposite of what the 27 hard training messages suggested. Two small sets can
+point in different directions, which is why one score is never enough. The two models still tie on
+this set; on the hard training messages the 8B model was ahead (96.3% against 81.5%). To add your
+own hard messages, see the [how-to](../../docs/howto/add-your-own-messages.md).
 
 ## Code map
 
@@ -110,7 +129,8 @@ make the test harder, add more hard messages ([how-to](../../docs/howto/add-your
 
 - Tuning on the test set: compare prompts on training messages. Look at the test set once.
 - Reporting one number: overall accuracy can hide failures on hard messages. Split the score.
-- Trusting a tiny test set: one message is 3 points here, and every setup scored 100%.
+- Trusting a tiny test set: one test message is 3 points here, and every setup scored 100%. Check
+  the challenge set too.
 - Ignoring unusable replies: a model that fails to answer is wrong. The report counts them.
 
 ## Exercise

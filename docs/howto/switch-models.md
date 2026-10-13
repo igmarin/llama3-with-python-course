@@ -49,14 +49,14 @@ still apply.
 
 On a 16 GB MacBook Pro (Apple Silicon), same prompts, Q4_K_M files:
 
-| Profile | Speed | Peak memory | Test messages (33) | Training messages (129) | Hard training messages (27) |
-|---------|-------|-------------|--------------------|-------------------------|-----------------------------|
-| `laptop-16gb` (3B) | 45.4 tokens/s | 2.6 GB | 100% | 95.3% | 81.5% |
-| `laptop-8b` (8B) | 23.2 tokens/s | 5.3 GB | 100% | 97.7% | 96.3% |
+| Profile | Speed | Peak memory | Test (33) | Challenge (60) | Training (129) | Hard training (27) |
+|---------|-------|-------------|-----------|----------------|----------------|--------------------|
+| `laptop-16gb` (3B) | 45.4 tokens/s | 2.6 GB | 100% | 98.3% | 95.3% | 81.5% |
+| `laptop-8b` (8B) | 23.2 tokens/s | 5.3 GB | 100% | 98.3% | 97.7% | 96.3% |
 
 Accuracy is for the message classifier in [lesson 3](../../lessons/03_project/) with its default prompt. Both models pass every
-test message, so the training messages show the difference: the 8B model handles the hard ones much
-better, at half the speed. See [Models and benchmarks](../models.md).
+test message and tie on the challenge set, so the hard training messages show the difference: the
+8B model handles them much better, at half the speed. See [Models and benchmarks](../models.md).
 
 ## If something fails
 

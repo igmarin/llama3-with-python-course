@@ -14,15 +14,18 @@ _MESSAGE_FILES = {
     "all": "messages.csv",
     "train": "train.csv",
     "test": "test.csv",
+    "challenge": "challenge.csv",
 }
 
 
-def load_messages(split: Literal["all", "train", "test"] = "all") -> pd.DataFrame:
+def load_messages(split: Literal["all", "train", "test", "challenge"] = "all") -> pd.DataFrame:
     """Load the labeled customer messages sent to the Northwind Bikes shop.
 
     Args:
         split: ``"train"`` and ``"test"`` are a fixed 80/20 split (see
-            ``scripts/split_messages.py``); ``"all"`` is every row.
+            ``scripts/split_messages.py``); ``"all"`` is every row of those two.
+            ``"challenge"`` is a separate set of 60 hard messages, never used for
+            training or for choosing a prompt.
 
     Returns:
         A DataFrame with columns ``message``, ``category`` and ``difficulty``
