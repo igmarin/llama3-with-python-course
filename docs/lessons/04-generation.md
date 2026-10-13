@@ -63,12 +63,12 @@ flowchart TD
 
 ## Common mistakes
 
-- **Expecting the same output at temperature 0.7.** Pass a `seed` if you need repeatability.
-- **Forgetting the reply needs room.** Trim to `n_ctx` minus the reply length, not to `n_ctx`.
-- **Counting words instead of tokens.** The token count is higher, and it differs per model.
-- **Per-message overhead.** Each chat message costs a few extra tokens for role markers. The code
+- Expecting the same output at temperature 0.7: pass a `seed` if you need repeatability.
+- Forgetting the reply needs room: trim to `n_ctx` minus the reply length, not to `n_ctx`.
+- Counting words instead of tokens: the token count is higher, and it differs per model.
+- Per-message overhead: each chat message costs a few extra tokens for role markers. The code
   adds 8 per message, an estimate for Llama 3.
-- **Raising `n_ctx` without cost.** A larger window uses more memory.
+- Raising `n_ctx` without cost: a larger window uses more memory.
 
 ## Exercise
 

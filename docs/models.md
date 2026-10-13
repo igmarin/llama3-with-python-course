@@ -1,6 +1,6 @@
 # Models and benchmarks
 
-The course runs on any Llama model in GGUF format. A **profile** in `configs/models.yaml` names one
+The course runs on any Llama model in GGUF format. A profile in `configs/models.yaml` names one
 model and its settings. Choose a profile with `LLAMA_PROFILE`, or point at any `.gguf` file with
 `LLAMA_MODEL_PATH`. No lesson code changes.
 
@@ -28,7 +28,7 @@ a 70B model is about 43 GB. Add a few GB for the context cache and your other pr
 must fit in RAM, and on a Mac the GPU can use only part of it (roughly two thirds to three
 quarters), so leave headroom.
 
-**Quantization** stores each weight in fewer bits. The suffix tells you how many:
+Quantization stores each weight in fewer bits. The suffix tells you how many:
 
 | Name | Bits per weight | Effect |
 |------|-----------------|--------|

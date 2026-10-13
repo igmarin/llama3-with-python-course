@@ -68,13 +68,13 @@ for the same ride", gets a sensible answer. The list grows every turn; lesson 4 
 
 ## Common mistakes
 
-- **A reply cut off mid-JSON.** If `max_tokens` is too small, the JSON stops mid-string and
+- A reply cut off mid-JSON: if `max_tokens` is too small, the JSON stops mid-string and
   parsing fails with `InvalidJSONReply`. Leave room for the whole object.
-- **Valid JSON, wrong content.** JSON mode guarantees syntax, not truth. The model can still
+- Valid JSON, wrong content: JSON mode guarantees syntax, not truth. The model can still
   miscount. Check the values you care about.
-- **Sharing a mutable default.** An earlier version of `Conversation` used `history=[]` as a
+- Sharing a mutable default: an earlier version of `Conversation` used `history=[]` as a
   default argument, so every chatbot shared one list. The fix is `history=None`. A test covers it.
-- **Too many examples.** Each example is text the model copies. Pick examples that cover the cases
+- Too many examples: each example is text the model copies. Pick examples that cover the cases
   you care about, and test with and without them.
 
 ## Exercise

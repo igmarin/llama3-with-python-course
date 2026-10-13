@@ -84,13 +84,13 @@ type or a negative count, not a wrong number: that still needs a check against k
 
 ## Common mistakes
 
-- **Assuming the model will use the tool.** It decides from the tool's description. Vague
+- Assuming the model will use the tool: it decides from the tool's description. Vague
   descriptions get ignored.
-- **Nested argument models.** The example tools use flat arguments only. Nested Pydantic models
+- Nested argument models: the example tools use flat arguments only. Nested Pydantic models
   add `$ref` entries to the schema, which this course did not test. Keep arguments flat.
-- **Tools with side effects.** Do not let a model-chosen call delete, send or pay without your
+- Tools with side effects: do not let a model-chosen call delete, send or pay without your
   checks. Validate, and ask a person for anything irreversible.
-- **Trusting a 3B model's choices.** It sometimes picks the wrong tool. Show the call, as the
+- Trusting a 3B model's choices: it sometimes picks the wrong tool. Show the call, as the
   lesson does, and test the failure path.
 
 ## Exercise

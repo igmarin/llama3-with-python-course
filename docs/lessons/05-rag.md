@@ -3,7 +3,7 @@
 You make the model answer from documents it has never seen, cite them, refuse when they don't
 contain the answer, and resist instructions hidden in a document.
 
-**Why it matters:** The model knows nothing about your shop. Without this it guesses; with it, every answer comes from your documents, with a source you can check.
+**Why it matters:** On its own, the model knows nothing about your shop and guesses. With RAG it answers from your documents and shows which one it used.
 
 ```bash
 python scripts/download_model.py --profile embedding
@@ -15,13 +15,13 @@ python lessons/05_rag/01_ask_your_documents.py
 RAG means retrieval-augmented generation. Instead of hoping the model memorised your facts, you
 look them up and put them in the prompt.
 
-1. **Chunk.** Split each document into pieces of at most 80 words. A paragraph stays whole if it
+1. Chunk: split each document into pieces of at most 80 words. A paragraph stays whole if it
    fits.
-2. **Embed.** A second model, the embedding model, turns each chunk into a list of numbers (a
+2. Embed: a second model, the embedding model, turns each chunk into a list of numbers (a
    vector). Texts with similar meaning get vectors that point the same way.
-3. **Search.** Embed the question the same way. Rank chunks by cosine similarity, the angle between
+3. Search: embed the question the same way. Rank chunks by cosine similarity, the angle between
    two vectors: 1.0 means the same direction, near 0 means unrelated.
-4. **Answer.** Send the best chunks to the chat model with the rule "answer only from these".
+4. Answer: send the best chunks to the chat model with the rule "answer only from these".
 
 ```mermaid
 flowchart TD
@@ -72,13 +72,13 @@ questions. `llama_embedder` adds it.
 
 ## Common mistakes
 
-- **A threshold from a few questions.** 0.6 was tuned on nine questions. Test yours.
-- **Chunks that are too big or too small.** Big chunks mix topics; small ones lose context.
-- **Mixing embedding models.** Vectors from different models cannot be compared. Rebuild the index
+- A threshold from a few questions: 0.6 was tuned on nine questions. Test yours.
+- Chunks that are too big or too small: big chunks mix topics; small ones lose context.
+- Mixing embedding models: vectors from different models cannot be compared. Rebuild the index
   after any change.
-- **Trusting retrieved text.** Anything you put in the prompt can carry instructions. Treat
+- Trusting retrieved text: anything you put in the prompt can carry instructions. Treat
   documents from outside sources as untrusted.
-- **Forgetting the prefixes.** The nomic-embed model card says to use them, so skipping them
+- Forgetting the prefixes: the nomic-embed model card says to use them, so skipping them
   goes against how the model was trained.
 
 ## Exercise

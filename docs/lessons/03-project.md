@@ -1,6 +1,6 @@
 # Lesson 3: Customer-message classifier project
 
-You sort messages sent to the Northwind Bikes shop into **Repair**, **Order** or **Feedback**, so each
+You sort messages sent to the Northwind Bikes shop into Repair, Order or Feedback, so each
 one reaches the right person, and you measure how often the model is right.
 
 **Why it matters:** A demo that works once proves little. A score on messages the model has never seen tells you whether to trust it, especially on the tricky cases.
@@ -84,10 +84,10 @@ and 96.3% on hard training messages, are more informative. To learn more, add ha
 
 ## Common mistakes
 
-- **Tuning on the test set.** Compare prompts on training messages. Look at the test set once.
-- **Reporting one number.** Overall accuracy can hide failures on hard messages. Split the score.
-- **Trusting a tiny test set.** One message is 3 points here, and every setup scored 100%.
-- **Ignoring unusable replies.** A model that fails to answer is wrong. The report counts them.
+- Tuning on the test set: compare prompts on training messages. Look at the test set once.
+- Reporting one number: overall accuracy can hide failures on hard messages. Split the score.
+- Trusting a tiny test set: one message is 3 points here, and every setup scored 100%.
+- Ignoring unusable replies: a model that fails to answer is wrong. The report counts them.
 
 ## Exercise
 

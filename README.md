@@ -7,7 +7,7 @@ cloud costs.
 
 Needs a Mac with Apple Silicon, 16 GB of RAM and Python 3.10 to 3.14. [Setup details](docs/setup.md)
 
-## Start in 5 minutes
+## Quick start
 
 ```bash
 git clone https://github.com/igmarin/llama3-with-python-course.git
@@ -18,13 +18,14 @@ python scripts/download_model.py --profile laptop-16gb
 python lessons/01_basics/01_chat.py
 ```
 
-If the last command prints text about bicycle tires, you are ready.
+The install compiles `llama-cpp-python`, so it takes a few minutes. If the last command prints
+text about bicycle tires, you are ready.
 
 ## Then follow this path
 
-1. **[Tutorial](docs/tutorial.md)**: build a classifier for the shop's customer messages, about 20
+1. [Tutorial](docs/tutorial.md): build a classifier for the shop's customer messages, about 20
    minutes.
-2. **The lessons**, in order:
+2. The lessons, in order:
 
    | Lesson | Why it matters |
    |--------|----------------|
@@ -33,12 +34,12 @@ If the last command prints text about bicycle tires, you are ready.
    | [3. Project](docs/lessons/03-project.md) | Build a real task and measure how often it is right |
    | [4. Generation](docs/lessons/04-generation.md) | Control randomness, and keep long chats inside the model's limit |
    | [5. RAG](docs/lessons/05-rag.md) | Answer from your own documents and admit when they don't say |
-   | [6. Tools](docs/lessons/06-tools.md) | Let the model call your code for exact answers, safely |
+   | [6. Tools](docs/lessons/06-tools.md) | Let the model call your Python functions, with every call checked first |
    | [7. Fine-tuning](docs/lessons/07-finetuning.md) | Teach the task by example, then check whether it paid off |
 
    Each page explains the ideas and links to its scripts in `lessons/`.
 
-3. **Everything else** is in the [docs index](docs/index.md): how-to guides (switch to a bigger
+3. Everything else is in the [docs index](docs/index.md): how-to guides (switch to a bigger
    model, add your own data, run the tests), model benchmarks, and further reading.
 
 ## License

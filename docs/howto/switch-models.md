@@ -59,9 +59,9 @@ better, at half the speed. See [Models and benchmarks](../models.md).
 
 ## If something fails
 
-- **`ModelNotFoundError: Model file not found: ...`**: the file is not downloaded. The message ends
+- `ModelNotFoundError: Model file not found: ...`: the file is not downloaded. The message ends
   with the command to run, for example `python scripts/download_model.py --profile studio-128gb`.
-- **`KeyError: "Unknown profile 'nope'. Available: ..."`**: the name is misspelled. The message lists
+- `KeyError: "Unknown profile 'nope'. Available: ..."`: the name is misspelled. The message lists
   the valid names.
-- **The model loads but the machine swaps or freezes**: the model is too big for your memory. Pick
+- The model loads but the machine swaps or freezes: the model is too big for your memory. Pick
   a smaller profile. [Models and benchmarks](../models.md) explains how to estimate the size.

@@ -73,12 +73,12 @@ writing.
 
 ## Common mistakes
 
-- **Using plain completion for a question.** If the reply rambles, switch to the chat API.
-- **Forgetting `max_tokens`.** Generation stops at a default limit that may cut your answer off
+- Using plain completion for a question: if the reply rambles, switch to the chat API.
+- Forgetting `max_tokens`: generation stops at a default limit that may cut your answer off
   mid-sentence, or run longer than you want. Set it.
-- **Putting `<|begin_of_text|>` in a hand-written prompt.** llama.cpp adds it, and you get a
+- Putting `<|begin_of_text|>` in a hand-written prompt: llama.cpp adds it, and you get a
   warning about a duplicate token. `llama3_chat_prompt` leaves it out for this reason.
-- **Expecting the same answer every run.** The default `temperature` adds randomness. Lesson 4
+- Expecting the same answer every run: the default `temperature` adds randomness. Lesson 4
   covers it.
 
 ## Exercise

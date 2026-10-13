@@ -1,8 +1,8 @@
 # Tutorial: build a customer-message classifier
 
 By the end you will have run a Llama model on your own computer, made it return data instead of
-prose, and used it to sort customer messages for a bike shop into **Repair**, **Order** or
-**Feedback**, with a score that shows how often it is right. It takes about 20 minutes after the
+prose, and used it to sort customer messages for a bike shop into Repair, Order or
+Feedback, with a score that shows how often it is right. It takes about 20 minutes after the
 install.
 
 Before you start, finish the [setup](setup.md): the install and the 2 GB model download. Run every command from the repository root, with your virtual environment
@@ -115,7 +115,7 @@ accuracy. You can now:
 
 ## Where next
 
-You just used pieces of lessons 1 to 3. The lessons explain each piece properly, in this order:
+You just used pieces of lessons 1 to 3. The lessons explain each piece, in this order:
 
 | Lesson | What it adds to what you just built |
 |--------|-------------------------------------|

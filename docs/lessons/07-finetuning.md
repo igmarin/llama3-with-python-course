@@ -91,13 +91,13 @@ no short rules.
 
 ## Common mistakes
 
-- **Choosing settings from the test score.** If you try several settings and keep the one with the
+- Choosing settings from the test score: if you try several settings and keep the one with the
   best test score, the test score no longer tells you how the model does on new messages. Choose
   from validation loss, then run the test once.
-- **Training too long.** If validation loss rises while training loss keeps falling, stop earlier.
+- Training too long: if validation loss rises while training loss keeps falling, stop earlier.
   Check the curve on every run; it depends on your data.
-- **Judging on the training data.** A model that memorised its examples scores 100% on them.
-- **Comparing unequal setups.** Base and tuned must get the same prompt and the same messages.
+- Judging on the training data: a model that memorised its examples scores 100% on them.
+- Comparing unequal setups: base and tuned must get the same prompt and the same messages.
 
 ## Exercise
 
