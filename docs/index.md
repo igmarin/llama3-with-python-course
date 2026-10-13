@@ -52,7 +52,7 @@ Lessons [7](../lessons/07_finetuning/) and [8](../lessons/08_quantization/) comp
 | [Handle errors](howto/handle-errors.md) | Retry, timeout, and degrade gracefully when the model fails |
 | [Cache responses](howto/cache-responses.md) | Avoid repeating the same model calls |
 | [Serve with FastAPI](howto/serve-with-fastapi.md) | Turn the classifier into a web API |
-| [Judge with a larger model](howto/judge-with-a-larger-model.md) | Use LLM-as-judge to score a smaller model's output |
+| [Check a small model with a larger one](howto/judge-with-a-larger-model.md) | Flag the 3B model's labels that need a human look |
 
 ## Reference
 

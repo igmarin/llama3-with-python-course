@@ -48,10 +48,10 @@ def main() -> None:
     print(f"Split: {args.split} ({len(df)} messages)")
     print(f"Accuracy: {result['accuracy']:.1%}")
     print(f"Unusable replies: {result['invalid']}")
-    print(f"\nPer-class:")
+    print("\nPer-class:")
     for label, m in result["per_class"].items():
         print(f"  {label}: precision {m['precision']:.1%}, recall {m['recall']:.1%} ({m['support']} messages)")
-    print(f"\nBy difficulty:")
+    print("\nBy difficulty:")
     for d, acc in result["accuracy_by_difficulty"].items():
         print(f"  {d}: {acc:.1%}")
     print(f"\nThroughput: {len(df) / elapsed:.1f} messages/s ({elapsed:.1f}s total)")

@@ -1,134 +1,82 @@
-# Handle errors in production
+# Handle model errors
 
-The model might return invalid JSON, timeout, or run out of memory. This guide
-shows how to handle these failures without crashing your application.
+What can fail when you call the model, and what to do about each failure. The main rule for a local
+model: retrying the same request does not help. Change the request.
 
 ## What can go wrong
 
-| Failure | Cause | Detection |
-|---------|-------|-----------|
-| Invalid JSON | `max_tokens` too small, or the model made a mistake | `InvalidJSONReply` from `chat_json` |
-| Context too long | Chat history exceeds `n_ctx` | `ContextTooLong` from `trim_history` |
-| Model not found | Model file not downloaded | `ModelNotFoundError` from `get_llm` |
-| Tool call failed | Model named an unknown tool or sent bad arguments | `ToolCallFailed` from `ask` |
-| Timeout | Model takes too long (large prompt, slow machine) | No built-in timeout; add one with `signal` or `threading` |
-| Out of memory | Model too large for available RAM | Process killed by OS; check `dmesg` or Console |
+| Failure | Cause | What you see |
+|---------|-------|--------------|
+| Invalid JSON | `max_tokens` cut the reply off, or no schema was given | `InvalidJSONReply` from `chat_json` |
+| Valid JSON, wrong values | The model made a mistake or invented a value | `ValidationError` from Pydantic, or nothing at all |
+| Unknown tool or bad arguments | The model named a tool that does not exist | `ToolCallFailed` from `ask` |
+| Chat too long | The history no longer fits in `n_ctx` | `ContextTooLong` from `trim_history` |
+| Model missing | The model file is not downloaded | `ModelNotFoundError` from `get_llm` |
+| Out of memory | The model is too big for this machine | The process is killed, or the machine freezes |
 
-## Retry with backoff
+## Change the request, do not repeat it
 
-When a model call fails, retrying immediately often fails again. Add a delay
-that grows with each attempt:
+A cloud API can fail because of the network or a busy server, so waiting and retrying the same
+call makes sense there. A local model at temperature 0 gives the same reply to the same prompt. A
+request that failed once fails again:
 
 ```python
-import time
+from llama_course.llm import get_llm
 from llama_course.structured import InvalidJSONReply, chat_json
 
-def chat_json_with_retry(llm, messages, schema=None, max_retries=3, **kwargs):
-    """Retry a JSON chat call with exponential backoff."""
-    for attempt in range(max_retries):
-        try:
-            return chat_json(llm, messages, schema=schema, **kwargs)
-        except InvalidJSONReply as exc:
-            if attempt == max_retries - 1:
-                raise
-            wait = 2 ** attempt  # 1s, 2s, 4s
-            print(f"Retry {attempt + 1}/{max_retries} after {wait}s: {exc}")
-            time.sleep(wait)
+llm = get_llm()
+msgs = [{"role": "user", "content": "Describe the Ridgeline 29 bike as JSON with name, price_usd and colours."}]
+for max_tokens in (10, 10, 10, 200):
+    try:
+        print(max_tokens, "ok", chat_json(llm, msgs, max_tokens=max_tokens, temperature=0.0))
+    except InvalidJSONReply as exc:
+        print(max_tokens, "fail", exc)
 ```
 
-This works for transient failures (the model made a mistake). For persistent
-failures (the prompt is too long), retrying won't help. Check the error message
-first.
+On the 3B model the first three calls failed in exactly the same place
+(`'{"name": "Ridgeline 29'`), and the call with `max_tokens=200` worked. Fix the cause instead:
 
-## Validate before you use
+- Cut-off JSON: raise `max_tokens`.
+- Wrong shape: pass a schema, so generation is constrained to it.
+- Wrong values: send the error back to the model and let it try again. `chat_model` in
+  [`structured.py`](../../src/llama_course/structured.py) and `ask` in
+  [`tools.py`](../../src/llama_course/tools.py) both do this once by default.
 
-The model might return valid JSON that's semantically wrong: a negative price,
-a part name that doesn't exist, a category that's not in your list. Validate
-the output before passing it to the rest of your application:
+## Validate values, not only the format
 
-```python
-from pydantic import BaseModel, Field, ValidationError
+The successful call above returned `'price_usd': 1200`. The prompt contains no price, so the model
+invented one. The JSON is valid and would pass a type check. Two defences:
 
-class Product(BaseModel):
-    name: str
-    price_usd: float = Field(gt=0)  # must be positive
-    weight_kg: float = Field(ge=0)
+- Check what you can with Pydantic: ranges, allowed values, required fields. `chat_model` sends
+  these errors back to the model.
+- Do not ask the model for facts it was never given. Look prices up in your own data, or with a
+  tool ([lesson 6](../../lessons/06_tools/)).
 
-try:
-    product = Product.model_validate(extracted_dict)
-except ValidationError as exc:
-    print(f"Invalid product: {exc}")
-    # Fall back to a default, or ask the model to correct it
-```
+## Limit how long a call can take
 
-Lesson 6 shows how to send the error back to the model for one more try.
+`max_tokens` is the practical time limit: generation stops after that many tokens. At the 3B
+model's 45 tokens per second, `max_tokens=200` is at most about 5 seconds of generation, plus the
+time to read the prompt.
 
-## Timeout long-running calls
+A hard timeout that stops a call halfway is harder. Python cannot safely interrupt the model from
+another thread. If you need one, run the model in a separate process and stop that process.
 
-The model can hang on a very long prompt or when the machine is under load. Add
-a timeout to prevent your application from blocking forever:
+## Fall back, and make the fallback visible
 
-```python
-import signal
-
-class ModelTimeout(Exception):
-    pass
-
-def timeout_handler(signum, frame):
-    raise ModelTimeout("Model call timed out")
-
-signal.signal(signal.SIGALRM, timeout_handler)
-signal.alarm(30)  # 30 seconds
-
-try:
-    result = llm.create_chat_completion(messages=messages, max_tokens=200)
-except ModelTimeout:
-    print("Model took too long; falling back to a default response")
-    result = None
-finally:
-    signal.alarm(0)  # cancel the alarm
-```
-
-This works on Unix (Mac, Linux). On Windows, use `threading.Timer` instead.
-
-## Log failures for debugging
-
-When a model call fails, log the prompt, the error, and the settings. This
-helps you spot patterns (e.g., "JSON fails when max_tokens < 50") and improve
-the prompt:
+When the model still fails, the program needs a safe default. The classifier in
+[lesson 3](../../lessons/03_project/) uses the label `Feedback`. `classify` logs a warning when it
+does, so you can count how often it happens:
 
 ```python
 import logging
 
-logger = logging.getLogger(__name__)
-
-try:
-    result = chat_json(llm, messages, schema=schema, max_tokens=50)
-except InvalidJSONReply as exc:
-    logger.error(
-        "JSON parse failed: max_tokens=%d, messages=%r, error=%s",
-        50, messages, exc
-    )
-    raise
+logging.basicConfig(level=logging.WARNING)
 ```
 
-## Graceful degradation
-
-When the model fails, your application should still do something useful. Options:
-
-- **Fall back to a default response**: "I couldn't process that request. Please
-  try again or contact support."
-- **Return a cached response**: if you've seen this question before, use the
-  cached answer (see [Cache responses](cache-responses.md)).
-- **Queue for later**: save the request and retry when the model is available.
-- **Route to a human**: for critical tasks, escalate to a person.
-
-The classifier in lesson 3 uses a fallback label when the model's reply is
-unusable. This keeps the application running, but the fallback might be wrong.
-Logging the failure (as shown above) makes it visible.
+Other safe defaults: send the message to a person, or tell the user to try again. Logs contain
+customer messages, so keep them where customer data is allowed to be.
 
 ## Where next
 
-- [Lesson 6: Tools](../../lessons/06_tools/): validation and retries for tool calls.
-- [Cache responses](cache-responses.md): avoid repeating failed calls.
-- [Chain prompts](chain-prompts.md): handle errors at each step of a pipeline.
+- [Lesson 6: Tools](../../lessons/06_tools/): sending validation errors back to the model.
+- [Change generation settings](change-generation-settings.md): `max_tokens`, temperature and context size.

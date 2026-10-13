@@ -60,7 +60,7 @@ Use it like the normal `create_chat_completion`:
 from llama_course.llm import get_llm
 
 llm = get_llm()
-messages = [{"role": "user", "content": "What do bicycle tires lose air?"}]
+messages = [{"role": "user", "content": "Why do bicycle tires lose air?"}]
 
 # First call: hits the model, takes a few seconds
 result1 = cached_chat_completion(llm, messages, max_tokens=100)
@@ -114,5 +114,5 @@ text = result["choices"][0]["message"]["content"]
 
 - [Chain prompts](chain-prompts.md): cache intermediate results in a pipeline.
 - [Handle errors](handle-errors.md): retry failed calls instead of caching them.
-- [Lesson 3: Project](../../lessons/03_project/): batch classification uses
-  this pattern to avoid re-running the model.
+- [Lesson 3: Project](../../lessons/03_project/): a place to try it: cache the
+  classifier's replies while you change the report code.

@@ -56,6 +56,11 @@ reply = message_text(llm.create_chat_completion(messages=messages, max_tokens=10
 print(f"\nReply: {reply}")
 ```
 
+On the 3B model this extracted `Ridgeline 29`, found the price $1249, and replied: "We currently
+have the Ridgeline 29 in stock. The price for it is $1249." The price is right. "In stock" is
+invented: no step checked stock. Each step only knows what you pass it, and the writing step fills
+gaps. Pass every fact the reply needs, or tell it to mention only the facts given.
+
 ## When to use tools instead
 
 If step 2 is a database query, an API call, or arithmetic, use tool calling

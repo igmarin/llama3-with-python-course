@@ -5,14 +5,18 @@ Concept:  Lesson 6.1 ran one tool per question. Real tasks often need
           several: check stock for two items, then work out shipping.
           ``ask_multi`` keeps the same chat going after each tool result,
           so the model can call another tool or stop when it has enough.
-          The loop runs at most ``max_turns`` times to prevent infinite
-          loops if the model keeps calling tools.
+          The final answer sees every result, not only the last one.
+          The loop runs at most ``max_turns`` times, so a model that keeps
+          calling tools cannot loop forever.
 Read:     README.md in this folder explains the ideas and new words.
 Run:      python lessons/06_tools/03_multi_turn_tools.py
 Expected: For each question, the tools the model called (in order), their
-          results, and the final answer. A 3B model may not always chain
-          tools correctly; the printed trace lets you see where it went
-          wrong.
+          results, and the final answer. Last run on the 3B model: the first
+          question took three calls (the first passed both items at once, got
+          an error back, and the model split it), the third took two. But
+          the answer to the first said "No, they are not both in stock" next
+          to the correct counts (40 and 25).
+          Correct facts do not guarantee a correct conclusion; read the trace.
 """
 
 from llama_course.llm import get_llm
@@ -35,8 +39,8 @@ def main() -> None:
         except ToolCallFailed as exc:
             print(f"   Gave up: {exc}\n")
             continue
-        if result.tool:
-            print(f"   Last tool: {result.tool}({result.arguments}) -> {result.result}")
+        for tool, arguments, output in result.steps:
+            print(f"   {tool}({arguments}) -> {output}")
         print(f"A: {result.text}\n")
 
 

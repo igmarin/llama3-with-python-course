@@ -1,10 +1,11 @@
 # Serve the classifier with FastAPI
 
-Turn the message classifier from lesson 3 into a web API that other programs
-can call. This guide shows a minimal FastAPI endpoint. It's not
-production-ready, but it shows the shape.
+Turn the message classifier from lesson 3 into a web API that other programs on your machine can
+call. This is a minimal version to learn the shape, not a production server.
 
 ## Install FastAPI
+
+FastAPI is not a course dependency, so install it on its own:
 
 ```bash
 pip install fastapi uvicorn
@@ -15,6 +16,8 @@ pip install fastapi uvicorn
 Save this as `api.py` in the repository root:
 
 ```python
+from threading import Lock
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 
@@ -22,30 +25,42 @@ from llama_course.classify import classify
 from llama_course.llm import get_llm
 
 app = FastAPI()
-llm = get_llm()  # load once at startup
+llm = get_llm()  # load once, at startup
+llm_lock = Lock()
+
 
 class MessageRequest(BaseModel):
     message: str
 
+
 class ClassificationResponse(BaseModel):
     category: str
 
+
 @app.post("/classify", response_model=ClassificationResponse)
-def classify_message(req: MessageRequest):
-    label = classify(llm, req.message)
+def classify_message(req: MessageRequest) -> ClassificationResponse:
+    with llm_lock:  # one request at a time: a Llama object is not safe to share between threads
+        label = classify(llm, req.message)
     return ClassificationResponse(category=label)
 ```
+
+FastAPI runs plain `def` endpoints in a pool of threads, so two requests can arrive at the same
+time. One `Llama` object holds one conversation state and must not be used by two threads at
+once. The lock makes requests wait their turn.
 
 Run it:
 
 ```bash
-uvicorn api:app --host 0.0.0.0 --port 8000
+uvicorn api:app --host 127.0.0.1 --port 8000
 ```
 
-Test it:
+`127.0.0.1` means only programs on this machine can reach it. Use `0.0.0.0` only after you add the
+protections listed below, because it opens the port to your whole network.
+
+Test it from a second terminal (tested with four requests sent at once, all answered):
 
 ```bash
-curl -X POST http://localhost:8000/classify \
+curl -X POST http://127.0.0.1:8000/classify \
   -H "Content-Type: application/json" \
   -d '{"message": "My chain jumps when I pedal hard. Can you look at it this week?"}'
 ```
@@ -53,49 +68,20 @@ curl -X POST http://localhost:8000/classify \
 You get:
 
 ```json
-{"category": "Repair"}
+{"category":"Repair"}
 ```
 
-## What this doesn't do
+## What this does not do
 
-This is a starting point, not a production API. It's missing:
-
-- **Authentication**: anyone who can reach port 8000 can call the endpoint. Add
-  API keys or OAuth.
-- **Rate limiting**: a client can send thousands of requests per second. Add a
-  rate limiter (e.g., `slowapi`).
-- **Timeouts**: the model can hang on a long prompt. Add a timeout to the
-  endpoint (e.g., `asyncio.wait_for`).
-- **Error handling**: if the model fails, the endpoint returns a 500. Catch
-  exceptions and return a useful error message.
-- **Logging**: log each request and response for debugging.
-- **Health checks**: add a `/health` endpoint that returns 200 if the model is
-  loaded.
-- **Batch endpoint**: accept a list of messages and return a list of labels.
-
-## Batch endpoint
-
-Process multiple messages in one request:
-
-```python
-class BatchRequest(BaseModel):
-    messages: list[str]
-
-class BatchResponse(BaseModel):
-    categories: list[str]
-
-@app.post("/classify/batch", response_model=BatchResponse)
-def classify_batch(req: BatchRequest):
-    labels = [classify(llm, msg) for msg in req.messages]
-    return BatchResponse(categories=labels)
-```
-
-This runs the model sequentially. For parallel processing, use
-`asyncio` and multiple model instances (one per process).
+- Authentication: anyone who can reach the port can use it.
+- Speed under load: requests run one at a time. The 3B model sorted 3.7 messages per second on
+  an M-series Mac ([`batch_classify.py`](../../lessons/03_project/batch_classify.py), test set). More throughput needs more
+  processes, each with its own copy of the model in memory.
+- Error reporting: if the model's reply is unusable, `classify` returns the fallback label
+  `Feedback` and logs a warning. A real service should tell the caller instead.
+- Health checks and request logs.
 
 ## Where next
 
-- [Handle errors](handle-errors.md): add timeouts and retries to the endpoint.
-- [Cache responses](cache-responses.md): avoid re-classifying the same message.
-- [Lesson 3: Project](../../lessons/03_project/): the classifier this endpoint
-  wraps.
+- [Handle errors](handle-errors.md): what to do when a model call fails.
+- [Lesson 3: Project](../../lessons/03_project/): the classifier this endpoint wraps.
