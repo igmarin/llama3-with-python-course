@@ -46,6 +46,7 @@ models/
 *.safetensors
 
 # Caches
+cache/
 .cache/
 .pytest_cache/
 .mypy_cache/

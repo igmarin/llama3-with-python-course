@@ -78,6 +78,27 @@ are free." The prompt wraps documents in tags and tells the model that documents
 instructions. On the question "Are all helmets free this week?" the 3B model said it could not find
 that in the documents. That was one run on one model, and the defence is not guaranteed.
 
+### Hallucination: when the model gets the facts wrong
+
+RAG stops the model from guessing when the documents don't have the answer. But the model can still
+misread a fact that *is* in the documents. For example, the returns policy says "30 days" for bikes
+and "14 days" for accessories. If the question is "How long do I have to return a helmet?", the
+model might cite the 30-day bike policy instead of the 14-day accessory policy. The answer sounds
+confident and cites a source, but the source says something different.
+
+This is harder to catch than a "not found" refusal. Two defences help:
+
+1. **Cross-check numbers.** If the answer contains a number (days, dollars, percentages), extract it
+   and compare it against the cited chunk. If they don't match, flag the answer. This works for
+   facts with exact values; it doesn't work for paraphrases.
+
+2. **Ask the model to quote.** Change the prompt to require a verbatim quote from the document
+   before each fact. The model is less likely to change a number when it has to copy it exactly.
+   This makes the answer longer and slower, so use it when accuracy matters more than speed.
+
+Neither defence is guaranteed. For critical facts (prices, legal terms), check against the source
+yourself, or use a larger model for the answer step.
+
 ### Prefixes
 
 The embedding model expects a short prefix: `search_document: ` before each chunk and

@@ -23,6 +23,7 @@ All course terms are in the [glossary](../../docs/glossary.md).
 ```bash
 python lessons/06_tools/01_tool_calling.py
 python lessons/06_tools/02_validated_output.py
+python lessons/06_tools/03_multi_turn_tools.py
 ```
 
 ## The ideas
@@ -79,6 +80,18 @@ back with an explanation. The model gets one more try. If that fails too, `ask` 
 `ToolCallFailed`. A tool can also raise `ToolError` itself, for example for an unknown item. That
 message becomes the result, and the model explains it to the user.
 
+### Multi-turn tool use
+
+[Lesson 6.1](01_tool_calling.py) ran one tool per question. Real tasks often need several: check stock
+for two items, then work out shipping. `ask_multi` keeps the same chat going after each tool result,
+so the model can call another tool or stop when it has enough. A failed call goes back to the model
+with the error, as in `ask`. The final answer sees every tool result, not only the last one.
+[Lesson 6.3](03_multi_turn_tools.py) asks questions that need two or three tool calls. The loop runs
+at most `max_turns` times, so a model that keeps calling tools cannot loop forever.
+
+Read the printed trace, not only the answer. On the last run, the 3B model got the stock counts right
+for "5 helmets and 3 locks" (40 and 25) and still answered "No, they are not both in stock."
+
 ### Why a fresh chat for the answer
 
 The tool-call chat tells the model to reply with JSON only. When that chat was reused for the final
@@ -101,7 +114,7 @@ answers.
 
 | File | What it shows |
 |------|---------------|
-| [`src/llama_course/tools.py`](../../src/llama_course/tools.py) | `Tool`, `ToolBox`, `ask`, `ToolError`, `ToolCallFailed` |
+| [`src/llama_course/tools.py`](../../src/llama_course/tools.py) | `Tool`, `ToolBox`, `ask`, `ask_multi`, `ToolError`, `ToolCallFailed` |
 | [`src/llama_course/shop_tools.py`](../../src/llama_course/shop_tools.py) | Three safe example tools |
 | [`src/llama_course/structured.py`](../../src/llama_course/structured.py) | `chat_model`, `describe_errors`, `InvalidModelReply` |
 
@@ -118,8 +131,11 @@ answers.
 
 ## Exercise
 
-Add an `opening_hours` tool that takes a `day` and returns the store hours, then ask "Is the store
+1. Add an `opening_hours` tool that takes a `day` and returns the store hours, then ask "Is the store
 open on Sunday?" Compare a short and a long tool description.
+
+2. Use `ask_multi` to answer "I need 5 helmets and 3 locks. What's the express shipping for a $350
+order?" How many tool calls does it take?
 
 <details>
 <summary>Answer</summary>
@@ -147,6 +163,10 @@ chose no tool for both "Is the store open on Sunday?" and "What are the store ho
 and guessed. With the long description it called `opening_hours` for the Sunday question and
 answered "closed", but it still skipped the tool for the Saturday question. The description decides
 whether a tool gets used, and a small model is not reliable at it.
+
+For the second question the 3B model made three calls: `shipping_cost` (express, $350), then
+`get_stock` for helmets and for locks. Its answer only mentioned the $79 shipping and dropped the
+stock counts it had just looked up. Check `result.steps` to see what the model knew.
 </details>
 
 ## Go deeper

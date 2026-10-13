@@ -12,7 +12,15 @@ from llama_course.shop_tools import (
     get_stock,
     shipping_cost,
 )
-from llama_course.tools import NO_TOOL, Tool, ToolBox, ToolCallFailed, ToolError, ask
+from llama_course.tools import (
+    NO_TOOL,
+    Tool,
+    ToolBox,
+    ToolCallFailed,
+    ToolError,
+    ask,
+    ask_multi,
+)
 
 
 def call(tool, **arguments):
@@ -108,3 +116,31 @@ def test_shop_tools():
     assert shipping_cost(ShippingArgs(order_total=1600)) == "shipping costs $0.00"
     assert shipping_cost(ShippingArgs(order_total=1600, express=True)) == "shipping costs $79.00"
     assert shipping_cost(ShippingArgs(order_total=100)) == "shipping costs $29.00"
+
+
+def test_ask_multi_chains_calls_and_answers_from_every_result(fake_llm):
+    llm = fake_llm([call("get_stock", item="helmet"), call("get_stock", item="lock"), json.dumps({"tool": NO_TOOL}), "Both."])
+    result = ask_multi(llm, SHOP_TOOLS, "Helmets and locks?")
+    assert [s[2] for s in result.steps] == ["40 helmet(s) in stock", "25 lock(s) in stock"]
+    assert (result.tool, result.arguments, result.text) == ("get_stock", {"item": "lock"}, "Both.")
+    final = llm.calls[-1]["messages"][-1]["content"]
+    assert "40 helmet(s)" in final and "25 lock(s)" in final
+
+
+def test_ask_multi_reports_a_bad_call_and_continues(fake_llm):
+    llm = fake_llm([call("delete_everything"), call("get_stock", item="lock"), json.dumps({"tool": NO_TOOL}), "25."])
+    result = ask_multi(llm, SHOP_TOOLS, "Locks?")
+    assert result.tool == "get_stock" and len(result.steps) == 1
+    assert "Unknown tool 'delete_everything'" in llm.calls[1]["messages"][-1]["content"]
+
+
+def test_ask_multi_stops_at_max_turns(fake_llm):
+    llm = fake_llm([call("get_stock", item="lock")] * 2 + ["25."])
+    result = ask_multi(llm, SHOP_TOOLS, "Locks?", max_turns=2)
+    assert len(result.steps) == 2 and len(llm.calls) == 3
+
+
+def test_ask_multi_gives_up_when_no_call_is_valid(fake_llm):
+    llm = fake_llm(["{bad", call("nope")])
+    with pytest.raises(ToolCallFailed, match="2 turns"):
+        ask_multi(llm, SHOP_TOOLS, "x", max_turns=2)

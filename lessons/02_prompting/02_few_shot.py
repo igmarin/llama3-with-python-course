@@ -25,6 +25,9 @@ NEW_ROUTE = "Rocky single-track descent with drops and loose gravel, 1,200 m of 
 
 
 def rate(llm, prompt: str) -> str:
+    # The stop string "Route" ends generation before the model writes the next
+    # example. This works for the 3B and 8B models but may need adjusting for
+    # other models that format their output differently.
     output = llm(prompt, max_tokens=3, stop=["Route"], temperature=0.0)
     return output["choices"][0]["text"].strip()
 

@@ -134,5 +134,5 @@ You just used pieces of [lessons 1](../lessons/01_basics/) to 3. The lessons exp
 | [4. Generation](../lessons/04_generation/) | Why answers vary between runs, and what happens when a chat gets too long |
 | [5. RAG](../lessons/05_rag/) | Answer customer questions from the shop's policy documents |
 | [6. Tools](../lessons/06_tools/) | Look up live stock and shipping costs by calling Python functions |
-| [7. Fine-tuning](../lessons/07_finetuning/) | Train the model on the messages instead of describing the task in the prompt |
+| [7. Fine-tuning](../lessons/07_finetuning/) | Train the model on the messages instead of describing the task in the prompt (Apple Silicon only) |
 | [8. Quantization](../lessons/08_quantization/) | Choose between smaller and larger model files for the classifier, with measurements |

@@ -8,6 +8,7 @@ reply is still unusable, :func:`classify` returns a default instead of crashing.
 from __future__ import annotations
 
 import json
+import logging
 from collections.abc import Sequence
 from typing import Any
 
@@ -17,8 +18,11 @@ from llama_course.data import LABELS
 from llama_course.structured import InvalidJSONReply, chat_json
 
 # Used when the model's reply is unusable. In a real shop, route these to a person.
+# A silent fallback can misroute messages; the warning makes failures visible.
 FALLBACK = "Feedback"
 INVALID = "invalid"
+
+logger = logging.getLogger(__name__)
 
 SYSTEM_PROMPT = (
     "You sort customer messages sent to a bike shop into exactly one category.\n"
@@ -76,7 +80,10 @@ def predict(llm: Any, message: str, examples: Sequence[tuple[str, str]] = FEW_SH
 
 def classify(llm: Any, message: str, examples: Sequence[tuple[str, str]] = FEW_SHOT_EXAMPLES) -> str:
     """Return exactly one valid label; falls back to :data:`FALLBACK` on a bad reply."""
-    return predict(llm, message, examples) or FALLBACK
+    label = predict(llm, message, examples)
+    if label is None:
+        logger.warning("Model reply unusable for message %r; falling back to %s", message, FALLBACK)
+    return label or FALLBACK
 
 
 def metrics(y_true: Sequence[str], y_pred: Sequence[str]) -> dict[str, Any]:
