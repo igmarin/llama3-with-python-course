@@ -5,7 +5,7 @@ read.
 
 **Why it matters:** A model's raw answer is prose, but a program needs a fixed format. This is how you get answers your code can use.
 
-Before you start: do [lesson 1](01-basics.md). You should know what a prompt, a token and a chat
+Before you start: do [lesson 1](../01_basics/). You should know what a prompt, a token and a chat
 message are.
 
 ## New words
@@ -18,7 +18,7 @@ message are.
 | JSON Schema | A description of the JSON you expect: which keys, and what type each value has |
 | Grammar | A set of rules that limits which tokens the model may pick next |
 
-All course terms are in the [glossary](../glossary.md).
+All course terms are in the [glossary](../../docs/glossary.md).
 
 ## Run it
 
@@ -35,7 +35,7 @@ python lessons/02_prompting/05_conversation_class.py
 ### Format the prompt so the answer comes next
 
 With plain completion, the model continues your text. So write the text so that the answer is the
-natural next thing. Lesson 2.1 writes `Instruction:`, `Question:` and then `Answer:`. After
+natural next thing. [Lesson 2.1](01_prompt_formatting.py) writes `Instruction:`, `Question:` and then `Answer:`. After
 `Answer:`, the likeliest continuation is an answer.
 
 A stop string ends the reply early. With `stop=["Question:"]`, the model stops before it starts
@@ -46,16 +46,16 @@ inventing a next question.
 Show a few inputs with their labels, then add a new input with the label left blank. The model
 copies the pattern and fills in the blank. `few_shot_prompt` builds this text for you.
 
-Lesson 2.2 rates cycling routes as Easy, Moderate or Hard, with one example of each. The new
+[Lesson 2.2](02_few_shot.py) rates cycling routes as Easy, Moderate or Hard, with one example of each. The new
 route is harder than every example. With the examples alone, the 3B model answers `Very Hard`, a
 label that does not exist. Examples show the model the format of the answer. They do not tell it
-which answers are allowed. Adding one line that names the three labels fixes it. Lesson 3 shows
+which answers are allowed. Adding one line that names the three labels fixes it. [Lesson 3](../03_project/) shows
 that examples can also help on some inputs and hurt on others.
 
 ### JSON mode
 
 Code can't read a sentence like "about two dozen tubes". It needs data. Passing
-`response_format={"type": "json_object"}` makes the model reply in valid JSON. Lesson 2.3 turns a
+`response_format={"type": "json_object"}` makes the model reply in valid JSON. [Lesson 2.3](03_json_inventory.py) turns a
 supplier's delivery note into a dictionary of parts and quantities.
 
 This works because of a grammar. At every step, llama.cpp removes the tokens that would break the
@@ -72,7 +72,7 @@ flowchart LR
 ```
 
 JSON mode makes sure the reply is valid JSON, but not which keys it has. A JSON Schema fixes those
-too. Lesson 2.4 asks for a `name` string, a `price_usd` number and a `weight_kg` number, and
+too. [Lesson 2.4](04_json_schema.py) asks for a `name` string, a `price_usd` number and a `weight_kg` number, and
 gets exactly those keys. `chat_json` sends the request and turns the reply into a Python
 dictionary.
 
@@ -82,17 +82,17 @@ The model remembers nothing between calls. Each call starts from zero. To hold a
 send the whole history every time.
 
 `Conversation` does this. It keeps the list of messages and sends all of it on each turn. That is
-why the follow-up in lesson 2.5, "something I can fold and take on the train for the same ride",
+why the follow-up in [lesson 2.5](05_conversation_class.py), "something I can fold and take on the train for the same ride",
 gets a sensible answer: the model can still see the first request. The list grows with every turn.
-Lesson 4 covers what happens when it gets too long.
+[Lesson 4](../04_generation/) covers what happens when it gets too long.
 
 ## Code map
 
 | File | What it shows |
 |------|---------------|
-| `src/llama_course/prompts.py` | `qa_prompt`, `few_shot_prompt` |
-| `src/llama_course/structured.py` | `chat_json`, and `InvalidJSONReply` for a reply that is not JSON |
-| `src/llama_course/conversation.py` | `Conversation`: history, one method per turn |
+| [`src/llama_course/prompts.py`](../../src/llama_course/prompts.py) | `qa_prompt`, `few_shot_prompt` |
+| [`src/llama_course/structured.py`](../../src/llama_course/structured.py) | `chat_json`, and `InvalidJSONReply` for a reply that is not JSON |
+| [`src/llama_course/conversation.py`](../../src/llama_course/conversation.py) | `Conversation`: history, one method per turn |
 
 ## Common mistakes
 
@@ -108,7 +108,7 @@ Lesson 4 covers what happens when it gets too long.
 
 ## Exercise
 
-In lesson 2.4, add a `frame_material` string field to `SCHEMA` and to `required`. The description
+In [lesson 2.4](04_json_schema.py), add a `frame_material` string field to `SCHEMA` and to `required`. The description
 never says what the frame is made of. What does the model return? How do you let it say "unknown"?
 
 <details>
@@ -131,6 +131,6 @@ prompt: "Use null for anything the description does not state." Then the 3B mode
 - [Claude prompt engineering overview](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview):
   practical advice that applies to most chat models.
 - [Understanding JSON Schema](https://json-schema.org/understanding-json-schema/): the language
-  lesson 2.4 uses to fix keys and types.
+  [lesson 2.4](04_json_schema.py) uses to fix keys and types.
 - [llama.cpp grammars](https://github.com/ggml-org/llama.cpp/blob/master/grammars/README.md): how
   output is restricted to a format.

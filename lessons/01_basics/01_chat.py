@@ -4,6 +4,7 @@ Goal:     Load a model and get one answer.
 Concept:  ``llm(prompt)`` is plain text completion. The model continues the text
           you give it. It does not know it is in a chat, so the reply may ramble
           or repeat. Lesson 1.2 fixes that with chat messages.
+Read:     README.md in this folder explains the ideas and new words.
 Run:      python lessons/01_basics/01_chat.py
 Expected: Text about why bicycle tires lose air, which may ramble until it hits
           ``max_tokens``. It differs on every run because ``temperature`` adds

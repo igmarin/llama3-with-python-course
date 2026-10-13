@@ -12,6 +12,7 @@ Concept:  Classification with an LLM is a prompt (rules plus a few worked
           then score the test set once.
           Run again with another profile to compare models:
               LLAMA_PROFILE=laptop-8b python lessons/03_project/classify_messages.py
+Read:     README.md in this folder explains the ideas and new words.
 Run:      python lessons/03_project/classify_messages.py [--limit N] [--rules-only] [--save]
 Expected: Accuracy, per-class precision/recall, accuracy on easy vs hard messages,
           and a confusion matrix. ``--save`` writes results_<profile>.md next to

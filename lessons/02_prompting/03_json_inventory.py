@@ -5,6 +5,7 @@ Concept:  ``response_format={"type": "json_object"}`` forces the model to emit
           valid JSON. ``chat_json`` also parses it and raises
           ``InvalidJSONReply`` if the reply was cut off. The input is a
           delivery note from a bike shop's supplier.
+Read:     README.md in this folder explains the ideas and new words.
 Run:      python lessons/02_prompting/03_json_inventory.py
 Expected: {'inner_tubes': 24, 'brake_pads': 60, 'saddles': 7}. The model turns "two
           dozen" into 24 and picks the key spelling itself; small models sometimes

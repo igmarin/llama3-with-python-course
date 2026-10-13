@@ -1,15 +1,17 @@
 # Add a model profile
 
 Make a new model selectable by name. This example adds Llama 3.2 1B, a tiny model that loads fast and
-uses little memory. The same steps work for any GGUF model on Hugging Face.
+uses little memory. The same steps work for any GGUF model on Hugging Face, the website where most
+open models are published.
 
 ## Steps
 
-1. Find a repository with GGUF files and pick one file. Search Hugging Face for `GGUF`. Quantized
-   builds from `bartowski` list their files. Choose a single `.gguf` file; models split into parts
+1. Find a repository with GGUF files and pick one file. Search Hugging Face for `GGUF`. Many
+   people publish compressed (quantized) copies of models; the `bartowski` repositories list every
+   file and its size. Choose a single `.gguf` file; models split into parts
    (`...-00001-of-00002.gguf`) will not work with the download script.
 
-2. Add a block under `profiles:` in `configs/models.yaml`:
+2. Add a block under `profiles:` in [`configs/models.yaml`](../../configs/models.yaml):
 
    ```yaml
      tiny-1b:
@@ -24,9 +26,9 @@ uses little memory. The same steps work for any GGUF model on Hugging Face.
    |-------|---------|
    | `repo`, `file` | Where to download from, and which file |
    | `n_ctx` | Context window in tokens. Larger needs more memory |
-   | `n_gpu_layers` | `-1` runs every layer on the GPU (Metal on a Mac) |
-   | `n_threads` | `null` lets llama.cpp choose |
-   | `mlx_repo` | Optional. The same model in MLX format, needed only for lesson 7 fine-tuning |
+   | `n_gpu_layers` | How many of the model's layers (its stacked processing stages) run on the GPU. `-1` means all of them, using Metal on a Mac |
+   | `n_threads` | How many CPU threads to use. `null` lets llama.cpp choose |
+   | `mlx_repo` | Optional. The same model in MLX format, needed only for [lesson 7](../../lessons/07_finetuning/) fine-tuning |
 
 3. Download it:
 
@@ -55,7 +57,7 @@ uses little memory. The same steps work for any GGUF model on Hugging Face.
 
 ## Notes
 
-- The `tiny-1b` block is not in the shipped `configs/models.yaml`. Add it yourself to follow along.
+- The `tiny-1b` block is not in the shipped [`configs/models.yaml`](../../configs/models.yaml). Add it yourself to follow along.
 - Profile names are free text. Use names that say what the machine or model is.
 - A model from another family (Mistral, Qwen) should load the same way (not tested here), but its prompt format differs,
-  and `llama3_chat_prompt` in lesson 1.4 is specific to Llama 3.
+  and `llama3_chat_prompt` in [lesson 1.4](../../lessons/01_basics/04_chat_template.py) is specific to Llama 3.

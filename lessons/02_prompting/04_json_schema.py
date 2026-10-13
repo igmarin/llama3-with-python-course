@@ -6,6 +6,7 @@ Concept:  Lesson 2.3 guaranteed valid JSON but not which keys. A JSON Schema
           a ``price_usd`` number and a ``weight_kg`` number, ready for a product
           catalogue. If ``max_tokens`` is too small the JSON is cut off and
           ``chat_json`` raises ``InvalidJSONReply``, so leave room for it.
+Read:     README.md in this folder explains the ideas and new words.
 Run:      python lessons/02_prompting/04_json_schema.py
 Expected: {'name': 'Ridgeline 29', 'price_usd': 1249, 'weight_kg': 13.8}
 """

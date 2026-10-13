@@ -5,7 +5,7 @@ read.
 
 **Why it matters:** The same prompt can give different answers, and a long chat eventually stops fitting. This lesson gives you control over both.
 
-Before you start: do [lesson 2](02-prompting.md). You should know how `Conversation` keeps a chat
+Before you start: do [lesson 2](../02_prompting/). You should know how `Conversation` keeps a chat
 history.
 
 ## New words
@@ -18,7 +18,7 @@ history.
 | Streaming | Receiving the reply token by token while it is written, instead of all at the end |
 | Context window | The most tokens the model can read at once (`n_ctx`), counting both your chat and its reply |
 
-All course terms are in the [glossary](../glossary.md).
+All course terms are in the [glossary](../../docs/glossary.md).
 
 ## Run it
 
@@ -44,7 +44,7 @@ settings change how:
 | `seed` | Fixes the random choices, so the same settings give the same text |
 
 For sorting, extracting or anything a program reads, use temperature 0. For writing, 0.7 is a
-common place to start. Lesson 4.1 runs the same prompt at three temperatures so you can see the
+common place to start. [Lesson 4.1](01_sampling.py) runs the same prompt at three temperatures so you can see the
 difference.
 
 ### Streaming
@@ -78,8 +78,8 @@ flowchart TD
 
 | File | What it shows |
 |------|---------------|
-| `src/llama_course/generation.py` | `stream_chat` |
-| `src/llama_course/context.py` | `count_tokens`, `messages_tokens`, `trim_history`, `ContextTooLong` |
+| [`src/llama_course/generation.py`](../../src/llama_course/generation.py) | `stream_chat` |
+| [`src/llama_course/context.py`](../../src/llama_course/context.py) | `count_tokens`, `messages_tokens`, `trim_history`, `ContextTooLong` |
 | `get_llm(n_ctx=512)` | Overrides a profile setting for one call |
 
 ## Common mistakes

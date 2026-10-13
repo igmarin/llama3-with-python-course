@@ -11,6 +11,7 @@ Concept:  Training loss going down proves nothing about new messages. The real
           pays off when a prompt gets long, slow or fragile, or when the task has
           no short rules.
 Requires: pip install -e ".[finetune]" and lessons 7.1 and 7.2 run first.
+Read:     README.md in this folder explains the ideas and new words.
 Run:      python lessons/07_finetuning/03_evaluate_tuned_model.py
 Expected: A table of accuracy for base vs tuned, overall and for easy/hard messages,
           plus the number of replies that did not contain exactly one label.

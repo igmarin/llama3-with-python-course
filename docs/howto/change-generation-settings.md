@@ -1,6 +1,7 @@
 # Change generation settings
 
-Control how random the answers are, how long they can be, and how much the model can read.
+Control how random the answers are, how long they can be, and how much the model can read. The
+ideas behind these settings are in [lesson 4](../../lessons/04_generation/).
 
 ## Steps
 
@@ -26,7 +27,7 @@ Control how random the answers are, how long they can be, and how much the model
    | Job | Setting |
    |-----|---------|
    | Classify, extract, call tools | `temperature=0.0` |
-   | Creative writing | `temperature=0.7` to `1.2`, optionally `top_p=0.9` |
+   | Creative writing | `temperature=0.7` to `1.2`, optionally `top_p=0.9` (picks only from the likeliest tokens) |
    | Repeatable creative output | any temperature plus a fixed `seed` |
    | Short answers | a small `max_tokens`, but not so small that JSON is cut off |
 
@@ -41,11 +42,11 @@ Control how random the answers are, how long they can be, and how much the model
    print(llm.n_ctx())   # 1024
    ```
 
-   To change it for every run of a profile, edit `n_ctx` in `configs/models.yaml`. A larger window uses
+   To change it for every run of a profile, edit `n_ctx` in [`configs/models.yaml`](../../configs/models.yaml). A larger window uses
    more memory.
 
 4. Keep a long chat inside the window. Use `trim_history` from `llama_course.context`; see
-   [lesson 4](../lessons/04-generation.md).
+   [lesson 4](../../lessons/04_generation/).
 
 ## Notes
 

@@ -7,6 +7,7 @@ Concept:  Instead of explaining the task, show a few input/label pairs and leave
           Examples show the format, not the full list of allowed answers. The new
           route is harder than every example, so with examples alone the model
           invents a stronger label. One line naming the allowed labels fixes it.
+Read:     README.md in this folder explains the ideas and new words.
 Run:      python lessons/02_prompting/02_few_shot.py
 Expected: "Very Hard," from the examples alone, then "Hard," once the labels are
           listed (3B model, temperature 0).

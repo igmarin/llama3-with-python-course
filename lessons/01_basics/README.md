@@ -5,7 +5,7 @@ completion and a chat.
 
 **Why it matters:** Every later lesson loads a model and chats with it. This lesson shows what happens underneath, so later errors and odd answers make sense.
 
-Before you start: finish the [setup](../setup.md). You need basic Python (functions, lists,
+Before you start: finish the [setup](../../docs/setup.md). You need basic Python (functions, lists,
 dictionaries). You do not need to know anything about AI yet.
 
 ## New words
@@ -18,7 +18,7 @@ dictionaries). You do not need to know anything about AI yet.
 | Prompt | The text you send to the model |
 | Completion | The text the model writes back, continuing your prompt |
 
-All course terms are in the [glossary](../glossary.md).
+All course terms are in the [glossary](../../docs/glossary.md).
 
 ## Run it
 
@@ -66,7 +66,7 @@ at a small cost in answer quality.
 Plain completion means the model continues your text. When you send
 `llm("Why do bicycle tires lose air?")`, the model does not know you asked a question. It writes
 whatever is likely to come next. That might be an answer. It might also be more questions, or a
-rambling essay. Lesson 1.1 shows this.
+rambling essay. [Lesson 1.1](01_chat.py) shows this.
 
 ### Chat
 
@@ -80,7 +80,7 @@ they say):
 | `assistant` | The model, in its earlier replies |
 
 `create_chat_completion(messages=...)` sends the list and returns the model's next message.
-Lesson 1.3 uses a system message to turn the model into a bike shop's help desk that refuses
+[Lesson 1.3](03_system_prompt.py) uses a system message to turn the model into a bike shop's help desk that refuses
 anything else.
 
 ### The chat template
@@ -89,7 +89,7 @@ The model only reads text, so the roles must be written into the text somehow. L
 special tokens for this, such as `<|start_header_id|>user<|end_header_id|>`. The set of rules
 for where these tokens go is called the chat template.
 
-`create_chat_completion` adds the special tokens for you. Lesson 1.4 writes them by hand with
+`create_chat_completion` adds the special tokens for you. [Lesson 1.4](04_chat_template.py) writes them by hand with
 `llama3_chat_prompt`, so you can see the text the model actually receives. It also shows the stop
 signal: `<|eot_id|>`, short for "end of turn". Without it, the model keeps writing.
 
@@ -97,9 +97,9 @@ signal: `<|eot_id|>`, short for "end of turn". Without it, the model keeps writi
 
 | File | What it shows |
 |------|---------------|
-| `src/llama_course/llm.py` | `get_llm()` loads the model chosen by the profile, once per run |
-| `src/llama_course/prompts.py` | `llama3_chat_prompt` builds the raw template |
-| `src/llama_course/conversation.py` | `message_text` pulls the reply out of a result |
+| [`src/llama_course/llm.py`](../../src/llama_course/llm.py) | `get_llm()` loads the model chosen by the profile, once per run |
+| [`src/llama_course/prompts.py`](../../src/llama_course/prompts.py) | `llama3_chat_prompt` builds the raw template |
+| [`src/llama_course/conversation.py`](../../src/llama_course/conversation.py) | `message_text` pulls the reply out of a result |
 
 ## Common mistakes
 
@@ -108,13 +108,13 @@ signal: `<|eot_id|>`, short for "end of turn". Without it, the model keeps writi
   mid-sentence or run longer than you want.
 - Putting `<|begin_of_text|>` in a hand-written prompt: llama.cpp adds this token itself, so you
   get a warning about a duplicate. `llama3_chat_prompt` leaves it out for this reason.
-- Expecting the same answer every run: the default `temperature` setting adds randomness. Lesson 4
+- Expecting the same answer every run: the default `temperature` setting adds randomness. [Lesson 4](../04_generation/)
   covers it.
 
 ## Exercise
 
-1. Add `temperature=0.0` to the call in `01_chat.py` and run it twice. What changes?
-2. How many tokens does the prompt in lesson 1.4 use?
+1. Add `temperature=0.0` to the call in [`01_chat.py`](01_chat.py) and run it twice. What changes?
+2. How many tokens does the prompt in [lesson 1.4](04_chat_template.py) use?
 
 <details>
 <summary>Answer</summary>

@@ -7,6 +7,7 @@ Concept:  Lesson 2.4 constrained JSON with a hand-written schema. A Pydantic mod
           schema, validates the reply, and on failure shows the model its own error
           and asks once more. Schema constraints guide generation; Pydantic is the
           check you can trust.
+Read:     README.md in this folder explains the ideas and new words.
 Run:      python lessons/06_tools/02_validated_output.py
 Expected: Three parsed delivery notes, then the share of the 32 delivery notes in
           data/inventory_text.csv whose counts all match (compared as sorted lists of

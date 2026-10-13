@@ -4,6 +4,7 @@ Goal:     Send a conversation instead of raw text.
 Concept:  A chat is a list of messages, each with a ``role`` ("system", "user" or
           "assistant") and ``content``. ``create_chat_completion`` wraps them in the
           model's chat template for you (lesson 1.4 shows that template).
+Read:     README.md in this folder explains the ideas and new words.
 Run:      python lessons/01_basics/02_conversation.py
 Expected: A short numbered list of steps for cleaning and oiling a bike chain.
 """

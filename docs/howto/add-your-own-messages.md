@@ -4,7 +4,7 @@ Put your own labelled customer messages into the classifier project and score th
 
 ## Steps
 
-1. Append rows to `data/messages.csv`. Each row is `message,category,difficulty`:
+1. Append rows to [`data/messages.csv`](../../data/messages.csv). Each row is `message,category,difficulty`:
 
    ```csv
    "My front light flickers when I ride over cobbles. Can you check the wiring?",Repair,easy
@@ -24,8 +24,9 @@ Put your own labelled customer messages into the classifier project and score th
    python scripts/split_messages.py
    ```
 
-   You see `train: 132 rows, test: 33 rows`. The split is random with a fixed seed, so adding rows
-   can change which messages land in the test set.
+   You see `train: 132 rows, test: 33 rows`. The script picks the test messages at random, but with a
+   fixed seed, so the same data always gives the same split. Adding rows can still change which
+   messages land in the test set.
 
 3. Check the data:
 
@@ -41,8 +42,8 @@ Put your own labelled customer messages into the classifier project and score th
    python lessons/03_project/classify_messages.py
    ```
 
-   Adding the three messages above gave 100% again. Compare against a baseline you ran on the same
-   data, since the test set may have changed.
+   Adding the three messages above gave 100% again. To see whether a change helped, compare against
+   a run on the same data (a baseline), because the test set may have changed.
 
 ## Tips
 
@@ -55,7 +56,7 @@ Put your own labelled customer messages into the classifier project and score th
 ## If something fails
 
 - `ValueError: Unknown labels ['Spam']; expected ['Repair', 'Order', 'Feedback']`: a row uses a
-  label the project does not know. Fix the spelling, or change `LABELS` in `src/llama_course/data.py`
-  and the prompt in `src/llama_course/classify.py` together.
+  label the project does not know. Fix the spelling, or change `LABELS` in [`src/llama_course/data.py`](../../src/llama_course/data.py)
+  and the prompt in [`src/llama_course/classify.py`](../../src/llama_course/classify.py) together.
 - `Missing columns` or `Found an empty message`: a row is missing a field or has an extra comma
   outside quotes.

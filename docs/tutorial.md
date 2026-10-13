@@ -17,7 +17,7 @@ python lessons/01_basics/01_chat.py
 
 You see text about why bicycle tires lose air (the wording differs on every run, and it may wander).
 The script loaded the model once with `get_llm()` and asked it to continue a piece of text. Plain
-completion tends to ramble, which is the next step's problem. [Lesson 1](lessons/01-basics.md)
+completion tends to ramble, which is the next step's problem. [Lesson 1](../lessons/01_basics/)
 explains the parts.
 
 ## 2. Use chat messages
@@ -44,7 +44,7 @@ You see:
 
 The input was a supplier's delivery note: "two dozen inner tubes, sixty brake pads and seven
 saddles." The model was forced to reply in JSON, and `chat_json` turned the reply into a Python
-dictionary. A program can use that. [Lesson 2](lessons/02-prompting.md) shows how to fix the keys
+dictionary. A program can use that. [Lesson 2](../lessons/02_prompting/) shows how to fix the keys
 and types with a JSON Schema.
 
 ## 4. Classify one message
@@ -91,7 +91,7 @@ python lessons/03_project/classify_messages.py
 
 You see the accuracy, precision and recall per category, accuracy on easy and hard messages, and a
 confusion matrix (which categories get mixed up). On the 3B model it scored 100% on this test set.
-[Lesson 3](lessons/03-project.md) explains why that number says less than it seems, and how the
+[Lesson 3](../lessons/03_project/) explains why that number says less than it seems, and how the
 worked examples helped on some messages and hurt on others.
 
 ## 6. Try a bigger model
@@ -116,14 +116,14 @@ accuracy. You can now:
 
 ## Where next
 
-You just used pieces of lessons 1 to 3. The lessons explain each piece, in this order:
+You just used pieces of [lessons 1](../lessons/01_basics/) to 3. The lessons explain each piece, in this order:
 
 | Lesson | What it adds to what you just built |
 |--------|-------------------------------------|
-| [1. Basics](lessons/01-basics.md) | What `get_llm()` loads and what a chat message contains (steps 1 and 2) |
-| [2. Prompting](lessons/02-prompting.md) | How the JSON in step 3 is forced, and how to fix its keys and types |
-| [3. Project](lessons/03-project.md) | How the classifier in steps 4 to 6 is built and scored, and what the worked examples cost |
-| [4. Generation](lessons/04-generation.md) | Why answers vary between runs, and what happens when a chat gets too long |
-| [5. RAG](lessons/05-rag.md) | Answer customer questions from the shop's policy documents |
-| [6. Tools](lessons/06-tools.md) | Look up live stock and shipping costs by calling Python functions |
-| [7. Fine-tuning](lessons/07-finetuning.md) | Train the model on the messages instead of describing the task in the prompt |
+| [1. Basics](../lessons/01_basics/) | What `get_llm()` loads and what a chat message contains (steps 1 and 2) |
+| [2. Prompting](../lessons/02_prompting/) | How the JSON in step 3 is forced, and how to fix its keys and types |
+| [3. Project](../lessons/03_project/) | How the classifier in steps 4 to 6 is built and scored, and what the worked examples cost |
+| [4. Generation](../lessons/04_generation/) | Why answers vary between runs, and what happens when a chat gets too long |
+| [5. RAG](../lessons/05_rag/) | Answer customer questions from the shop's policy documents |
+| [6. Tools](../lessons/06_tools/) | Look up live stock and shipping costs by calling Python functions |
+| [7. Fine-tuning](../lessons/07_finetuning/) | Train the model on the messages instead of describing the task in the prompt |

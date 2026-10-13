@@ -1,6 +1,6 @@
 # References
 
-Every link here was checked and resolved when this page was written. Lesson pages list the same
+Every link here was checked and resolved when this page was written. Lesson READMEs list the same
 links next to the idea they support. `python scripts/check_links.py` checks them again.
 
 ## Running Llama locally
@@ -58,7 +58,7 @@ links next to the idea they support. `python scripts/check_links.py` checks them
 - [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401):
   the paper that named RAG.
 - [nomic-embed-text v1.5](https://huggingface.co/nomic-ai/nomic-embed-text-v1.5) and its paper,
-  [Nomic Embed](https://arxiv.org/abs/2402.01613): the embedding model used in lesson 5.
+  [Nomic Embed](https://arxiv.org/abs/2402.01613): the embedding model used in [lesson 5](../lessons/05_rag/).
 - [OWASP LLM01: Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/): the
   risk and defences.
 - [Simon Willison on prompt injection](https://simonwillison.net/series/prompt-injection/): a running
@@ -69,7 +69,7 @@ links next to the idea they support. `python scripts/check_links.py` checks them
 ## Fine-tuning and evaluation
 
 - [LoRA](https://arxiv.org/abs/2106.09685) and [QLoRA](https://arxiv.org/abs/2305.14314): the
-  fine-tuning methods behind lesson 7.
+  fine-tuning methods behind [lesson 7](../lessons/07_finetuning/).
 - [mlx-lm LoRA guide](https://github.com/ml-explore/mlx-lm/blob/main/mlx_lm/LORA.md) and the
   [MLX documentation](https://ml-explore.github.io/mlx/build/html/index.html): the Apple Silicon
   tools the course uses.

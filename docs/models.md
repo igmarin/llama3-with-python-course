@@ -1,8 +1,11 @@
 # Models and benchmarks
 
-The course runs on any Llama model in GGUF format. A profile in `configs/models.yaml` names one
-model and its settings. Choose a profile with `LLAMA_PROFILE`, or point at any `.gguf` file with
-`LLAMA_MODEL_PATH`. No lesson code changes.
+The course runs on any Llama model in GGUF format (see [lesson 1](../lessons/01_basics/)). A
+profile is a named model setup: one entry in [`configs/models.yaml`](../configs/models.yaml) with
+the model file and its settings. Choose a profile with the `LLAMA_PROFILE` environment variable, or
+point at any `.gguf` file with `LLAMA_MODEL_PATH`. No lesson code changes.
+
+New words are in the [glossary](glossary.md).
 
 ## Profiles
 
@@ -23,10 +26,14 @@ bottom of this page.
 
 ## How much memory do I need?
 
-A model file is roughly `parameters x bits per weight / 8`. A 3B model at 4.5 bits is about 2 GB;
-a 70B model is about 43 GB. Add a few GB for the context cache and your other programs. The model
-must fit in RAM, and on a Mac the GPU can use only part of it (roughly two thirds to three
-quarters), so leave headroom.
+A model file's size in bytes is roughly `number of weights x bits per weight / 8`. A 3B model at
+4.5 bits per weight is about 2 GB, and a 70B model is about 43 GB.
+
+The whole model must fit in memory (RAM), with room to spare. Add a few GB for the context cache,
+the memory the model uses to hold your conversation while it works, and for your other programs.
+On a Mac the GPU, the chip that does the model's arithmetic, can use only part of the RAM: roughly
+two thirds to three quarters. So a 16 GB Mac is comfortable with the 2 GB and 4.9 GB models, and a
+43 GB model needs a much bigger machine.
 
 Quantization stores each weight in fewer bits. The suffix tells you how many:
 
@@ -34,14 +41,14 @@ Quantization stores each weight in fewer bits. The suffix tells you how many:
 |------|-----------------|--------|
 | Q4_K_M | about 4.5 | Default choice. Small, quality close to the original |
 | Q5_K_M | about 5.5 | A little larger and a little better |
-| Q8_0 | 8 | Nearly lossless, almost twice the size of Q4 |
+| Q8_0 | 8 | Very close to the original quality, almost twice the size of Q4 |
 
 Smaller files also run faster, because generating a token means reading the whole model from
 memory.
 
 ## Add a profile
 
-Copy a block in `configs/models.yaml`, change the fields, and download it. The step-by-step guide is
+Copy a block in [`configs/models.yaml`](../configs/models.yaml), change the fields, and download it. The step-by-step guide is
 [Add a model profile](howto/add-a-model-profile.md). Use a single `.gguf` file; a model split into
 several parts will not work with the download script.
 
@@ -51,7 +58,7 @@ several parts will not work with the download script.
 python scripts/benchmark.py --profile laptop-16gb
 ```
 
-It prints a table and saves `benchmarks/<profile>.json`. Three numbers matter:
+It prints a table and saves [`benchmarks/<profile>.json`](../benchmarks/). Three numbers matter:
 
 | Measure | Meaning |
 |---------|---------|
@@ -64,7 +71,8 @@ so treat the number as a lower bound.
 
 ## Results
 
-Short prompts, 128 new tokens, temperature 0, median of 9 runs after one warm-up.
+Short prompts, 128 new tokens, temperature 0. Each number is the median (the middle value) of 9
+runs, after one untimed warm-up run.
 
 | Profile | Model | Machine | Load | First token | Speed | Peak memory |
 |---------|-------|---------|------|-------------|-------|-------------|
@@ -77,9 +85,9 @@ Generation speed drops as the model grows: the 8B model has almost three times a
 model with slightly different prompts measured 53.9 tokens/s. Compare models on the same day and
 prompts.
 
-The bigger model is more accurate on the hard cases. On the message classifier in lesson 3, both
+The bigger model is more accurate on the hard cases. On the message classifier in [lesson 3](../lessons/03_project/), both
 models pass all 33 test messages, but on the 27 hard training messages the 8B model scored 96.3%
 against 81.5% for the 3B model.
 
-The load time of 0.5 s was measured with the file already in the operating system's cache. A cold
-start takes longer.
+The load time of 0.5 s was measured with the file already in the operating system's cache. The
+first load after a restart reads the file from disk and takes longer.

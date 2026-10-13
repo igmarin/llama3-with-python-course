@@ -5,7 +5,7 @@ contain the answer, and resist instructions hidden in a document.
 
 **Why it matters:** On its own, the model knows nothing about your shop and guesses. With RAG it answers from your documents and shows which one it used.
 
-Before you start: do [lesson 2](02-prompting.md), and download the extra model:
+Before you start: do [lesson 2](../02_prompting/), and download the extra model:
 `python scripts/download_model.py --profile embedding`.
 
 ## New words
@@ -18,7 +18,7 @@ Before you start: do [lesson 2](02-prompting.md), and download the extra model:
 | Cosine similarity | A score for how close two embeddings point: 1.0 is the same direction, near 0 is unrelated |
 | Prompt injection | Text that tries to give the model new orders, hidden in content it reads |
 
-All course terms are in the [glossary](../glossary.md).
+All course terms are in the [glossary](../../docs/glossary.md).
 
 ## Run it
 
@@ -87,9 +87,9 @@ The embedding model expects a short prefix: `search_document: ` before each chun
 
 | File | What it shows |
 |------|---------------|
-| `src/llama_course/rag.py` | `chunk_text`, `load_chunks`, `Index`, `answer`, `build_messages` |
-| `data/docs/*.md` | Five policy pages for a made-up bike shop, one with the injection |
-| `configs/models.yaml` | The `embedding` profile (nomic-embed-text v1.5) |
+| [`src/llama_course/rag.py`](../../src/llama_course/rag.py) | `chunk_text`, `load_chunks`, `Index`, `answer`, `build_messages` |
+| [`data/docs/*.md`](../../data/docs/) | Five policy pages for a made-up bike shop, one with the injection |
+| [`configs/models.yaml`](../../configs/models.yaml) | The `embedding` profile (nomic-embed-text v1.5) |
 
 ## Common mistakes
 
@@ -109,9 +109,9 @@ Ask "Can I return a custom-built bike?" What does the answer cite, and what is t
 <details>
 <summary>Answer</summary>
 
-Add the question to `QUESTIONS` in lesson 5.1. The best match is `returns#2` with score 0.82, and
+Add the question to `QUESTIONS` in [lesson 5.1](01_ask_your_documents.py). The best match is `returns#2` with score 0.82, and
 the answer is: Custom-built bikes and items marked "final sale" cannot be returned [1]. It cites
-`returns#2`. Then add a page of your own to `data/docs/` and ask about it.
+`returns#2`. Then add a page of your own to [`data/docs/`](../../data/docs/) and ask about it.
 </details>
 
 ## Go deeper

@@ -7,6 +7,7 @@ Concept:  Llama 3 was trained on text with special tokens that mark who is
           hand with ``llama3_chat_prompt`` and call plain completion.
           (llama.cpp adds the start-of-text token itself, so we leave it out.)
           Stop on ``<|eot_id|>`` ("end of turn"), or the model keeps going.
+Read:     README.md in this folder explains the ideas and new words.
 Run:      python lessons/01_basics/04_chat_template.py
 Expected: The prompt with its special tokens, then a one-sentence answer saying a
           tandem bicycle seats two riders.

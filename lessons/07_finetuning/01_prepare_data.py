@@ -9,6 +9,7 @@ Concept:  Fine-tuning shows the model many (input, correct answer) pairs. Each p
             test.jsonl   the final exam, only used in lesson 7.3
           The test set is the same 33 messages the base model was scored on in lesson 3,
           and it is never used for training or tuning.
+Read:     README.md in this folder explains the ideas and new words.
 Run:      python lessons/07_finetuning/01_prepare_data.py
 Expected: Counts per file (111 / 18 / 33) and one example.
 """

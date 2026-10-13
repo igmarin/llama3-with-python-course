@@ -15,6 +15,7 @@ Concept:  RAG = retrieval-augmented generation.
           marks documents as data and tells the model to ignore commands inside them.
           ``helmets.md`` contains such an attack on purpose.
 Setup:    python scripts/download_model.py --profile embedding
+Read:     README.md in this folder explains the ideas and new words.
 Run:      python lessons/05_rag/01_ask_your_documents.py
 Expected: Cited answers for the first three questions. The helmet question about
           "free this week" is answered from the sizing guide, not from the injected

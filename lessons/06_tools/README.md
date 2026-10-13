@@ -5,7 +5,7 @@ before use.
 
 **Why it matters:** Models guess at facts and arithmetic. Here the model calls your code for exact answers, and your code checks every call first.
 
-Before you start: do [lesson 2](02-prompting.md). You should know what JSON and a JSON Schema are.
+Before you start: do [lesson 2](../02_prompting/). You should know what JSON and a JSON Schema are.
 
 ## New words
 
@@ -16,7 +16,7 @@ Before you start: do [lesson 2](02-prompting.md). You should know what JSON and 
 | Pydantic | A Python library that checks data against a class you define: types, ranges and required fields |
 | Validation | Checking data before you use it, and rejecting it if it is wrong |
 
-All course terms are in the [glossary](../glossary.md).
+All course terms are in the [glossary](../../docs/glossary.md).
 
 ## Run it
 
@@ -91,7 +91,7 @@ read Llama 3's tool calls back. This course builds the whole loop itself instead
 
 ### Validated output without tools
 
-Lesson 6.2 applies the same checks to plain data. `chat_model` asks for JSON that matches a
+[Lesson 6.2](02_validated_output.py) applies the same checks to plain data. `chat_model` asks for JSON that matches a
 Pydantic class, validates it, and retries once with the error shown to the model. On the 32
 supplier delivery notes, the quantities matched on 30, and no reply was invalid. Validation catches
 a wrong type or a negative count. It cannot catch a wrong number; that needs a check against known
@@ -101,9 +101,9 @@ answers.
 
 | File | What it shows |
 |------|---------------|
-| `src/llama_course/tools.py` | `Tool`, `ToolBox`, `ask`, `ToolError`, `ToolCallFailed` |
-| `src/llama_course/shop_tools.py` | Three safe example tools |
-| `src/llama_course/structured.py` | `chat_model`, `describe_errors`, `InvalidModelReply` |
+| [`src/llama_course/tools.py`](../../src/llama_course/tools.py) | `Tool`, `ToolBox`, `ask`, `ToolError`, `ToolCallFailed` |
+| [`src/llama_course/shop_tools.py`](../../src/llama_course/shop_tools.py) | Three safe example tools |
+| [`src/llama_course/structured.py`](../../src/llama_course/structured.py) | `chat_model`, `describe_errors`, `InvalidModelReply` |
 
 ## Common mistakes
 

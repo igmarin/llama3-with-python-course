@@ -7,6 +7,7 @@ Concept:  Accuracy works for labels. A summary can be right in many wordings, so
           texts, such as a base model and a fine-tuned one. This lesson scores the
           base model's one-sentence summaries of data/summaries.csv.
 Requires: pip install -e ".[finetune]"
+Read:     README.md in this folder explains the ideas and new words.
 Run:      python lessons/07_finetuning/04_rouge_summaries.py
 Expected: One example summary next to its reference, then ROUGE-1/2/L averages over
           31 texts. Last run: ROUGE-1 0.51, ROUGE-2 0.22, ROUGE-L 0.43.

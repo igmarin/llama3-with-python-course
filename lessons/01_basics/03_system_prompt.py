@@ -4,6 +4,7 @@ Goal:     Control what the assistant will and won't do.
 Concept:  The "system" message sets rules before the user speaks. Here it turns
           the model into the help desk of a bike shop that only talks about bikes,
           so a request to write a poem about the sea gets the fixed refusal.
+Read:     README.md in this folder explains the ideas and new words.
 Run:      python lessons/01_basics/03_system_prompt.py
 Expected: "I can only help with questions about bikes." A small model may
           sometimes ignore the rule; try a few runs, or tighten the system prompt.

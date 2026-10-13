@@ -5,7 +5,7 @@ one reaches the right person, and you measure how often the model is right.
 
 **Why it matters:** A demo that works once proves little. A score on messages the model has never seen tells you whether to trust it, especially on the tricky cases.
 
-Before you start: do [lesson 2](02-prompting.md). This project uses a system prompt, few-shot
+Before you start: do [lesson 2](../02_prompting/). This project uses a system prompt, few-shot
 examples and a JSON Schema together.
 
 ## New words
@@ -20,7 +20,7 @@ examples and a JSON Schema together.
 | Recall | Of the messages that really belong in a category, the share the model found |
 | Confusion matrix | A table of true category against predicted category, showing which ones get mixed up |
 
-All course terms are in the [glossary](../glossary.md).
+All course terms are in the [glossary](../../docs/glossary.md).
 
 ## Run it
 
@@ -50,7 +50,7 @@ The system prompt defines each category by what the customer wants now:
 - Order: buying, reserving, paying, returning, stock or delivery.
 - Feedback: praise, complaints or suggestions that ask for nothing.
 
-Some messages in `data/` are marked hard. Their wording points to the wrong category: praise
+Some messages in [`data/`](../../data/) are marked hard. Their wording points to the wrong category: praise
 followed by a repair request, a mechanic's advice that leads to a purchase, an "URGENT" note that
 asks for nothing. They catch a model that goes by keywords instead of meaning.
 
@@ -96,15 +96,15 @@ keeps the examples. If hard messages matter most to you, the choice flips.
 On the 33 test messages, both prompts scored 100%, and so did the 8B model. When every setup gets
 everything right, the test cannot tell them apart. The training numbers above are more useful here,
 as is the 8B model's score on the training split: 97.7% overall and 96.3% on hard messages. To
-make the test harder, add more hard messages ([how-to](../howto/add-your-own-messages.md)).
+make the test harder, add more hard messages ([how-to](../../docs/howto/add-your-own-messages.md)).
 
 ## Code map
 
 | File | What it shows |
 |------|---------------|
-| `src/llama_course/classify.py` | `SYSTEM_PROMPT`, `FEW_SHOT_EXAMPLES`, `predict`, `classify`, `metrics`, `evaluate` |
-| `src/llama_course/data.py` | `load_messages("train" or "test")`, which checks columns and labels |
-| `lessons/03_project/results_*.md` | Saved output for each profile and prompt |
+| [`src/llama_course/classify.py`](../../src/llama_course/classify.py) | `SYSTEM_PROMPT`, `FEW_SHOT_EXAMPLES`, `predict`, `classify`, `metrics`, `evaluate` |
+| [`src/llama_course/data.py`](../../src/llama_course/data.py) | `load_messages("train" or "test")`, which checks columns and labels |
+| [`lessons/03_project/results_*.md`](./) | Saved output for each profile and prompt |
 
 ## Common mistakes
 
@@ -142,7 +142,7 @@ examples, and 0.953 and 0.815 with six.
 - [scikit-learn: model evaluation](https://scikit-learn.org/stable/modules/model_evaluation.html):
   accuracy, precision, recall and the confusion matrix.
 - [Pydantic JSON Schema](https://docs.pydantic.dev/latest/concepts/json_schema/): schemas from
-  Python classes (used in lesson 6).
+  Python classes (used in [lesson 6](../06_tools/)).
 - [Prompt Engineering Guide](https://www.promptingguide.ai/): when examples help and when they
   don't.
 - [Llama 3 model card and prompt formats](https://www.llama.com/docs/model-cards-and-prompt-formats/meta-llama-3/):

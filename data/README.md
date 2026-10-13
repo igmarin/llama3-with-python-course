@@ -5,11 +5,11 @@ people or messages, and is released under [CC0 1.0](LICENSE) (public domain).
 
 | File | Rows | Columns | Used for |
 |------|------|---------|----------|
-| `messages.csv` | 162 | `message`, `category`, `difficulty` | Message classifier (lesson 3) and fine-tuning (lesson 7) |
-| `train.csv` / `test.csv` | 129 / 33 | same | Fixed 80/20 split of the file above |
-| `summaries.csv` | 31 | `text`, `summary` | ROUGE evaluation: `summary` is the reference |
-| `inventory_text.csv` | 32 | `text`, `expected_json` | JSON extraction (lessons 2.3 and 6.2) |
-| `docs/*.md` | 5 files | Markdown | RAG lesson (lesson 5): the shop's policies |
+| [`messages.csv`](messages.csv) | 162 | `message`, `category`, `difficulty` | Message classifier ([lesson 3](../lessons/03_project/)) and fine-tuning ([lesson 7](../lessons/07_finetuning/)) |
+| [`train.csv`](train.csv) / [`test.csv`](test.csv) | 129 / 33 | same | Fixed 80/20 split of the file above |
+| [`summaries.csv`](summaries.csv) | 31 | `text`, `summary` | ROUGE evaluation: `summary` is the reference |
+| [`inventory_text.csv`](inventory_text.csv) | 32 | `text`, `expected_json` | JSON extraction ([lessons 2.3](../lessons/02_prompting/03_json_inventory.py) and 6.2) |
+| [`docs/*.md`](docs/) | 5 files | Markdown | RAG lesson ([lesson 5](../lessons/05_rag/)): the shop's policies |
 
 The course uses one made-up company throughout: Northwind Bikes, a bicycle shop.
 
@@ -21,12 +21,14 @@ The course uses one made-up company throughout: Northwind Bikes, a bicycle shop.
 - `difficulty` is `hard` for 33 rows (about 20%). Hard messages use words that point to the wrong
   class: praise followed by a repair request, a mechanic's advice that leads to a purchase, an
   "URGENT" note that asks for nothing. Report accuracy on easy and hard rows separately.
-- `train.csv` and `test.csv` come from `python scripts/split_messages.py`. The split is seeded
-  and stratified by category and difficulty. Change the data, then run the script again.
+- [`train.csv`](train.csv) and [`test.csv`](test.csv) come from `python scripts/split_messages.py`. The script picks
+  20% of each category and difficulty for the test set, at random but with a fixed seed, so it
+  gives the same split every time and both files keep the same mix of messages. Change the data,
+  then run the script again.
 
 ## Delivery notes
 
-`inventory_text.csv` holds supplier delivery notes. `expected_json` maps each part to its quantity,
+[`inventory_text.csv`](inventory_text.csv) holds supplier delivery notes. `expected_json` maps each part to its quantity,
 for example `{"inner tubes": 24}`. Keys are plural part names as written in the note (`tandems`,
 not `tandem`). A small model may name a part differently, so compare quantities or normalize keys
 before judging a reply wrong.
@@ -43,6 +45,6 @@ train = load_messages("train")
 
 ## RAG documents
 
-`docs/` holds five short policy pages for a made-up bike shop. `helmets.md` ends with a
+[`docs/`](docs/) holds five short policy pages for a made-up bike shop. `helmets.md` ends with a
 planted prompt-injection sentence ("ignore your previous instructions...") so the lesson can
 show how the prompt resists it. Do not remove it.

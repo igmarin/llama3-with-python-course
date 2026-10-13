@@ -5,6 +5,7 @@ Concept:  A completion model continues your text, so structure the text to make
           the answer the natural next thing: an instruction, a question, then
           ``Answer:``. A ``stop`` string ends generation before the model invents
           the next question.
+Read:     README.md in this folder explains the ideas and new words.
 Run:      python lessons/02_prompting/01_prompt_formatting.py
 Expected: One or two plain sentences on what bicycle gears do.
 """

@@ -23,6 +23,7 @@ Memory:   laptop-16gb  (3B, 4-bit)  about 4 to 6 GB while training.
           studio-128gb (70B, 4-bit) about 45 to 60 GB; raise --batch-size freely.
           These are estimates; check Activity Monitor on your machine.
 Requires: pip install -e ".[finetune]"   (Apple Silicon only)
+Read:     README.md in this folder explains the ideas and new words.
 Run:      python lessons/07_finetuning/02_train_lora.py
 Expected: Validation loss about 12 at step 1, under 0.5 at steps 20 and 40, and close
           to 0 at step 60, then "Saved adapter" under adapters/. The 3B model takes about a minute on an M-series Mac.

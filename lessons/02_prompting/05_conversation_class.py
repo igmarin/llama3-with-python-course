@@ -5,6 +5,7 @@ Concept:  The model has no memory. ``Conversation`` keeps the message list and
           sends all of it each turn, which is why "something lighter for the same
           ride" works: the model still sees the first request. The history grows
           every turn and must fit in ``n_ctx``.
+Read:     README.md in this folder explains the ideas and new words.
 Run:      python lessons/02_prompting/05_conversation_class.py
 Expected: A bike type for each request. The follow-up stays on the same kind of
           riding.

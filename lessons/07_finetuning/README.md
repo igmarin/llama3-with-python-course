@@ -5,7 +5,7 @@ learn how to score generated text.
 
 **Why it matters:** When a prompt gets long, slow or fragile, you can teach the task by example instead. This lesson shows how, and how to check that it paid off.
 
-Before you start: do [lesson 3](03-project.md), which gives you the score to compare against. This
+Before you start: do [lesson 3](../03_project/), which gives you the score to compare against. This
 lesson needs a Mac with Apple Silicon.
 
 ## New words
@@ -19,7 +19,7 @@ lesson needs a Mac with Apple Silicon.
 | Validation set | Examples the model never trains on, used to check for memorising during training |
 | ROUGE | A score for generated text, based on how many words it shares with a human-written version |
 
-All course terms are in the [glossary](../glossary.md).
+All course terms are in the [glossary](../../docs/glossary.md).
 
 ## Run it
 
@@ -35,7 +35,7 @@ python lessons/07_finetuning/04_rouge_summaries.py
 
 ### Fine-tuning teaches by example
 
-In lesson 3 the prompt described the task: rules plus examples. Fine-tuning takes another route.
+In [lesson 3](../03_project/) the prompt described the task: rules plus examples. Fine-tuning takes another route.
 You show the model many pairs of a customer message and its right label, and it adjusts. After
 that, the prompt can be one short line.
 
@@ -78,12 +78,12 @@ earlier. Choose the number of training steps from validation loss.
 ### Accuracy and the confusion matrix
 
 Accuracy is the share of correct labels. A confusion matrix shows which labels get mixed up, for
-example Order messages called Feedback. Lesson 7.3 reports easy and hard messages separately,
+example Order messages called Feedback. [Lesson 7.3](03_evaluate_tuned_model.py) reports easy and hard messages separately,
 because a model can do well on easy messages and fail the hard ones.
 
 ### ROUGE
 
-A summary has no single right answer, so accuracy does not work for it. Lesson 7.4 compares each
+A summary has no single right answer, so accuracy does not work for it. [Lesson 7.4](04_rouge_summaries.py) compares each
 summary with one written by a person and counts the overlap:
 
 - ROUGE-1 counts shared words.
@@ -97,10 +97,10 @@ on the same texts, not to judge a single summary.
 
 | File | What it shows |
 |------|---------------|
-| `src/llama_course/finetune.py` | Training examples as chats, the validation split, `parse_label` |
-| `src/llama_course/classify.py` | `score_predictions`, the scoring shared with lesson 3 |
-| `src/llama_course/rouge.py` | `rouge_scores` |
-| `configs/models.yaml` | `mlx_repo`: the MLX copy of each model |
+| [`src/llama_course/finetune.py`](../../src/llama_course/finetune.py) | Training examples as chats, the validation split, `parse_label` |
+| [`src/llama_course/classify.py`](../../src/llama_course/classify.py) | `score_predictions`, the scoring shared with [lesson 3](../03_project/) |
+| [`src/llama_course/rouge.py`](../../src/llama_course/rouge.py) | `rouge_scores` |
+| [`configs/models.yaml`](../../configs/models.yaml) | `mlx_repo`: the MLX copy of each model |
 
 ## Results on the 3B model
 
@@ -111,7 +111,7 @@ on the same texts, not to judge a single summary.
 | 6 hard messages | 100% | 100% |
 
 The test set is small: one message is 3 points, so treat a difference of one or two messages as
-noise. The base model here gets a short prompt with no rules. The prompt from lesson 3 (rules,
+noise. The base model here gets a short prompt with no rules. The prompt from [lesson 3](../03_project/) (rules,
 examples and a schema) scores 100% on the same messages. On this synthetic data, a good prompt did
 as well as fine-tuning. Fine-tuning pays off when a prompt gets long, slow or fragile, or when the
 task has no short rules.
@@ -128,7 +128,7 @@ task has no short rules.
 
 ## Exercise
 
-In `02_train_lora.py`, set `ITERS = 200` and run lessons 7.2 and 7.3 again. What happens to
+In [`02_train_lora.py`](02_train_lora.py), set `ITERS = 200` and run [lessons 7.2](02_train_lora.py) and 7.3 again. What happens to
 validation loss, and to the test accuracy? What should you conclude?
 
 <details>
