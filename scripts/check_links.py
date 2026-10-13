@@ -2,6 +2,7 @@
 
     python scripts/check_links.py                 # README.md, docs/, lessons/, data/
     python scripts/check_links.py some/file.md    # specific files or folders
+    python scripts/check_links.py --offline       # relative links only, no web requests (CI)
 
 Exits with 1 if any link fails. Some sites reject scripts with 403 or 429; the report
 marks those "blocked" so you can open them in a browser instead of treating them as dead.
@@ -75,7 +76,8 @@ def check(url: str, attempts: int = 3) -> str:
 
 
 def main() -> None:
-    args = [Path(a).resolve() for a in sys.argv[1:]]
+    offline = "--offline" in sys.argv
+    args = [Path(a).resolve() for a in sys.argv[1:] if a != "--offline"]
     paths = args or [ROOT / "README.md", ROOT / "docs", ROOT / "lessons", ROOT / "data"]
     links = collect([p for p in paths if p.exists()])
     missing = [
@@ -87,6 +89,9 @@ def main() -> None:
     ]
     for item in missing:
         print(f"missing file   {item}")
+    if offline:
+        print(f"Checked relative links only; {len(missing)} missing.")
+        sys.exit(1 if missing else 0)
     with ThreadPoolExecutor(max_workers=4) as pool:
         results = dict(zip(links, pool.map(check, links)))
     bad = {u: r for u, r in results.items() if r != "ok"}

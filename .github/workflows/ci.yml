@@ -24,3 +24,5 @@ jobs:
           pip install numpy pandas pydantic pyyaml pytest ruff
       - run: ruff check .
       - run: pytest -q
+      - name: Check relative links in the docs
+        run: python scripts/check_links.py --offline
