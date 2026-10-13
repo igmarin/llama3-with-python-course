@@ -13,6 +13,13 @@ profiles:
     n_gpu_layers: -1
     n_threads: null
 
+  laptop-16gb-q8:         # Same 3B model at 8 bits per weight (3.4 GB). Compared in lesson 8
+    repo: bartowski/Llama-3.2-3B-Instruct-GGUF
+    file: Llama-3.2-3B-Instruct-Q8_0.gguf
+    n_ctx: 4096
+    n_gpu_layers: -1
+    n_threads: null
+
   laptop-8b:              # Llama 3.1 8B: smarter than 3B, fits a 16 GB machine (4.9 GB file)
     repo: bartowski/Meta-Llama-3.1-8B-Instruct-GGUF
     file: Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf

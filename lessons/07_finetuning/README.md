@@ -18,6 +18,10 @@ lesson needs a Mac with Apple Silicon.
 | Loss | A number for how wrong the model's answers are on a set of examples. Lower is better |
 | Validation set | Examples the model never trains on, used to check for memorising during training |
 | ROUGE | A score for generated text, based on how many words it shares with a human-written version |
+| Rank | The size of the small matrices LoRA trains. Higher rank = more weights to train |
+| Scale (alpha) | How strongly the adapter's output is added to the model's. PEFT calls it `lora_alpha` |
+| Dropout | Switching off a random share of the adapter's values while training, to discourage memorising |
+| Target layers | Which layers inside the model get an adapter, for example only `q_proj` and `v_proj` |
 
 All course terms are in the [glossary](../../docs/glossary.md).
 
@@ -29,6 +33,7 @@ python lessons/07_finetuning/01_prepare_data.py
 python lessons/07_finetuning/02_train_lora.py
 python lessons/07_finetuning/03_evaluate_tuned_model.py
 python lessons/07_finetuning/04_rouge_summaries.py
+python lessons/07_finetuning/05_lora_settings.py   # about 6 minutes: four training runs
 ```
 
 ## The ideas
@@ -97,10 +102,11 @@ on the same texts, not to judge a single summary.
 
 | File | What it shows |
 |------|---------------|
-| [`src/llama_course/finetune.py`](../../src/llama_course/finetune.py) | Training examples as chats, the validation split, `parse_label` |
+| [`src/llama_course/finetune.py`](../../src/llama_course/finetune.py) | Training examples as chats, the validation split, `parse_label`, LoRA config helpers |
 | [`src/llama_course/classify.py`](../../src/llama_course/classify.py) | `score_predictions`, the scoring shared with [lesson 3](../03_project/) |
 | [`src/llama_course/rouge.py`](../../src/llama_course/rouge.py) | `rouge_scores` |
 | [`configs/models.yaml`](../../configs/models.yaml) | `mlx_repo`: the MLX copy of each model |
+| [`results_lora_settings.md`](results_lora_settings.md) | The LoRA settings table from the last run |
 
 ## Results on the 3B model
 
@@ -120,6 +126,38 @@ The base model here gets one short line of instructions and no examples. The ful
 the challenge set, ahead of the tuned model's 93.3%. So on this data, a careful prompt still beat
 fine-tuning. Fine-tuning pays off when a prompt gets long, slow or fragile, or when the task has no
 short rules.
+
+## LoRA settings compared
+
+[`05_lora_settings.py`](05_lora_settings.py) trains the same classifier four times. Only the LoRA
+settings change; the data, steps and learning rate stay as in [lesson 7.2](02_train_lora.py).
+
+Many tutorials use PEFT, the PyTorch LoRA library, with settings like `r=12, lora_alpha=8` or
+`r=2, lora_alpha=4`, applied only to the attention layers `q_proj` and `v_proj`. PEFT multiplies the
+adapter's output by `lora_alpha / r`. mlx-lm takes that multiplier directly as `scale`, so
+`peft_scale` in [`src/llama_course/finetune.py`](../../src/llama_course/finetune.py) converts it:
+`r=12, lora_alpha=8` becomes `rank=12, scale=0.67`.
+
+| Setting | Trainable weights | Final validation loss | Challenge accuracy (60) |
+|---------|-------------------|-----------------------|-------------------------|
+| [Lesson 7.2](02_train_lora.py) default: rank 8, scale 20, all layers | 6.947M | 0.001 | 93.3% |
+| Rank 12, alpha 8 (scale 0.67), q/v only | 1.966M | 0.029 | 85.0% |
+| Rank 2, alpha 4 (scale 2), q/v only, 250 tokens | 0.328M | 0.040 | 83.3% |
+| Rank 2, scale 20, q/v only, 250 tokens | 0.328M | 0.010 | 95.0% |
+
+What this run shows:
+
+- Scale mattered more than rank. The two PEFT-style settings had small scales and learned less in
+  60 steps. Rank 2 with scale 20 did as well as the default with 21 times fewer trainable weights.
+- PEFT settings don't carry over as-is. Their scale is tuned together with a learning rate and a
+  number of steps. Change one, and the others may need to change too.
+- Validation loss mostly agreed with the challenge set: the two settings with the lowest loss (0.001
+  and 0.010) scored highest, and the two with higher loss scored lowest. Use validation loss to
+  choose settings. The challenge set is used here only to show the effect, and
+  choosing by it would spend it like a test set.
+
+One run per setting on 60 messages is a small sample. Treat these as hints for your own data, not
+as rules.
 
 ## Common mistakes
 
@@ -159,6 +197,8 @@ validation examples before you trust a flat validation curve.
   `mlx_lm lora`.
 - [MLX documentation](https://ml-explore.github.io/mlx/build/html/index.html): Apple's array
   framework under `mlx-lm`.
+- [LoRA in PEFT](https://huggingface.co/docs/peft/main/en/conceptual_guides/lora): rank, alpha and
+  target modules explained.
 - [Hugging Face PEFT](https://huggingface.co/docs/peft/index): the same idea on PyTorch, the usual
   route on Linux and NVIDIA GPUs.
 - [ROUGE: A Package for Automatic Evaluation of Summaries](https://aclanthology.org/W04-1013/): the

@@ -32,13 +32,10 @@ Expected: Validation loss about 12 at step 1, under 0.5 at steps 20 and 40, and 
 import subprocess
 import sys
 
-from llama_course.finetune import DATA_DIR
+from llama_course.finetune import BATCH_SIZE, DATA_DIR, ITERS, LEARNING_RATE, MAX_SEQ_LENGTH
 from llama_course.llm import ROOT, get_profile
 
 ADAPTER_DIR = ROOT / "adapters" / "message-lora"
-ITERS = 60
-BATCH_SIZE = 4
-LEARNING_RATE = 5e-5
 
 
 def main() -> None:
@@ -58,7 +55,7 @@ def main() -> None:
         "--batch-size", str(BATCH_SIZE),
         "--learning-rate", str(LEARNING_RATE),
         "--mask-prompt",
-        "--max-seq-length", "512",
+        "--max-seq-length", str(MAX_SEQ_LENGTH),
         "--steps-per-report", "10",
         "--steps-per-eval", "20",
     ]

@@ -135,3 +135,4 @@ You just used pieces of [lessons 1](../lessons/01_basics/) to 3. The lessons exp
 | [5. RAG](../lessons/05_rag/) | Answer customer questions from the shop's policy documents |
 | [6. Tools](../lessons/06_tools/) | Look up live stock and shipping costs by calling Python functions |
 | [7. Fine-tuning](../lessons/07_finetuning/) | Train the model on the messages instead of describing the task in the prompt |
+| [8. Quantization](../lessons/08_quantization/) | Choose between smaller and larger model files for the classifier, with measurements |

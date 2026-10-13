@@ -14,6 +14,7 @@ flowchart LR
     L2 --> L5[5. RAG]
     L2 --> L6[6. Tools]
     L3 --> L7[7. Fine-tuning]
+    L3 --> L8[8. Quantization]
 ```
 
 Use the [how-to guides](#how-to-guides) and [reference pages](#reference) when you need them.
@@ -32,10 +33,11 @@ docstring: the goal, the idea, the command to run, and what you should see.
 | [4. Generation](../lessons/04_generation/) | The same prompt can give different answers, and a long chat eventually stops fitting. This lesson gives you control over both. | Temperature and seed, streaming, tokens and the context window |
 | [5. RAG](../lessons/05_rag/) | The model knows nothing about your shop. Without this it guesses; with it, every answer comes from your documents, with a source you can check. | Embeddings, cosine search, citations, refusing, prompt injection |
 | [6. Tools](../lessons/06_tools/) | Models guess at facts and arithmetic. Here the model calls your code for exact answers, and your code checks every call first. | Tool calling, Pydantic validation, retries |
-| [7. Fine-tuning](../lessons/07_finetuning/) | When a prompt gets long, slow or fragile, you can teach the task by example instead. This lesson shows how, and how to check that it paid off. | LoRA, train/validation/test data, accuracy, ROUGE (Apple Silicon only) |
+| [7. Fine-tuning](../lessons/07_finetuning/) | When a prompt gets long, slow or fragile, you can teach the task by example instead. This lesson shows how, and how to check that it paid off. | LoRA, its settings, train/validation/test data, accuracy, ROUGE (Apple Silicon only) |
+| [8. Quantization](../lessons/08_quantization/) | Quantization decides which models fit on your machine and how fast they answer. Knowing what it costs lets you pick a model file on evidence. | 8-bit vs 4-bit, NF4, compute type, size, speed and accuracy |
 
 [Lessons 1](../lessons/01_basics/) and 2 are the base for everything else. [Lessons 4](../lessons/04_generation/), 5 and 6 can be done in any order.
-[Lesson 7](../lessons/07_finetuning/) compares against the score from [lesson 3](../lessons/03_project/), so do 3 first.
+Lessons [7](../lessons/07_finetuning/) and [8](../lessons/08_quantization/) compare against the scores from [lesson 3](../lessons/03_project/), so do 3 first.
 
 ## How-to guides
 

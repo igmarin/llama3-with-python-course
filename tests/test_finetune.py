@@ -76,3 +76,29 @@ def test_write_jsonl_one_line_per_row(tmp_path):
     df = pd.DataFrame({"message": ["a", "b"], "category": ["Repair", "Order"]})
     finetune.write_jsonl(df, tmp_path / "x.jsonl")
     assert len((tmp_path / "x.jsonl").read_text().splitlines()) == 2
+
+
+def test_peft_scale_converts_alpha():
+    assert finetune.peft_scale(8, 12) == pytest.approx(0.667, abs=0.001)
+    assert finetune.peft_scale(4, 2) == 2
+
+
+def test_lora_config_holds_the_chosen_settings(tmp_path):
+    cfg = finetune.lora_config("repo/model", tmp_path / "a", rank=2, scale=2.0, dropout=0.05,
+                               keys=finetune.ATTENTION_QV, max_seq_length=250)
+    assert cfg["lora_parameters"] == {"rank": 2, "scale": 2.0, "dropout": 0.05,
+                                      "keys": ["self_attn.q_proj", "self_attn.v_proj"]}
+    assert cfg["max_seq_length"] == 250 and cfg["iters"] == finetune.ITERS and cfg["mask_prompt"]
+
+
+def test_lora_config_without_keys_targets_every_layer(tmp_path):
+    cfg = finetune.lora_config("m", tmp_path, rank=8, scale=20.0)
+    assert "keys" not in cfg["lora_parameters"]
+
+
+def test_parse_training_log_reads_new_and_old_formats():
+    new = "Trainable parameters: 0.216% (6.947M/3212.750M)\n     1    val 12.339    3.32s\n\x1b[1m    60\x1b[0m    val 0.001    2.94s\n"
+    old = "Iter 1: Val loss 2.500, Val took 1.0s\nIter 60: Val loss 0.300, Val took 1.0s\n"
+    assert finetune.parse_training_log(new) == {"trainable_millions": 6.947, "val_loss": {1: 12.339, 60: 0.001}}
+    assert finetune.parse_training_log(old)["val_loss"] == {1: 2.5, 60: 0.3}
+    assert finetune.parse_training_log("nothing")["trainable_millions"] is None

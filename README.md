@@ -37,6 +37,7 @@ text about bicycle tires, you are ready.
    | [5. RAG](lessons/05_rag/) | Answer from your own documents and admit when they don't say |
    | [6. Tools](lessons/06_tools/) | Let the model call your Python functions, with every call checked first |
    | [7. Fine-tuning](lessons/07_finetuning/) | Teach the task by example, then check whether it paid off |
+   | [8. Quantization](lessons/08_quantization/) | See what 8-bit and 4-bit files cost in speed, memory and accuracy |
 
    Each lesson is a folder: its README explains the ideas, and the scripts sit next to it.
 

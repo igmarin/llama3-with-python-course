@@ -12,6 +12,7 @@ New words are in the [glossary](glossary.md).
 | Profile | Model | File size | Machine it suits |
 |---------|-------|-----------|------------------|
 | `laptop-16gb` (default) | Llama 3.2 3B Instruct, Q4_K_M | 2.0 GB | 16 GB laptop |
+| `laptop-16gb-q8` | Llama 3.2 3B Instruct, Q8_0 | 3.4 GB | 16 GB laptop; compared in [lesson 8](../lessons/08_quantization/) |
 | `laptop-8b` | Llama 3.1 8B Instruct, Q4_K_M | 4.9 GB | 16 GB laptop |
 | `studio-128gb` | Llama 3.3 70B Instruct, Q4_K_M | about 43 GB | 64 GB or more |
 | `embedding` | nomic-embed-text v1.5, Q8_0 | 0.15 GB | any; used by the RAG lesson |

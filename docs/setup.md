@@ -44,12 +44,13 @@ turned on. In each new terminal window, turn it on again with `source .venv/bin/
 
 ## Extra downloads
 
-Two lessons need more than the default model. Each downloads once.
+Three lessons need more than the default model. Each downloads once.
 
 | Lesson | Needs | How |
 |--------|-------|-----|
 | 5. RAG | A small embedding model (0.15 GB) | `python scripts/download_model.py --profile embedding` |
 | 7. Fine-tuning | The 3B model in MLX format (1.8 GB) | Downloaded automatically the first time [lesson 7.2](../lessons/07_finetuning/02_train_lora.py) runs |
+| 8. Quantization | The 3B model at 8 bits (3.4 GB) | `python scripts/download_model.py --profile laptop-16gb-q8` |
 
 ## Check that it works
 
@@ -73,7 +74,8 @@ Measured on a MacBook Pro (Apple Silicon, 16 GB) with the 3B model.
 | 4. Generation | a few seconds per script |
 | 5. RAG | about 5 s |
 | 6. Tools | 10 s; [lesson 6.2](../lessons/06_tools/02_validated_output.py) about 50 s |
-| 7. Fine-tuning | 1 to 25 s per script; training about 1 minute |
+| 7. Fine-tuning | 1 to 25 s per script; training about 1 minute; [lesson 7.5](../lessons/07_finetuning/05_lora_settings.py) about 6 minutes |
+| 8. Quantization | about 2 minutes |
 
 ## Common install problems
 

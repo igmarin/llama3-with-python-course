@@ -22,25 +22,14 @@ Expected: Accuracy for base vs tuned on the test set and on the challenge set, p
 
 import sys
 
-from mlx_lm import generate, load
+from mlx_lm import load
 
-from llama_course.classify import INVALID, score_predictions
+from llama_course.classify import score_predictions
 from llama_course.data import load_messages
-from llama_course.finetune import parse_label, prompt_messages
+from llama_course.finetune import mlx_predict
 from llama_course.llm import ROOT, get_profile
 
 ADAPTER_DIR = ROOT / "adapters" / "message-lora"
-
-
-def predict_all(model, tokenizer, messages) -> list[str]:
-    predictions = []
-    for message in messages:
-        prompt = tokenizer.apply_chat_template(
-            prompt_messages(message), add_generation_prompt=True, tokenize=False
-        )
-        reply = generate(model, tokenizer, prompt=prompt, max_tokens=8)  # greedy by default
-        predictions.append(parse_label(reply) or INVALID)
-    return predictions
 
 
 def main() -> None:
@@ -55,7 +44,7 @@ def main() -> None:
     print(f"Base model: {profile.mlx_repo}; tuned = base + adapter")
 
     for split, df in splits.items():
-        base, tuned = (score_predictions(df, predict_all(*models[m], df["message"])) for m in models)
+        base, tuned = (score_predictions(df, mlx_predict(*models[m], df["message"])) for m in models)
         rows = [("All messages", base["accuracy"], tuned["accuracy"])]
         for difficulty in base["accuracy_by_difficulty"]:
             rows.append((f"  {difficulty}", base["accuracy_by_difficulty"][difficulty], tuned["accuracy_by_difficulty"][difficulty]))
